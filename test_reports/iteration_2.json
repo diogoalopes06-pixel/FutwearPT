@@ -1,0 +1,50 @@
+{
+  "summary": "PWA + Web Push + admin email notification testing complete. Backend: 28/28 pytest tests PASSED (extended from 18 in iter_1, added 7 push tests + 3 PWA asset tests). Frontend: admin push banner renders correctly on /admin with 'Ativar notificações' button when push is supported. Manifest and service-worker are served correctly with required content. Existing flows (admin login, list/update orders, notify-ready, products tab, stats) still work end-to-end.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "Admin push banner (headless / when permission denied)",
+        "issues": ["Helper text 'Permissão de notificações bloqueada...' is rendered as a flex sibling that wraps to a new line via 'w-full' inside a flex-wrap container. It works but layout could be cleaner (e.g., put the warning outside the flex wrapper). Cosmetic only."]
+      }
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "(Non-blocking) AdminLoginPage emits a React dev warning: 'Cannot update a component while rendering a different component' — likely a setState/<Navigate> called during render. Consider wrapping the redirect logic in useEffect or returning <Navigate /> at the top of render after early returns. Not user-visible but should be cleaned up.",
+    "(Optional) The seeded admin already had bcrypt hash from iter_1; if VAPID_PRIVATE_KEY ever changes, existing push_subscriptions docs will keep working but pushes will silently fail. Consider clearing push_subscriptions on key rotation or logging a warning at startup."
+  ],
+  "critical_code_review_comments": [
+    "push_service.send_push_to_all returns early with {sent: 0} when VAPID_PRIVATE_KEY is empty — good defensive pattern.",
+    "_send_one runs in a thread via asyncio.to_thread — non-blocking, good.",
+    "Expired subs (404/410) are auto-removed from DB — good cleanup.",
+    "push_subscriptions collection lacks an index on subscription.endpoint; given upsert frequency is low this is fine, but a unique index would prevent any race-condition duplicates.",
+    "AdminDashboardPage.refreshPushStatus runs unconditionally on user mount; in headless browsers (or browsers w/o SW), pushSupported() guard prevents errors — good.",
+    "Frontend push.js subscribeToPush correctly handles userVisibleOnly:true (required by Chrome) and posts subscription.toJSON() (with endpoint+keys) to backend — correct shape.",
+    "Service-worker.js has both 'push' and 'notificationclick' handlers, focuses existing tab if open — correct UX.",
+    "manifest.json icons all use jpg (not png/svg) — works but not ideal for maskable/Android adaptive icons; consider providing a true 512x512 PNG with proper safe-zone padding.",
+    "Push subscribe endpoint stores full subscription dict including keys — never logs them. OK.",
+    "No rate limiting on /api/admin/push/test — admin-auth-gated so low risk, but a noisy admin could spam pushes."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py"
+  ],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "100%"
+  },
+  "test_credentials": "admin@deliciasdaquintinha.pt / quintinha2026 (verified working)",
+  "seed_data_creation": "Tests created additional TEST_-prefixed orders and one synthetic push subscription that is created+deleted within the same test (test_subscribe_and_unsubscribe_flow). No leftover synthetic push_subscriptions docs.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Push tests in TestPushNotifications class verify auth-gating (3 endpoints), VAPID public-key public access, subscribe upsert idempotency, unsubscribe removal, and admin/push/test returns {sent: int>=0}. PWA assets verified via /manifest.json (theme #C1292E, 2 icons), /service-worker.js (push + notificationclick handlers), and / (rel=manifest + apple-mobile-web-app-capable meta). In headless Chromium, Notification.permission defaults to 'denied' so the toggle button is correctly disabled with a red helper message — this is expected behavior, not a bug. Real device push delivery cannot be tested headlessly (out of scope per request). All test_credentials and 28 pytest cases confirmed passing in 4.55s.",
+  "rca of the issue": "N/A — no bugs found. PWA + Web Push + admin email notification all working as specified."
+}

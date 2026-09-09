@@ -1,0 +1,35 @@
+{
+  "summary": "Comprehensive testing of As Delícias da Quintinha (PT-PT fruit shop). Backend: 18/18 pytest tests PASSED covering products, categories, orders (create/empty/delivery validation/email), auth (login/wrong-pass/me/admin-protected), admin order status updates, notify-ready (with/without email), full product CRUD, and stats. Frontend: home/loja/cart drawer/checkout/order-confirmation/admin-login/admin-dashboard all work correctly. Cart subtotal updates on qty change, order placement creates DB record, admin can update status (toast 'Estado atualizado' shown, stats update live), notify-ready button correctly enabled only when order has email, WhatsApp link uses wa.me with correctly URL-encoded PT message including order ref and total. Admin product CRUD modal opens with all form fields wired. All data-testid present.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Admin dashboard - Produtos tab", "issues": ["Some product cards display broken/empty image placeholders (Compota de Abóbora, Compota de Figo, Chouriço Caseiro, Presunto Curado, Queijo da Serra DOP). The Unsplash URLs in seed data appear to occasionally fail to resolve. Adding an onError fallback to <img> would improve UX. Same images render fine on /loja public grid in some cases — possibly transient Unsplash 404s for specific photo IDs."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/backend_test.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "(Optional polish) Add image onError fallback to ProductCard and admin product cards to handle occasional Unsplash 404s; or replace 4-5 problematic seed image URLs with verified ones.",
+    "(Optional UX) On /checkout, when user clicks 'Levantamento na loja' the address field disappears — works correctly. Default is 'delivery' which is fine, but consider preselecting 'pickup' to reduce friction since most local customers may pick up."
+  ],
+  "critical_code_review_comments": [
+    "server.py uses deprecated FastAPI '@app.on_event' (startup/shutdown). Migrate to lifespan context manager for FastAPI >=0.110 compatibility.",
+    "POST /api/orders trusts client-supplied price and unit in OrderItem; total is computed from these untrusted values. Recommend re-fetching product price from DB by product_id server-side before computing total to prevent price tampering.",
+    "Admin endpoints lack basic rate limiting / brute-force lockout on /api/auth/login (5-attempt lockout per playbook). Currently any number of bad logins is allowed. Not blocking issue but should be added.",
+    "CORS_ORIGINS defaults to '*' with allow_credentials=True — browsers will reject credentialed requests with wildcard. Currently login is bearer-token (not cookie), so fine, but configure explicit origins for production.",
+    "EmailStr accepted at /api/auth/login but admin email stored normalized (lower+strip). Login normalizes input — OK. Good.",
+    "email_service.py runs resend.Emails.send via asyncio.to_thread — good non-blocking pattern."
+  ],
+  "updated_files": ["/app/backend/tests/backend_test.py", "/app/backend/tests/__init__.py"],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "admin@deliciasdaquintinha.pt / quintinha2026 (verified working)",
+  "seed_data_creation": "Tests created TEST_-prefixed orders (~7) and one TEST_Produto (created+updated+deleted). The 6 admin-visible orders include test data — main agent may want to clear DB before production.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend tests in /app/backend/tests/backend_test.py are pytest-based and cover all 18 endpoints listed in the review. JUnit XML at /app/test_reports/pytest/pytest_results.xml. Admin login uses data-testid admin-login-{email,password,submit}. Admin dashboard exposes admin-tab-{orders,products}, admin-order-{id}, admin-order-status-{id}, admin-notify-email-{id}, admin-notify-whatsapp-{id}, admin-add-product, admin-product-form, admin-form-{name,category,unit,price,image,desc,submit}, admin-edit-{id}, admin-delete-{id}. Cart uses nav-cart-button to open drawer; CartDrawer uses cart-{drawer,subtotal,checkout-button,clear-button,increase-{id},decrease-{id},remove-{id}}. Checkout default delivery_method='delivery' so address is required unless pickup option clicked.",
+  "rca of the issue": "N/A — no bugs found"
+}
