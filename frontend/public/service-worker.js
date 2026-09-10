@@ -1,4 +1,4 @@
-/* Service Worker — As Delícias da Quintinha */
+/* Service Worker — FutWearPT */
 const LOGO = "https://customer-assets.emergentagent.com/job_29644c96-d4a1-4651-9cb8-e1e8ae32b23e/artifacts/2znhesa5_610958654_1532084765591153_3031691144275560007_n.jpg";
 
 self.addEventListener("install", (event) => {
@@ -14,7 +14,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("push", (event) => {
-  let data = { title: "As Delícias da Quintinha", body: "Nova notificação" };
+  let data = { title: "FutWearPT", body: "Novo drop disponível" };
   try {
     if (event.data) data = { ...data, ...event.data.json() };
   } catch (_) {

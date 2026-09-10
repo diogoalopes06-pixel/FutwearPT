@@ -1,30 +1,36 @@
 {
   "name": "FutWearPT",
-  "short_name": "Delícias",
-  "description": "Frutaria & mercearia em Abrantes — encomende frescos da quintinha.",
+  "short_name": "FutWearPT",
+  "description": "Camisolas de futebol, retro, treino e personalização. Compra online em Portugal.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#FDFBF7",
-  "theme_color": "#C1292E",
+  "background_color": "#080808",
+  "theme_color": "#CAFF00",
   "lang": "pt-PT",
   "icons": [
     {
-      "src": "https://customer-assets.emergentagent.com/job_29644c96-d4a1-4651-9cb8-e1e8ae32b23e/artifacts/2znhesa5_610958654_1532084765591153_3031691144275560007_n.jpg",
+      "src": "/futwearpt-logo-square.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://customer-assets.emergentagent.com/job_29644c96-d4a1-4651-9cb8-e1e8ae32b23e/artifacts/2znhesa5_610958654_1532084765591153_3031691144275560007_n.jpg",
+      "src": "/futwearpt-logo-square.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
   "shortcuts": [
-    { "name": "Loja", "url": "/loja" },
-    { "name": "Admin", "url": "/admin" }
+    {
+      "name": "Loja",
+      "url": "/loja"
+    },
+    {
+      "name": "Admin",
+      "url": "/admin"
+    }
   ]
 }
