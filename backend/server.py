@@ -328,23 +328,23 @@ class CouponValidate(BaseModel):
 
 # ---------- Site content (CMS) ----------
 class HeroContent(BaseModel):
-    tagline: str = "Desde a primeira hora · Abrantes"
-    title_part1: str = "Sabor"
-    title_emphasis: str = "autêntico"
-    title_part2: str = "da nossa quintinha."
-    subtitle: str = "Frutas, legumes, queijos, enchidos, vinhos regionais e compotas caseiras. Selecionados todos os dias com o cuidado de quem ama o que faz."
+    tagline: str = "FUTEBOL · PORTUGAL · 2026"
+    title_part1: str = "Veste"
+    title_emphasis: str = "a tua paixão"
+    title_part2: str = "."
+    subtitle: str = "Camisolas de futebol, modelos retro e equipamento de treino. Escolhe o tamanho, personaliza e compra online."
     image: str = "https://static.prod-images.emergentagent.com/jobs/29644c96-d4a1-4651-9cb8-e1e8ae32b23e/images/f98aea86f70724fbb9799d980b3ef521853eda75aad46dd1aff41ab887d01aff.png"
-    cta_primary: str = "Encomendar agora"
-    cta_secondary: str = "Conhecer a quintinha"
+    cta_primary: str = "Ver camisolas"
+    cta_secondary: str = "Sobre a FutWearPT"
     rating_value: str = "4.6"
-    rating_label: str = "Avaliações Google"
+    rating_label: str = "Paixão pelo futebol"
 
 
 class AboutContent(BaseModel):
     tagline: str = "Sobre nós"
-    title: str = "Uma loja com alma de quintinha."
-    paragraph1: str = "Na Delícias da Quintinha celebramos o sabor genuíno dos produtos caseiros. Frutas e legumes frescos, compotas artesanais, vinhos regionais, queijos e enchidos tradicionais fazem parte de uma seleção cuidada — sempre com a qualidade e o carinho de quem valoriza o que é simples e verdadeiro."
-    paragraph2: str = "Trabalhamos com pequenos produtores locais e em cada época da nossa horta. Visite-nos em Abrantes ou faça a sua encomenda online — entregamos em sua casa."
+    title: str = "A tua paixão. A tua camisola."
+    paragraph1: str = "A FutWearPT nasceu para juntar camisolas de futebol, cultura de bancada e personalização numa experiência de compra simples."
+    paragraph2: str = "Escolhe o modelo, seleciona o tamanho, acrescenta nome e número e recebe a tua encomenda em Portugal."
     image: str = "https://static.prod-images.emergentagent.com/jobs/29644c96-d4a1-4651-9cb8-e1e8ae32b23e/images/eba9781416b8f4f38f11a3dcff467e1fdb4df4177b33d9d09aee2dc0ad093416.png"
 
 
@@ -352,14 +352,14 @@ class ContactContent(BaseModel):
     address_line1: str = "Av. Mário Soares 37 loja 1"
     address_line2: str = "2200-192 Abrantes"
     phone: str = "+351 241 402 897"
-    email: str = "deliciasdaquintinha.financeira@gmail.com"
-    facebook_url: str = "https://www.facebook.com/asdeliciasdaquintinha"
-    facebook_handle: str = "@asdeliciasdaquintinha"
-    hours_weekday_label: str = "Segunda – Sábado"
-    hours_weekday_time: str = "08:00 – 20:00"
-    hours_weekend_label: str = "Domingo"
-    hours_weekend_time: str = "Encerrado"
-    map_query: str = "Av. Mário Soares 37 Abrantes"
+    email: str = "hello@futwearpt.pt"
+    facebook_url: str = ""
+    facebook_handle: str = ""
+    hours_weekday_label: str = "Online"
+    hours_weekday_time: str = "24/7"
+    hours_weekend_label: str = "Encomendas"
+    hours_weekend_time: str = "Sempre abertas"
+    map_query: str = "Portugal"
 
 
 class ReviewContent(BaseModel):
@@ -380,9 +380,9 @@ class SiteContent(BaseModel):
     contact: ContactContent = Field(default_factory=ContactContent)
     reviews: List[ReviewContent] = Field(default_factory=list)
     categories: List[CategoryContent] = Field(default_factory=list)
-    cta_title: str = "Encomende hoje. Receba ainda mais fresco."
-    cta_subtitle: str = "Entrega ao domicílio em Abrantes ou levantamento na loja. Sem complicações."
-    footer_tagline: str = "Fresquinhos da nossa terra. Produtos regionais, caseiros e selecionados com carinho desde a primeira hora."
+    cta_title: str = "Do drop à tua porta."
+    cta_subtitle: str = "Preparação habitual em 24–48h úteis. Portes e opções apresentados no checkout."
+    footer_tagline: str = "Camisolas de futebol, retro e treino. Personaliza a tua camisola e veste a tua paixão."
     promo_banner: "PromoBanner" = Field(default_factory=lambda: PromoBanner())
     analytics: "AnalyticsConfig" = Field(default_factory=lambda: AnalyticsConfig())
     seo: "SeoConfig" = Field(default_factory=lambda: SeoConfig())
@@ -402,8 +402,8 @@ class AnalyticsConfig(BaseModel):
 
 
 class SeoConfig(BaseModel):
-    site_title: str = "As Delícias da Quintinha — Frutaria & Mercearia em Abrantes"
-    site_description: str = "Frutas, legumes, queijos, enchidos, vinhos e compotas caseiras. Encomende online e receba em Abrantes."
+    site_title: str = "FutWearPT — Camisolas de Futebol"
+    site_description: str = "Camisolas de futebol, retro e treino. Personaliza a tua camisola e compra online em Portugal."
     og_image: str = ""
 
 
@@ -1434,7 +1434,7 @@ async def seed():
                 CategoryContent(slug="retro", name="Retro", image="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&q=80&w=900"),
                 CategoryContent(slug="treino", name="Treino", image="https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&q=80&w=900"),
             ],
-            cta_title="Encontra a tua camisola.", cta_subtitle="Personaliza, encomenda e acompanha o teu pedido online.", footer_tagline="Camisolas de futebol, retro e treino. Personaliza a tua camisola e veste a tua paixão.",
+            cta_title="Do drop à tua porta.", cta_subtitle="Preparação habitual em 24–48h úteis. Portes e opções apresentados no checkout.", footer_tagline="Camisolas de futebol, retro e treino. Personaliza a tua camisola e veste a tua paixão.",
             seo=SeoConfig(site_title="FutWearPT — Camisolas de Futebol", site_description="Camisolas de futebol, retro e treino. Personaliza a tua camisola e compra online em Portugal.")
         )
         payload = default_content.model_dump()
