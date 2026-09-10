@@ -1,47 +1,24 @@
-import { useContent } from "../context/ContentContext";
-
-const HERO_IMG_DEFAULT = "https://static.prod-images.emergentagent.com/jobs/29644c96-d4a1-4651-9cb8-e1e8ae32b23e/images/f98aea86f70724fbb9799d980b3ef521853eda75aad46dd1aff41ab887d01aff.png";
+import { ShieldCheck, Zap, Trophy, Target } from "lucide-react";
 
 export default function AboutPage() {
-  const { content } = useContent();
-  const { about, hero } = content;
-
   return (
-    <div className="pt-32 pb-24 bg-brand-bone" data-testid="about-page">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-10">
-        <p className="text-xs uppercase tracking-[0.3em] text-brand-red mb-4">A nossa história</p>
-        <h1 className="font-serif text-6xl md:text-7xl text-brand-espresso leading-tight">{about.title}</h1>
-
-        <div className="mt-16 grid md:grid-cols-12 gap-10 items-start">
-          <div className="md:col-span-5">
-            <div className="aspect-[4/5] w-full overflow-hidden bg-brand-cream">
-              {about.image && <img src={about.image} alt="" className="w-full h-full object-cover" />}
-            </div>
+    <div className="pt-32 pb-24 bg-[#080808] text-white min-h-screen" data-testid="about-page">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10">
+        <p className="fw-kicker">FUTWEARPT / FOOTBALL ONLY</p>
+        <h1 className="text-6xl md:text-8xl font-black tracking-[-.07em] leading-[.85] mt-4">NÃO É MODA.<br/><span className="text-[#CAFF00] italic">É CULTURA.</span></h1>
+        <div className="mt-16 grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-7 border border-[#292929] bg-[#101010] p-8 md:p-12">
+            <p className="text-2xl md:text-4xl font-black leading-tight">A FutWearPT existe para quem vê uma camisola e vê muito mais do que tecido.</p>
+            <p className="mt-8 text-zinc-400 text-lg leading-relaxed">É clube. É memória. É bancada. É aquele jogo que nunca esqueceste. Criámos uma loja focada em camisolas de futebol, drops retro, treino e personalização — sem a estética de catálogo genérico.</p>
+            <p className="mt-5 text-zinc-400 text-lg leading-relaxed">Escolhe o teu lado, mete o teu nome e veste a tua história.</p>
           </div>
-          <div className="md:col-span-7 space-y-6 text-lg leading-relaxed text-brand-muted whitespace-pre-line">
-            {about.paragraph1 && (
-              <p className="font-serif text-3xl text-brand-espresso leading-snug">{about.paragraph1}</p>
-            )}
-            {about.paragraph2 && <p>{about.paragraph2}</p>}
+          <div className="lg:col-span-5 grid grid-cols-2 gap-2">
+            {[ [Zap,"DROPS","Limitados"],[ShieldCheck,"QUALIDADE","Sem atalhos"],[Trophy,"FUTEBOL","Primeiro"],[Target,"ATITUDE","Sempre"] ].map(([Icon,t,d])=><div key={t} className="bg-[#111] border border-[#292929] p-6 min-h-[170px] hover:border-[#CAFF00] transition-colors"><Icon className="text-[#CAFF00]" size={22}/><h3 className="font-black text-xl mt-12">{t}</h3><p className="text-xs uppercase tracking-[.16em] text-zinc-600 mt-1">{d}</p></div>)}
           </div>
         </div>
-
-        <div className="mt-24 grid md:grid-cols-3 gap-8 border-t border-brand-border pt-16">
-          {[
-            { title: "Modelos 2026", text: "Trabalhamos com frutas e legumes da estação. Mais sabor, mais nutrientes, menos quilómetros." },
-            { title: "Personalizáveis e futebol", text: "Camisolas de futebol, modelos retro e equipamento de treino escolhidos para quem não abdica do estilo." },
-            { title: "Atendimento próximo", text: "Aqui ouvimos quem entra. Sugestões, receitas, conselhos — gostamos de tratar cada cliente como vizinho." },
-          ].map((b, i) => (
-            <div key={i}>
-              <p className="text-xs uppercase tracking-[0.25em] text-brand-red mb-3">0{i + 1}</p>
-              <h3 className="font-serif text-3xl text-brand-espresso leading-tight">{b.title}</h3>
-              <p className="mt-3 text-brand-muted leading-relaxed">{b.text}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-24 relative aspect-[16/7] overflow-hidden bg-brand-cream">
-          <img src={hero.image || HERO_IMG_DEFAULT} alt="" className="w-full h-full object-cover" />
+        <div className="mt-20 border-y border-[#292929] py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div><p className="fw-kicker">A NOSSA REGRA</p><p className="text-3xl md:text-5xl font-black tracking-[-.05em] mt-2">SE NÃO TEM ATITUDE,<br/>NÃO É FUTWEAR.</p></div>
+          <div className="text-right text-zinc-500 text-sm max-w-sm">Portugal · Online<br/>Camisolas · Retro · Treino · Personalização</div>
         </div>
       </div>
     </div>
