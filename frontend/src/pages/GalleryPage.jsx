@@ -49,7 +49,7 @@ export default function GalleryPage() {
                 <p className="text-xs uppercase tracking-[0.25em] text-brand-red">A nossa história em imagens</p>
               </div>
               <h1 className="font-serif text-5xl md:text-7xl text-brand-espresso leading-none">Galeria</h1>
-              <p className="mt-4 text-brand-muted max-w-2xl">Momentos, produtos e o dia-a-dia da nossa quintinha.</p>
+              <p className="mt-4 text-brand-muted max-w-2xl">Drops, camisolas e cultura de futebol FutWearPT.</p>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@ export default function GalleryPage() {
           <div className="py-32 text-center text-brand-muted">
             <Images size={48} className="mx-auto mb-4 opacity-30" />
             <p className="font-serif text-3xl text-brand-espresso">Ainda não há fotos.</p>
-            <p className="mt-2 text-sm">Em breve partilhamos momentos da nossa quintinha.</p>
+            <p className="mt-2 text-sm">Em breve partilhamos novos drops, camisolas e momentos FutWearPT.</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">

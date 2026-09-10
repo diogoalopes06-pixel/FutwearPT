@@ -18,10 +18,10 @@ export default function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [clientOrderId] = useState(() => {
-    const saved = sessionStorage.getItem("dq_checkout_id");
+    const saved = sessionStorage.getItem("fw_checkout_id");
     if (saved) return saved;
     const id = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
-    sessionStorage.setItem("dq_checkout_id", id);
+    sessionStorage.setItem("fw_checkout_id", id);
     return id;
   });
   const [coupon, setCoupon] = useState({ code: "", discount: 0, msg: "", checking: false });
@@ -38,7 +38,7 @@ export default function CheckoutPage() {
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   useEffect(() => {
-    const token = localStorage.getItem("dq_customer_token");
+    const token = localStorage.getItem("fw_customer_token");
     if (!token) return;
     api.get("/customers/me", { headers: { Authorization: `Bearer ${token}` } })
       .then(({ data }) => {
@@ -98,7 +98,7 @@ export default function CheckoutPage() {
       const { data } = await api.post("/orders", payload);
       toast.success("Encomenda criada com sucesso");
       clear();
-      sessionStorage.removeItem("dq_checkout_id");
+      sessionStorage.removeItem("fw_checkout_id");
       navigate(`/encomenda/${data.id}?token=${encodeURIComponent(data.tracking_token)}`);
     } catch (err) {
       const detail = err?.response?.data?.detail;
@@ -160,12 +160,12 @@ export default function CheckoutPage() {
             <section className="bg-white border border-brand-border p-5 sm:p-7 transition-all duration-300 hover:shadow-sm">
               <SectionTitle number="2" title="Entrega" />
               <div className="grid sm:grid-cols-2 gap-4">
-                <DeliveryOption icon={Truck} selected={form.delivery_method === "delivery"} onClick={() => setForm((f) => ({ ...f, delivery_method: "delivery" }))} title="Entrega ao domicílio" desc="Zona de Abrantes" data-testid="checkout-delivery-option" />
-                <DeliveryOption icon={Store} selected={form.delivery_method === "pickup"} onClick={() => setForm((f) => ({ ...f, delivery_method: "pickup" }))} title="Levantamento na loja" desc="Av. Mário Soares 37 · Grátis" data-testid="checkout-pickup-option" />
+                <DeliveryOption icon={Truck} selected={form.delivery_method === "delivery"} onClick={() => setForm((f) => ({ ...f, delivery_method: "delivery" }))} title="Envio para Portugal" desc="Expedição em 24–48h úteis" data-testid="checkout-delivery-option" />
+                <DeliveryOption icon={Store} selected={form.delivery_method === "pickup"} onClick={() => setForm((f) => ({ ...f, delivery_method: "pickup" }))} title="Levantamento local" desc="Grátis · quando disponível" data-testid="checkout-pickup-option" />
               </div>
               {form.delivery_method === "delivery" && (
                 <Field label="Morada de entrega *" className="mt-4">
-                  <textarea required maxLength={500} autoComplete="street-address" value={form.address} onChange={set("address")} rows={3} placeholder="Rua, número, andar, código postal, freguesia" data-testid="checkout-address" className={`${inputCls} resize-none`} />
+                  <textarea required maxLength={500} autoComplete="street-address" value={form.address} onChange={set("address")} rows={3} placeholder="Rua, número, andar, código postal, localidade" data-testid="checkout-address" className={`${inputCls} resize-none`} />
                 </Field>
               )}
               <Field label="Hora preferida" className="mt-4">
@@ -177,7 +177,7 @@ export default function CheckoutPage() {
                 </div>
               </Field>
               <Field label="Notas para a loja" className="mt-4">
-                <textarea maxLength={1000} value={form.notes} onChange={set("notes")} rows={2} placeholder="Ex: maçãs maduras, melhor hora..." data-testid="checkout-notes" className={`${inputCls} resize-none`} />
+                <textarea maxLength={1000} value={form.notes} onChange={set("notes")} rows={2} placeholder="Ex: instruções para a transportadora ou pedido especial..." data-testid="checkout-notes" className={`${inputCls} resize-none`} />
               </Field>
             </section>
 

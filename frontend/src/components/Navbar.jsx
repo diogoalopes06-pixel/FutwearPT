@@ -17,8 +17,13 @@ export default function Navbar() {
     <header data-testid="navbar" className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? "bg-black/95 backdrop-blur-xl border-b border-white/10" : "bg-black/70 backdrop-blur-md"}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group" data-testid="nav-home-logo">
-          <div className="h-10 w-10 grid place-items-center bg-[#CAFF00] text-black font-black skew-x-[-8deg] group-hover:rotate-[-6deg] transition-transform"><span className="skew-x-[8deg]">FW</span></div>
-          <div><span className="block text-white font-black tracking-[-.05em] text-xl leading-none">FUTWEAR<span className="text-[#CAFF00]">PT</span></span><span className="block text-[8px] uppercase tracking-[.28em] text-zinc-500 mt-1">Football only</span></div>
+          <div className="h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-sm border border-white/10 bg-[#c90d0c] shadow-[0_0_24px_rgba(201,13,12,.18)] group-hover:scale-105 group-hover:-rotate-2 transition-all duration-300">
+            <img src="/futwearpt-logo-square.png" alt="FutWearPT" className="h-full w-full object-cover" />
+          </div>
+          <div>
+            <span className="block text-white font-black tracking-[-.05em] text-xl leading-none">FUTWEAR<span className="text-[#CAFF00]">PT</span></span>
+            <span className="block text-[8px] uppercase tracking-[.28em] text-zinc-500 mt-1">Football only · Portugal</span>
+          </div>
         </Link>
         <nav className="hidden md:flex items-center gap-7">
           {links.map((l) => <NavLink key={l.to} to={l.to} end={l.to === "/"} className={({isActive}) => `text-[10px] uppercase tracking-[.2em] font-black transition-colors ${isActive ? "text-[#CAFF00]" : "text-zinc-400 hover:text-white"}`}>{l.label}</NavLink>)}

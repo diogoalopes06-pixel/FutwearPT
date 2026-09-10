@@ -37,7 +37,7 @@ export default function TermsPage() {
           <section>
             <h2 className="font-serif text-3xl text-brand-espresso mb-3">4. Entrega e levantamento</h2>
             <p>
-              As encomendas podem ser levantadas na loja ou, quando disponível, entregues ao domicílio na zona indicada. Horários e custos de entrega são confirmados pela equipa.
+              As encomendas são preparadas para expedição em Portugal, normalmente no prazo de 24–48 horas úteis. Os portes e opções disponíveis são apresentados no checkout. Quando disponível, poderá existir levantamento local gratuito.
             </p>
           </section>
 

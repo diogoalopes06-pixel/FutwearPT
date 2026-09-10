@@ -41,7 +41,7 @@ export default function CartDrawer() {
             <div className="h-full flex flex-col items-center justify-center text-center py-20">
               <ShoppingBag size={32} className="text-brand-muted mb-4" />
               <p className="font-serif text-2xl text-brand-espresso">O seu cesto está vazio</p>
-              <p className="text-sm text-brand-muted mt-2">Adicione produtos frescos da nossa quintinha.</p>
+              <p className="text-sm text-brand-muted mt-2">Adicione uma camisola e prepara-te para o próximo jogo.</p>
               <button
                 onClick={() => {
                   setOpen(false);
@@ -107,7 +107,7 @@ export default function CartDrawer() {
               <span className="font-medium tabular-nums" data-testid="cart-subtotal">€{subtotal.toFixed(2)}</span>
             </div>
             <p className="text-xs text-brand-muted leading-relaxed">
-              Custos de entrega calculados na finalização. Levantamento na loja gratuito.
+              Portes e opções de entrega apresentados na finalização. Preparação habitual: 24–48h úteis.
             </p>
             <button
               onClick={() => {

@@ -51,7 +51,7 @@ export default function ProductPage() {
     };
     document.title = `${product.name} — FutWearPT`;
     setMeta("og:title", `${product.name} — FutWearPT`);
-    setMeta("og:description", product.description || "Produto fresco da nossa quintinha.");
+    setMeta("og:description", product.description || "Camisola de futebol FutWearPT.");
     setMeta("og:url", window.location.href);
     if (product.image) setMeta("og:image", product.image);
     setMeta("og:type", "product");

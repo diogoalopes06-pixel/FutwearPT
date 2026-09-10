@@ -119,14 +119,17 @@ export default function HomePage() {
       </section>
 
       <section className="fw-section fw-values">
-        <div className="fw-section-head reveal"><div><p className="fw-kicker">PORQUE FUTWEARPT?</p><h2>FEITO PARA<br/><em>QUEM VIVE.</em></h2></div></div>
+        <div className="fw-section-head reveal">
+          <div><p className="fw-kicker">LOGÍSTICA FUTWEARPT</p><h2>DO DROP<br/><em>À TUA PORTA.</em></h2></div>
+          <p className="max-w-md text-sm text-zinc-500 leading-relaxed">Sem complicar: escolhes a camisola, confirmas a encomenda e nós tratamos do resto.</p>
+        </div>
         <div className="fw-value-grid">
           {[
-            ["01", "DROP LIMITADO", "Lançamentos com atitude. Quando acaba, acabou."],
-            ["02", "PERSONALIZAÇÃO", "Nome e número para tornares a camisola tua."],
-            ["03", "ENVIO RÁPIDO", "Recebe em Portugal sem esperar uma eternidade."],
-            ["04", "SUPORTE REAL", "Dúvidas? Falas com pessoas, não com robots."],
-          ].map(([n, t, d], i) => <div key={n} className={`fw-value reveal reveal-delay-${(i % 3) + 1}`}><span>{n}</span><Sparkles size={17}/><h3>{t}</h3><p>{d}</p></div>)}
+            ["01", "PREPARAÇÃO", "A encomenda entra em produção e é preparada com cuidado."],
+            ["02", "EXPEDIÇÃO", "Pedidos expedidos normalmente em 24–48h úteis."],
+            ["03", "ENVIO SEGURO", "A camisola segue protegida e pronta para chegar impecável."],
+            ["04", "ACOMPANHAMENTO", "Recebe a confirmação e acompanha o estado da encomenda."],
+          ].map(([n, t, d], i) => <div key={n} className={`fw-value reveal reveal-delay-${(i % 3) + 1}`}><span>{n}</span><Truck size={17}/><h3>{t}</h3><p>{d}</p></div>)}
         </div>
       </section>
 
