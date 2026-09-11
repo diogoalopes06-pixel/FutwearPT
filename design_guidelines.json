@@ -1,19 +1,84 @@
 {
-  "theme": "dark-football",
-  "brand": "FutWearPT",
-  "archetype": "street football / premium sportswear",
-  "reasoning": "A FutWearPT deve parecer uma marca de futebol contemporânea, forte e memorável, e não um template genérico.",
+  "theme": "light",
+  "archetype": "1 - Organic & Earthy",
+  "reasoning": "A family-run Portuguese farm/grocery (quintinha) needs to feel warm, trustworthy, and rooted in nature. We use a warm bone-white base and espresso text to create an organic, farm-to-table editorial feel that complements the brand's bold red logo without looking like a generic e-commerce template.",
   "colors": {
-    "primary": "#E10600",
-    "primary_hover": "#B80500",
-    "background": "#070707",
-    "surface": "#101010",
-    "surface_alt": "#171717",
-    "text_primary": "#FFFFFF",
-    "text_muted": "#A1A1AA",
-    "cream": "#F1E7D0",
-    "border": "#292929"
+    "primary": "#C1292E",
+    "primary_hover": "#A02025",
+    "background": "#FDFBF7",
+    "surface": "#FFFFFF",
+    "surface_alt": "#F5F2EA",
+    "text_primary": "#2C2724",
+    "text_muted": "#6B635E",
+    "accent_green": "#7C9082",
+    "border": "#E8E2D9",
+    "error": "#991B1B",
+    "success": "#2F5233"
   },
-  "typography": {"heading": "font-black / condensed sports display", "body": "Outfit, sans-serif"},
-  "principles": ["Vermelho dominante", "Preto/grafite como base", "Movimento e energia", "Cards de produto claros", "Mobile first"]
+  "typography": {
+    "fonts": {
+      "heading": "Cormorant Garamond, serif",
+      "body": "Outfit, sans-serif"
+    },
+    "scales": {
+      "h1": "text-5xl md:text-6xl tracking-tighter leading-none font-semibold",
+      "h2": "text-3xl md:text-4xl tracking-tight leading-tight font-medium",
+      "h3": "text-2xl md:text-3xl tracking-tight leading-snug font-medium",
+      "h4": "text-lg md:text-xl font-medium",
+      "body_large": "text-lg leading-relaxed",
+      "body": "text-base leading-relaxed",
+      "small": "text-sm tracking-wide"
+    }
+  },
+  "spacing_and_layout": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "section_padding": "py-16 md:py-24 lg:py-32",
+    "grid_gap": "gap-6 md:gap-8",
+    "radius": "rounded-sm",
+    "shadows": {
+      "card": "shadow-[0_4px_24px_rgba(44,39,36,0.06)]",
+      "drawer": "shadow-[-8px_0_32px_rgba(44,39,36,0.1)]"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#C1292E] text-white hover:bg-[#A02025] transition-colors duration-300 rounded-sm font-medium px-6 py-3",
+      "secondary": "bg-transparent border border-[#E8E2D9] text-[#2C2724] hover:border-[#2C2724] transition-colors duration-300 rounded-sm font-medium px-6 py-3",
+      "outline": "bg-transparent border border-[#C1292E] text-[#C1292E] hover:bg-[#C1292E] hover:text-white transition-colors duration-300 rounded-sm font-medium px-6 py-3"
+    },
+    "cards": {
+      "product": "bg-white border border-[#E8E2D9] rounded-sm overflow-hidden group hover:shadow-[0_4px_24px_rgba(44,39,36,0.06)] transition-all duration-300",
+      "image_container": "relative aspect-[4/3] overflow-hidden bg-[#F5F2EA]",
+      "image": "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+    },
+    "navigation": {
+      "header": "fixed top-0 w-full z-50 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#E8E2D9] transition-all duration-300",
+      "link": "text-[#6B635E] hover:text-[#C1292E] transition-colors text-sm font-medium tracking-wide uppercase"
+    },
+    "cart_drawer": {
+      "container": "fixed inset-y-0 right-0 w-full max-w-md bg-[#FDFBF7] shadow-[-8px_0_32px_rgba(44,39,36,0.1)] z-50 flex flex-col transform transition-transform duration-300",
+      "overlay": "fixed inset-0 bg-[#2C2724]/40 backdrop-blur-sm z-40 transition-opacity"
+    }
+  },
+  "media": {
+    "logo": "https://customer-assets.emergentagent.com/job_29644c96-d4a1-4651-9cb8-e1e8ae32b23e/artifacts/2znhesa5_610958654_1532084765591153_3031691144275560007_n.jpg",
+    "images": {
+      "hero_bg": "https://static.prod-images.emergentagent.com/jobs/29644c96-d4a1-4651-9cb8-e1e8ae32b23e/images/f98aea86f70724fbb9799d980b3ef521853eda75aad46dd1aff41ab887d01aff.png",
+      "about_farm": "https://static.prod-images.emergentagent.com/jobs/29644c96-d4a1-4651-9cb8-e1e8ae32b23e/images/eba9781416b8f4f38f11a3dcff467e1fdb4df4177b33d9d09aee2dc0ad093416.png",
+      "jams_bread": "https://static.prod-images.emergentagent.com/jobs/29644c96-d4a1-4651-9cb8-e1e8ae32b23e/images/acbc8436dac892a2a9193176b7908927dbc1ee336e5c278fe899743ef72a404e.png",
+      "placeholder_fruit": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800",
+      "placeholder_veg": "https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&q=80&w=800",
+      "placeholder_cheese": "https://images.unsplash.com/photo-1516643147509-4b3600367e0d?auto=format&fit=crop&q=80&w=800",
+      "placeholder_wine": "https://images.pexels.com/photos/20411281/pexels-photo-20411281.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Use standard Tailwind classes. Include 'Outfit' (body) and 'Cormorant Garamond' (headings) from Google Fonts in index.html.",
+    "The UI is primarily standard React/Tailwind. Use Shadcn only for complex logic (Sheet for Cart, Dialog, Select for categories, Form).",
+    "DO NOT use Inter or standard Shadcn border radii. Apply the 'rounded-sm' style and specific hex colors.",
+    "Make the Hero section highly editorial: perhaps a split layout or an overlapping container that allows the 'hero_bg' image to shine without a heavy full black overlay. Use a very subtle black/30 or gradient overlay if text is strictly over the image.",
+    "Implement a slide-out cart (Shadcn Sheet or custom Framer Motion drawer) for smooth e-commerce UX.",
+    "Add 'data-testid' to all interactive elements for testing.",
+    "The admin dashboard should adopt the same typography but use a denser layout (Archetype 4 hybrid) for data management while maintaining the warm brand colors."
+  ]
 }

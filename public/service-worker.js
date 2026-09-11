@@ -1,4 +1,4 @@
-/* Service Worker — FutWearPT */
+/* Service Worker — As Delícias da Quintinha */
 const LOGO = "/futwearpt-logo-square.png";
 
 self.addEventListener("install", (event) => {
@@ -14,7 +14,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("push", (event) => {
-  let data = { title: "FutWearPT", body: "Nova atualização FutWearPT" };
+  let data = { title: "As Delícias da Quintinha", body: "Nova notificação" };
   try {
     if (event.data) data = { ...data, ...event.data.json() };
   } catch (_) {

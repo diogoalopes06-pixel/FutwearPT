@@ -41,7 +41,7 @@
     "backend": "100%",
     "frontend": "100%"
   },
-  "test_credentials": "credenciais definidas pelas variáveis de ambiente ADMIN_EMAIL e ADMIN_PASSWORD",
+  "test_credentials": "admin@deliciasdaquintinha.pt / quintinha2026 (verified working)",
   "seed_data_creation": "Tests created additional TEST_-prefixed orders and one synthetic push subscription that is created+deleted within the same test (test_subscribe_and_unsubscribe_flow). No leftover synthetic push_subscriptions docs.",
   "retest_needed": false,
   "main_agent_can_self_test": true,

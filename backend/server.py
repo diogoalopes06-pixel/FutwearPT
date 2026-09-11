@@ -256,7 +256,6 @@ class Order(OrderIn):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     subtotal: float = 0.0
     discount: float = 0.0
-    shipping_fee: float = 0.0
     total: float = 0.0
     status: str = "pending"  # pending, confirmed, preparing, ready, delivered, cancelled
     payment_status: str = "pending"  # pending, paid, failed, refunded
@@ -350,9 +349,9 @@ class AboutContent(BaseModel):
 
 
 class ContactContent(BaseModel):
-    address_line1: str = "Portugal"
-    address_line2: str = "Loja online"
-    phone: str = ""
+    address_line1: str = "Av. Mário Soares 37 loja 1"
+    address_line2: str = "2200-192 Abrantes"
+    phone: str = "+351 241 402 897"
     email: str = "hello@futwearpt.pt"
     facebook_url: str = ""
     facebook_handle: str = ""
@@ -361,24 +360,6 @@ class ContactContent(BaseModel):
     hours_weekend_label: str = "Encomendas"
     hours_weekend_time: str = "Sempre abertas"
     map_query: str = "Portugal"
-
-
-
-
-class LogisticsContent(BaseModel):
-    enabled: bool = True
-    delivery_label: str = "Envio para Portugal continental"
-    delivery_time: str = "2–4 dias úteis"
-    shipping_price: float = Field(default=4.90, ge=0, le=500)
-    free_shipping_threshold: float = Field(default=60.00, ge=0, le=100000)
-    pickup_enabled: bool = True
-    pickup_label: str = "Levantamento"
-    pickup_time: str = "Disponível após confirmação"
-    carrier: str = "Transportadora"
-    tracking_enabled: bool = True
-    returns_days: int = Field(default=14, ge=0, le=365)
-    support_email: str = "hello@futwearpt.pt"
-    preparation_time: str = "24–48h úteis"
 
 
 class ReviewContent(BaseModel):
@@ -397,7 +378,6 @@ class SiteContent(BaseModel):
     hero: HeroContent = Field(default_factory=HeroContent)
     about: AboutContent = Field(default_factory=AboutContent)
     contact: ContactContent = Field(default_factory=ContactContent)
-    logistics: LogisticsContent = Field(default_factory=LogisticsContent)
     reviews: List[ReviewContent] = Field(default_factory=list)
     categories: List[CategoryContent] = Field(default_factory=list)
     cta_title: str = "Do drop à tua porta."
@@ -631,12 +611,12 @@ async def admin_delete_product_review(rid: str, admin=Depends(get_current_admin)
 @api.get("/categories")
 async def list_categories():
     return [
-        {"slug": "clubes", "name": "Clubes"},
-        {"slug": "selecoes", "name": "Seleções"},
-        {"slug": "retro", "name": "Retro"},
-        {"slug": "treino", "name": "Treino"},
-        {"slug": "crianca", "name": "Junior"},
-        {"slug": "acessorios", "name": "Acessórios"},
+        {"slug": "frutas", "name": "Frutas"},
+        {"slug": "legumes", "name": "Legumes"},
+        {"slug": "queijos-enchidos", "name": "Queijos & Enchidos"},
+        {"slug": "vinhos", "name": "Vinhos"},
+        {"slug": "compotas", "name": "Compotas"},
+        {"slug": "mercearia", "name": "Mercearia"},
     ]
 
 
@@ -721,14 +701,7 @@ async def create_order(data: OrderIn, background: BackgroundTasks, request: Requ
     coupon_doc = None
     if data.coupon_code:
         discount, coupon_doc = await _validate_coupon_internal(data.coupon_code, subtotal)
-    discounted_subtotal = round(max(0, subtotal - discount), 2)
-    site_doc = await db.site_content.find_one({"id": "main"}, {"_id": 0})
-    logistics = LogisticsContent(**(site_doc or {}).get("logistics", {}))
-    shipping_fee = 0.0
-    if data.delivery_method == "delivery" and logistics.enabled:
-        if discounted_subtotal < logistics.free_shipping_threshold:
-            shipping_fee = round(logistics.shipping_price, 2)
-    total = round(discounted_subtotal + shipping_fee, 2)
+    total = round(max(0, subtotal - discount), 2)
 
     customer_avatar_url = ""
     if data.email:
@@ -736,7 +709,7 @@ async def create_order(data: OrderIn, background: BackgroundTasks, request: Requ
         customer_avatar_url = customer_for_avatar.get("avatar_url", "") if customer_for_avatar else ""
 
     tracking_token = secrets.token_urlsafe(32)
-    order = Order(**data.model_dump(exclude={"items"}), items=canonical_items, subtotal=subtotal, discount=discount, shipping_fee=shipping_fee, total=total, customer_avatar_url=customer_avatar_url, tracking_token=tracking_token)
+    order = Order(**data.model_dump(exclude={"items"}), items=canonical_items, subtotal=subtotal, discount=discount, total=total, customer_avatar_url=customer_avatar_url, tracking_token=tracking_token)
     if coupon_doc:
         order.coupon_code = coupon_doc["code"]  # normalise to upper-case
     doc = order.model_dump()
@@ -831,7 +804,7 @@ async def create_order(data: OrderIn, background: BackgroundTasks, request: Requ
         send_push_to_all,
         db,
         {
-            "title": "⚽ Nova encomenda recebida",
+            "title": "🍎 Nova encomenda recebida",
             "body": f"{order.customer_name} · €{total:.2f} · {len(canonical_items)} produto(s)",
             "tag": f"order-{order.id}",
             "url": "/admin",
@@ -1151,7 +1124,7 @@ async def admin_export_orders_csv(admin=Depends(get_current_admin)):
 
 @api.get("/")
 async def root():
-    return {"app": "FutWearPT", "status": "ok", "store": "football"}
+    return {"app": "As Delícias da Quintinha", "status": "ok"}
 
 
 # ---------- Bundles (cabazes) ----------
@@ -1461,8 +1434,7 @@ async def seed():
                 CategoryContent(slug="retro", name="Retro", image="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&q=80&w=900"),
                 CategoryContent(slug="treino", name="Treino", image="https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&q=80&w=900"),
             ],
-            cta_title="Do drop à tua porta.", cta_subtitle="Preparação em 24–48h úteis. Envio rápido e acompanhamento da encomenda.", footer_tagline="Camisolas de futebol, retro, treino e personalização.",
-            logistics=LogisticsContent(),
+            cta_title="Do drop à tua porta.", cta_subtitle="Preparação habitual em 24–48h úteis. Portes e opções apresentados no checkout.", footer_tagline="Camisolas de futebol, retro e treino. Personaliza a tua camisola e veste a tua paixão.",
             seo=SeoConfig(site_title="FutWearPT — Camisolas de Futebol", site_description="Camisolas de futebol, retro e treino. Personaliza a tua camisola e compra online em Portugal.")
         )
         payload = default_content.model_dump()
@@ -1529,7 +1501,7 @@ async def sitemap_xml(request: Request):
     from fastapi.responses import Response
     products = await db.products.find({}, {"_id": 0, "id": 1}).to_list(1000)
     bundles = await db.bundles.find({"active": True}, {"_id": 0, "id": 1}).to_list(200)
-    base = os.environ.get("SITE_URL", "https://futwearpt.pt").rstrip("/")
+    base = os.environ.get("SITE_URL", "https://futwear-pt-l3cp.vercel.app").rstrip("/")
     static = ["/", "/loja", "/sobre", "/contactos", "/galeria", "/termos", "/privacidade"]
     urls = []
     for path in static:

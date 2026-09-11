@@ -7,10 +7,11 @@ import resend
 logger = logging.getLogger("emails")
 
 resend.api_key = os.environ.get("RESEND_API_KEY", "")
-SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "noreply@futwearpt.pt")
+SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "")
 SENDER_NAME = os.environ.get("SENDER_NAME", "FutWearPT")
 SENDER = f"{SENDER_NAME} <{SENDER_EMAIL}>"
 SITE_URL = os.environ.get("SITE_URL", "").rstrip("/")
+EMAIL_LOGO_URL = os.environ.get("EMAIL_LOGO_URL", f"{SITE_URL}/futwearpt-logo-square.png" if SITE_URL else "")
 
 
 def _tracking_url(order: dict, site_url: str = "") -> str:
@@ -21,7 +22,7 @@ def _tracking_url(order: dict, site_url: str = "") -> str:
     suffix = f"?token={token}" if token else ""
     return f"{base}/encomenda/{order['id']}{suffix}"
 
-LOGO = os.environ.get("EMAIL_LOGO_URL", f"{SITE_URL}/futwearpt-logo-square.png" if SITE_URL else "")
+LOGO = EMAIL_LOGO_URL
 
 
 def _format_items(items) -> str:
@@ -64,8 +65,8 @@ def _wrap(title: str, intro: str, body_html: str, cta_label: str = None, cta_url
                 </td></tr>
                 <tr><td style="padding:24px 40px 40px 40px;border-top:1px solid #E8E2D9;background:#F5F2EA;font-size:12px;color:#6B635E;line-height:1.6;">
                     <p style="margin:0 0 8px 0;"><strong style="color:#2C2724;">FutWearPT</strong></p>
-                    <p style="margin:0;">FutWearPT · Loja online de camisolas de futebol</p>
-                    <p style="margin:0;">+351 241 402 897 · hello@futwearpt.pt</p>
+                    <p style="margin:0;">FutWearPT · Portugal</p>
+                    <p style="margin:0;">{os.environ.get("SUPPORT_PHONE", "")} · {os.environ.get("SUPPORT_EMAIL", "")}</p>
                 </td></tr>
             </table>
         </td></tr>
@@ -82,10 +83,6 @@ def _build_order_summary(order) -> str:
     return f"""
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 24px 0;">
         {_format_items(order['items'])}
-        <tr>
-            <td style="padding-top:12px;color:#6B635E;font-size:13px;">Portes</td>
-            <td style="padding-top:12px;color:#6B635E;text-align:right;font-size:13px;">{("Grátis" if order.get("shipping_fee", 0) == 0 else f"€{order.get("shipping_fee", 0):.2f}")}</td>
-        </tr>
         <tr>
             <td style="padding-top:20px;font-family:Georgia,serif;font-size:22px;color:#2C2724;">Total</td>
             <td style="padding-top:20px;font-family:Georgia,serif;font-size:22px;color:#C1292E;text-align:right;">€{order['total']:.2f}</td>
@@ -190,7 +187,7 @@ STATUS_LABELS = {
 
 STATUS_INTROS = {
     "confirmed": "A sua encomenda foi confirmada pela nossa equipa. Vamos começar a preparar tudo com o cuidado habitual.",
-    "preparing": "A sua encomenda já está em preparação. Estamos a tratar dos seus produtos.",
+    "preparing": "A sua encomenda já está em preparação. Estamos a tratar dos seus produtos frescos.",
     "ready": "Boas notícias — a sua encomenda está pronta.",
     "delivered": "A sua encomenda foi marcada como entregue. Obrigado pela preferência!",
     "cancelled": "A sua encomenda foi cancelada. Se tiver dúvidas, contacte-nos por telefone ou email.",
@@ -243,4 +240,4 @@ async def send_password_reset_email(email: str, token: str, name: str = "Cliente
         cta_label="Criar nova password",
         cta_url=reset_url,
     )
-    return await send_email(email, "Recuperar password · FutWearPT", html)
+    return await send_email(email, "Recuperar password · As Delícias da Quintinha", html)

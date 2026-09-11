@@ -1,4 +1,4 @@
-"""Backend tests for FutWearPT."""
+"""Backend tests for As Delícias da Quintinha."""
 import os
 import time
 import io
@@ -56,11 +56,11 @@ class TestPublicProducts:
             assert k in sample
 
     def test_filter_by_category(self, session):
-        r = session.get(f"{BASE_URL}/api/products?category=clubes", timeout=30)
+        r = session.get(f"{BASE_URL}/api/products?category=frutas", timeout=30)
         assert r.status_code == 200
         data = r.json()
         assert len(data) > 0
-        assert all(p["category"] == "clubes" for p in data)
+        assert all(p["category"] == "frutas" for p in data)
 
     def test_filter_featured(self, session):
         r = session.get(f"{BASE_URL}/api/products?featured=true", timeout=30)
@@ -74,7 +74,7 @@ class TestPublicProducts:
         cats = r.json()
         assert len(cats) == 6
         slugs = {c["slug"] for c in cats}
-        assert {"clubes", "selecoes", "retro", "treino", "crianca", "acessorios"} <= slugs
+        assert {"frutas", "legumes", "queijos-enchidos", "vinhos", "compotas", "mercearia"} <= slugs
 
 
 # ---------- Public orders ----------
@@ -221,7 +221,7 @@ class TestAdminProducts:
     def test_create_update_delete_product(self, session, auth_headers):
         # CREATE
         payload = {
-            "name": "TEST_Produto", "category": "clubes", "price": 1.0,
+            "name": "TEST_Produto", "category": "mercearia", "price": 1.0,
             "unit": "un", "image": "", "description": "test", "in_stock": True,
         }
         r = session.post(f"{BASE_URL}/api/admin/products", json=payload, headers=auth_headers, timeout=30)
