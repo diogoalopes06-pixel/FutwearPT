@@ -9,7 +9,7 @@ export default function ContactPage() {
     <div className="pt-32 pb-24 bg-brand-bone" data-testid="contact-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         <p className="text-xs uppercase tracking-[0.3em] text-brand-red mb-4">Fale connosco</p>
-        <h1 className="font-serif text-6xl md:text-7xl text-brand-espresso leading-tight">Tens dúvidas?<br/>Fala connosco.</h1>
+        <h1 className="font-serif text-6xl md:text-7xl text-brand-espresso leading-tight">Venha visitar-nos.<br/>Ou ligue. Adoramos conversa.</h1>
 
         <div className="mt-16 grid lg:grid-cols-2 gap-10">
           <div className="space-y-8">
@@ -97,9 +97,9 @@ export default function ContactPage() {
           <h2 className="font-serif text-5xl text-brand-espresso leading-tight">Resposta rápida.</h2>
           <div className="mt-10 grid md:grid-cols-2 gap-x-12 gap-y-10">
             {[
-              { q: "Que tipo de produtos vendem?", a: "Camisolas de clubes, seleções, retro, treino e modelos Junior, com opções de personalização." },
+              { q: "Que tipo de produtos vendem?", a: "Frutas, legumes, compotas, queijos, enchidos, vinhos regionais, mel, azeite, pão e mercearia caseira." },
               { q: "Aceitam encomendas online?", a: "Sim! Pode preencher o cesto neste site e finalizar a encomenda. Confirmamos por telefone." },
-              { q: "Fazem entregas?", a: "Sim. Enviamos para Portugal continental e apresentamos os portes no checkout. Quando disponível, podes optar por levantamento." },
+              { q: "Fazem entregas?", a: "Sim, entregamos na zona de Abrantes. Pode também levantar na loja sem custos." },
               { q: "Os produtos são da época?", a: "Sempre. Trabalhamos com produtores locais e tudo é selecionado consoante a estação." },
             ].map((f, i) => (
               <div key={i}>

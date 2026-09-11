@@ -4,11 +4,11 @@ import { toast } from "sonner";
 import api from "../lib/api";
 import { useContent } from "../context/ContentContext";
 
-export default function ContentEditor({ initialSection = "hero" }) {
+export default function ContentEditor() {
   const { content: initial, refresh } = useContent();
   const [draft, setDraft] = useState(null);
   const [saving, setSaving] = useState(false);
-  const [section, setSection] = useState(initialSection);
+  const [section, setSection] = useState("hero");
 
   useEffect(() => {
     if (initial) setDraft(JSON.parse(JSON.stringify(initial)));
@@ -49,7 +49,6 @@ export default function ContentEditor({ initialSection = "hero" }) {
     { id: "hero", label: "Hero" },
     { id: "about", label: "Sobre a FutWearPT" },
     { id: "contact", label: "Contactos" },
-    { id: "logistics", label: "Logística" },
     { id: "reviews", label: "Avaliações" },
     { id: "categories", label: "Categorias" },
     { id: "banner", label: "Banner Promo" },
@@ -89,7 +88,6 @@ export default function ContentEditor({ initialSection = "hero" }) {
       {section === "hero" && <HeroEditor data={draft.hero} update={update} />}
       {section === "about" && <AboutEditor data={draft.about} update={update} />}
       {section === "contact" && <ContactEditor data={draft.contact} update={update} />}
-      {section === "logistics" && <LogisticsEditor data={draft.logistics || {}} update={update} />}
       {section === "reviews" && <ReviewsEditor reviews={draft.reviews} setDraft={setDraft} />}
       {section === "categories" && <CategoriesEditor categories={draft.categories} setDraft={setDraft} />}
       {section === "banner" && <BannerEditor data={draft.promo_banner || {}} update={update} />}
@@ -108,7 +106,7 @@ function BannerEditor({ data, update }) {
         <input type="checkbox" checked={data.active || false} onChange={(e) => update("promo_banner.active", e.target.checked)} data-testid="banner-active" /> Ativar banner
       </label>
       <Field label="Texto"><Input value={data.text} onChange={(v) => update("promo_banner.text", v)} /></Field>
-      <Field label="Link (opcional)"><Input value={data.link} onChange={(v) => update("promo_banner.link", v)} placeholder="/loja?cat=clubes ou https://..." /></Field>
+      <Field label="Link (opcional)"><Input value={data.link} onChange={(v) => update("promo_banner.link", v)} placeholder="/loja?cat=frutas ou https://..." /></Field>
       <div className="grid sm:grid-cols-2 gap-4">
         <Field label="Cor de fundo"><Input value={data.bg_color} onChange={(v) => update("promo_banner.bg_color", v)} placeholder="#C1292E" /></Field>
         <Field label="Cor do texto"><Input value={data.text_color} onChange={(v) => update("promo_banner.text_color", v)} placeholder="#FDFBF7" /></Field>
@@ -203,34 +201,6 @@ function ContactEditor({ data, update }) {
   );
 }
 
-function LogisticsEditor({ data, update }) {
-  return (
-    <Card title="Logística e entregas">
-      <p className="text-xs text-brand-muted">Define aqui prazos, portes e acompanhamento. As chaves de email/API ficam nas variáveis de ambiente do backend.</p>
-      <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={data.enabled !== false} onChange={(e) => update("logistics.enabled", e.target.checked)} /> Ativar entregas</label>
-      <div className="grid sm:grid-cols-2 gap-4">
-        <Field label="Método de envio"><Input value={data.delivery_label || ""} onChange={(v) => update("logistics.delivery_label", v)} /></Field>
-        <Field label="Prazo de entrega"><Input value={data.delivery_time || ""} onChange={(v) => update("logistics.delivery_time", v)} /></Field>
-        <Field label="Preparação"><Input value={data.preparation_time || ""} onChange={(v) => update("logistics.preparation_time", v)} /></Field>
-        <Field label="Transportadora"><Input value={data.carrier || ""} onChange={(v) => update("logistics.carrier", v)} /></Field>
-        <Field label="Portes (€)"><Input type="number" step="0.01" min="0" value={data.shipping_price ?? 0} onChange={(v) => update("logistics.shipping_price", Number(v) || 0)} /></Field>
-        <Field label="Portes grátis a partir de (€)"><Input type="number" step="0.01" min="0" value={data.free_shipping_threshold ?? 0} onChange={(v) => update("logistics.free_shipping_threshold", Number(v) || 0)} /></Field>
-        <Field label="Email de apoio"><Input type="email" value={data.support_email || ""} onChange={(v) => update("logistics.support_email", v)} /></Field>
-        <Field label="Prazo de devolução (dias)"><Input type="number" min="0" value={data.returns_days ?? 14} onChange={(v) => update("logistics.returns_days", Number(v) || 0)} /></Field>
-      </div>
-      <div className="border-t border-brand-border pt-5 space-y-3">
-        <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={data.pickup_enabled !== false} onChange={(e) => update("logistics.pickup_enabled", e.target.checked)} /> Permitir levantamento</label>
-        <div className="grid sm:grid-cols-2 gap-4">
-          <Field label="Nome do levantamento"><Input value={data.pickup_label || ""} onChange={(v) => update("logistics.pickup_label", v)} /></Field>
-          <Field label="Disponibilidade"><Input value={data.pickup_time || ""} onChange={(v) => update("logistics.pickup_time", v)} /></Field>
-        </div>
-        <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={data.tracking_enabled !== false} onChange={(e) => update("logistics.tracking_enabled", e.target.checked)} /> Acompanhamento de encomenda</label>
-      </div>
-      <div className="bg-brand-red/5 border border-brand-red/20 p-4 text-xs text-brand-muted leading-relaxed"><strong className="text-brand-red">Emails:</strong> confirmação, alterações de estado, pagamento confirmado, encomenda pronta e recuperação de password são enviados pelo Resend quando as variáveis do backend estiverem configuradas.</div>
-    </Card>
-  );
-}
-
 function ReviewsEditor({ reviews, setDraft }) {
   const setReviews = (next) => setDraft((d) => ({ ...d, reviews: next }));
   const updateField = (i, key, val) => setReviews(reviews.map((r, idx) => (idx === i ? { ...r, [key]: val } : r)));
@@ -269,7 +239,7 @@ function CategoriesEditor({ categories, setDraft }) {
 
   return (
     <Card title="Categorias da Loja">
-      <p className="text-xs text-brand-muted mb-4">O <strong>slug</strong> deve corresponder ao slug do produto (ex: clubes, selecoes, retro, treino, crianca, acessorios).</p>
+      <p className="text-xs text-brand-muted mb-4">O <strong>slug</strong> deve corresponder ao slug do produto (ex: frutas, legumes, queijos-enchidos, vinhos, compotas, mercearia).</p>
       <div className="space-y-4">
         {categories.map((c, i) => (
           <div key={i} className="bg-brand-cream/40 border border-brand-border p-5">

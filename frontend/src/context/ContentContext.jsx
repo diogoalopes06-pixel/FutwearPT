@@ -9,7 +9,6 @@ const ABOUT_IMG = "";
 const FALLBACK = {
   hero: { tagline: "FUTEBOL · PORTUGAL · 2026", title_part1: "Veste.", title_emphasis: "Joga.", title_part2: "Domina.", subtitle: "Camisolas para quem leva o futebol a sério. Clubes, seleções, retro, treino e personalização.", image: "", cta_primary: "Entrar na loja", cta_secondary: "Conhecer a FutWearPT", rating_value: "4.9", rating_label: "Clientes FutWearPT" },
   about: { tagline: "Football only", title: "Não é moda. É cultura.", paragraph1: "A FutWearPT nasceu para quem não consegue ver uma camisola sem imaginar um jogo.", paragraph2: "Selecionamos camisolas de clubes, seleções, retro e treino com foco em atitude, qualidade e personalização. Veste o teu clube. Veste a tua história.", image: "" },
-  logistics: { enabled: true, delivery_label: "Envio para Portugal continental", delivery_time: "2–4 dias úteis", shipping_price: 4.90, free_shipping_threshold: 60, pickup_enabled: true, pickup_label: "Levantamento", pickup_time: "Disponível após confirmação", carrier: "Transportadora", tracking_enabled: true, returns_days: 14, support_email: "hello@futwearpt.pt", preparation_time: "24–48h úteis" },
   contact: { address_line1: "Portugal", address_line2: "Loja online", phone: "", email: "hello@futwearpt.pt", facebook_url: "", facebook_handle: "", hours_weekday_label: "Online", hours_weekday_time: "24/7", hours_weekend_label: "Encomendas", hours_weekend_time: "Sempre abertas", map_query: "Portugal" },
   reviews: [
     { name: "Cliente FutWearPT", text: "Camisola com grande qualidade e chegou rápido. A personalização ficou brutal.", stars: 5 },
@@ -43,7 +42,6 @@ export function ContentProvider({ children }) {
       setContent({
         ...FALLBACK,
         // Keep the storefront football-first even if an older backend still has the original shop content.
-        logistics: { ...FALLBACK.logistics, ...(data.logistics || {}) },
         promo_banner: { ...FALLBACK.promo_banner, ...(data.promo_banner || {}) },
         analytics: { ...FALLBACK.analytics, ...(data.analytics || {}) },
         seo: { ...FALLBACK.seo, ...(data.seo || {}) },

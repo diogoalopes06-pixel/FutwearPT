@@ -144,7 +144,7 @@ export default function ProductPage() {
           <div className="reveal reveal-delay-1">
             <p className="text-xs uppercase tracking-[0.3em] text-brand-red">{(product.category || "produto").replace("-", " ")}</p>
             <h1 className="mt-3 font-serif text-6xl md:text-7xl text-brand-espresso leading-none">{product.name || "Produto"}</h1>
-            <p className="mt-5 text-brand-muted leading-relaxed text-lg">{product.description || "Camisola selecionada pela nossa equipa."}</p>
+            <p className="mt-5 text-brand-muted leading-relaxed text-lg">{product.description || "Produto selecionado diariamente pela nossa equipa."}</p>
 
             <div className="mt-8 flex flex-wrap items-end gap-6">
               <div>
