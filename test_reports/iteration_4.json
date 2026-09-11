@@ -36,7 +36,7 @@
     "backend": "100% (50/50)",
     "frontend": "100% (all critical flows verified)"
   },
-  "test_credentials": "admin@deliciasdaquintinha.pt / quintinha2026 (verified working)",
+  "test_credentials": "credenciais definidas pelas variáveis de ambiente ADMIN_EMAIL e ADMIN_PASSWORD",
   "seed_data_creation": "All test data prefixed with TEST_ and cleaned up after each test. Coupons TEST*, MIN*, ORD* created and deleted. Bundle TEST_Cabaz created and deleted. Product TEST_StockItem created, ordered to stock=0, then deleted. No leftover TEST_ rows. Manually restored hero.subtitle after discovering pre-existing 'x' leftover from iteration 3's test_put_content_bad_payload.",
   "retest_needed": false,
   "main_agent_can_self_test": true,

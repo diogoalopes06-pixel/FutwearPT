@@ -7,8 +7,8 @@ import resend
 logger = logging.getLogger("emails")
 
 resend.api_key = os.environ.get("RESEND_API_KEY", "")
-SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "noreply@asdeliciasdaquintinha.com")
-SENDER_NAME = os.environ.get("SENDER_NAME", "As Delícias da Quintinha")
+SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "noreply@futwearpt.pt")
+SENDER_NAME = os.environ.get("SENDER_NAME", "FutWearPT")
 SENDER = f"{SENDER_NAME} <{SENDER_EMAIL}>"
 SITE_URL = os.environ.get("SITE_URL", "").rstrip("/")
 
@@ -21,7 +21,7 @@ def _tracking_url(order: dict, site_url: str = "") -> str:
     suffix = f"?token={token}" if token else ""
     return f"{base}/encomenda/{order['id']}{suffix}"
 
-LOGO = "https://customer-assets.emergentagent.com/job_29644c96-d4a1-4651-9cb8-e1e8ae32b23e/artifacts/2znhesa5_610958654_1532084765591153_3031691144275560007_n.jpg"
+LOGO = os.environ.get("EMAIL_LOGO_URL", f"{SITE_URL}/futwearpt-logo-square.png" if SITE_URL else "")
 
 
 def _format_items(items) -> str:
@@ -53,8 +53,8 @@ def _wrap(title: str, intro: str, body_html: str, cta_label: str = None, cta_url
         <tr><td align="center">
             <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#FFFFFF;border:1px solid #E8E2D9;">
                 <tr><td style="padding:40px 40px 24px 40px;text-align:center;border-bottom:1px solid #E8E2D9;">
-                    <img src="{LOGO}" alt="As Delícias da Quintinha" width="80" height="80" style="border-radius:4px;display:block;margin:0 auto;">
-                    <p style="margin:18px 0 0 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C1292E;">As Delícias da Quintinha</p>
+                    <img src="{LOGO}" alt="FutWearPT" width="80" height="80" style="border-radius:4px;display:block;margin:0 auto;">
+                    <p style="margin:18px 0 0 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C1292E;">FutWearPT</p>
                 </td></tr>
                 <tr><td style="padding:40px 40px 32px 40px;">
                     <h1 style="margin:0 0 16px 0;font-family:Georgia,serif;font-size:32px;line-height:1.15;color:#2C2724;font-weight:600;">{title}</h1>
@@ -63,9 +63,9 @@ def _wrap(title: str, intro: str, body_html: str, cta_label: str = None, cta_url
                     {cta}
                 </td></tr>
                 <tr><td style="padding:24px 40px 40px 40px;border-top:1px solid #E8E2D9;background:#F5F2EA;font-size:12px;color:#6B635E;line-height:1.6;">
-                    <p style="margin:0 0 8px 0;"><strong style="color:#2C2724;">As Delícias da Quintinha</strong></p>
-                    <p style="margin:0;">Av. Mário Soares 37 loja 1, 2200-192 Abrantes</p>
-                    <p style="margin:0;">+351 241 402 897 · deliciasdaquintinha.financeira@gmail.com</p>
+                    <p style="margin:0 0 8px 0;"><strong style="color:#2C2724;">FutWearPT</strong></p>
+                    <p style="margin:0;">FutWearPT · Loja online de camisolas de futebol</p>
+                    <p style="margin:0;">+351 241 402 897 · hello@futwearpt.pt</p>
                 </td></tr>
             </table>
         </td></tr>
@@ -82,6 +82,10 @@ def _build_order_summary(order) -> str:
     return f"""
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 24px 0;">
         {_format_items(order['items'])}
+        <tr>
+            <td style="padding-top:12px;color:#6B635E;font-size:13px;">Portes</td>
+            <td style="padding-top:12px;color:#6B635E;text-align:right;font-size:13px;">{("Grátis" if order.get("shipping_fee", 0) == 0 else f"€{order.get("shipping_fee", 0):.2f}")}</td>
+        </tr>
         <tr>
             <td style="padding-top:20px;font-family:Georgia,serif;font-size:22px;color:#2C2724;">Total</td>
             <td style="padding-top:20px;font-family:Georgia,serif;font-size:22px;color:#C1292E;text-align:right;">€{order['total']:.2f}</td>
@@ -186,7 +190,7 @@ STATUS_LABELS = {
 
 STATUS_INTROS = {
     "confirmed": "A sua encomenda foi confirmada pela nossa equipa. Vamos começar a preparar tudo com o cuidado habitual.",
-    "preparing": "A sua encomenda já está em preparação. Estamos a tratar dos seus produtos frescos.",
+    "preparing": "A sua encomenda já está em preparação. Estamos a tratar dos seus produtos.",
     "ready": "Boas notícias — a sua encomenda está pronta.",
     "delivered": "A sua encomenda foi marcada como entregue. Obrigado pela preferência!",
     "cancelled": "A sua encomenda foi cancelada. Se tiver dúvidas, contacte-nos por telefone ou email.",
@@ -239,4 +243,4 @@ async def send_password_reset_email(email: str, token: str, name: str = "Cliente
         cta_label="Criar nova password",
         cta_url=reset_url,
     )
-    return await send_email(email, "Recuperar password · As Delícias da Quintinha", html)
+    return await send_email(email, "Recuperar password · FutWearPT", html)

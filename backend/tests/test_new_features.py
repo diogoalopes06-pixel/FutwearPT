@@ -45,7 +45,7 @@ class TestBundles:
     def test_bundle_crud(self, auth_headers):
         # CREATE
         payload = {
-            "name": "TEST_Cabaz_Frutas",
+            "name": "TEST_Pack_Futebol",
             "description": "Cabaz de teste",
             "price": 19.99,
             "image": "",
@@ -58,7 +58,7 @@ class TestBundles:
                           headers=auth_headers, timeout=30)
         assert r.status_code == 200, r.text
         b = r.json()
-        assert b["name"] == "TEST_Cabaz_Frutas"
+        assert b["name"] == "TEST_Pack_Futebol"
         assert b["price"] == 19.99
         assert len(b["items"]) == 2
         bid = b["id"]
@@ -210,7 +210,7 @@ class TestOrderExtensions:
     def test_stock_decrement_and_out_of_stock(self, auth_headers):
         # Create product with stock_quantity=2
         create = requests.post(f"{BASE_URL}/api/admin/products",
-                               json={"name": "TEST_StockItem", "category": "mercearia",
+                               json={"name": "TEST_StockItem", "category": "clubes",
                                      "price": 3.0, "unit": "un", "in_stock": True,
                                      "stock_quantity": 2},
                                headers=auth_headers, timeout=30)

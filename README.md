@@ -1,4 +1,4 @@
-# As Delícias da Quintinha
+# FutWearPT
 
 Loja online com catálogo, carrinho, checkout, contas de cliente e painel administrativo.
 
