@@ -1,5 +1,5 @@
 /* Service Worker — FutWearPT */
-const LOGO = "https://customer-assets.emergentagent.com/job_29644c96-d4a1-4651-9cb8-e1e8ae32b23e/artifacts/2znhesa5_610958654_1532084765591153_3031691144275560007_n.jpg";
+const LOGO = "/futwearpt-logo-square.png";
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
