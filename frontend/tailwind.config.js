@@ -10,14 +10,14 @@ module.exports = {
             },
             colors: {
                 brand: {
-                    red: '#CAFF00',
-                    redDark: '#A8D600',
+                    red: '#E10600',
+                    redDark: '#A80500',
                     bone: '#F4F4F0',
                     surface: '#111111',
                     cream: '#171717',
                     espresso: '#080808',
                     muted: '#8A8A84',
-                    sage: '#CAFF00',
+                    sage: '#B80500',
                     border: '#292929',
                 },
                 background: 'hsl(var(--background))',
