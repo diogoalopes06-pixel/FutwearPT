@@ -52,7 +52,7 @@ export function LocalBusinessSchema() {
     const contact = c || {};
     const json = {
       "@context": "https://schema.org",
-      "@type": "GroceryStore",
+      "@type": "Store",
       name: "FutWearPT",
       address: {
         "@type": "PostalAddress",

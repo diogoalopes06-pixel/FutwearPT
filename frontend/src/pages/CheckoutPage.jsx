@@ -4,6 +4,7 @@ import { ArrowLeft, Truck, Store, Loader2, Tag, Clock, Smartphone, Banknote, Che
 import { toast } from "sonner";
 import { useCart } from "../context/CartContext";
 import api from "../lib/api";
+import { useContent } from "../context/ContentContext";
 
 const DELIVERY_SLOTS = [
   "Sem preferência",
@@ -14,6 +15,8 @@ const DELIVERY_SLOTS = [
 
 export default function CheckoutPage() {
   const { items, subtotal, clear } = useCart();
+  const { content } = useContent();
+  const logistics = content.logistics || {};
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
@@ -53,7 +56,9 @@ export default function CheckoutPage() {
       .catch(() => {});
   }, []);
 
-  const total = Math.max(0, subtotal - coupon.discount);
+  const discountedSubtotal = Math.max(0, subtotal - coupon.discount);
+  const shippingFee = form.delivery_method === "delivery" && logistics.enabled !== false && discountedSubtotal < Number(logistics.free_shipping_threshold || 0) ? Number(logistics.shipping_price || 0) : 0;
+  const total = Math.max(0, discountedSubtotal + shippingFee);
 
   const validateCoupon = async () => {
     if (!coupon.code.trim()) return;
@@ -160,8 +165,8 @@ export default function CheckoutPage() {
             <section className="bg-white border border-brand-border p-5 sm:p-7 transition-all duration-300 hover:shadow-sm">
               <SectionTitle number="2" title="Entrega" />
               <div className="grid sm:grid-cols-2 gap-4">
-                <DeliveryOption icon={Truck} selected={form.delivery_method === "delivery"} onClick={() => setForm((f) => ({ ...f, delivery_method: "delivery" }))} title="Envio para Portugal" desc="Expedição em 24–48h úteis" data-testid="checkout-delivery-option" />
-                <DeliveryOption icon={Store} selected={form.delivery_method === "pickup"} onClick={() => setForm((f) => ({ ...f, delivery_method: "pickup" }))} title="Levantamento local" desc="Grátis · quando disponível" data-testid="checkout-pickup-option" />
+                <DeliveryOption icon={Truck} selected={form.delivery_method === "delivery"} onClick={() => setForm((f) => ({ ...f, delivery_method: "delivery" }))} title={logistics.delivery_label || "Envio para Portugal"} desc={`${logistics.preparation_time || "24–48h úteis"} + ${logistics.delivery_time || "2–4 dias úteis"}`} data-testid="checkout-delivery-option" />
+                <DeliveryOption icon={Store} selected={form.delivery_method === "pickup"} onClick={() => setForm((f) => ({ ...f, delivery_method: "pickup" }))} title={logistics.pickup_label || "Levantamento"} desc={logistics.pickup_time || "Disponível após confirmação"} data-testid="checkout-pickup-option" />
               </div>
               {form.delivery_method === "delivery" && (
                 <Field label="Morada de entrega *" className="mt-4">
@@ -253,14 +258,12 @@ export default function CheckoutPage() {
                     <span className="tabular-nums">−€{coupon.discount.toFixed(2)}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-sm text-brand-muted">
-                  <span>{form.delivery_method === "pickup" ? "Levantamento" : "Entrega"}</span>
-                  <span className="tabular-nums">a combinar</span>
-                </div>
+
                 <div className="flex justify-between text-sm text-brand-muted">
                   <span>Pagamento</span>
                   <span className="tabular-nums">{form.payment_method === "mbway" ? "MBWay" : "Na entrega/loja"}</span>
                 </div>
+                <div className="flex justify-between text-sm text-brand-muted"><span>Portes</span><span className="tabular-nums">{form.delivery_method === "pickup" ? "Grátis" : (shippingFee === 0 ? "Grátis" : `€${shippingFee.toFixed(2)}`)}</span></div>
                 <div className="flex justify-between mt-3 pt-3 border-t border-brand-border">
                   <span className="font-serif text-2xl text-brand-espresso">Total</span>
                   <span className="font-serif text-2xl text-brand-red tabular-nums" data-testid="checkout-total">€{total.toFixed(2)}</span>

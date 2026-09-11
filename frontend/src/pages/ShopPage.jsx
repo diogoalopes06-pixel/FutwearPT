@@ -21,6 +21,8 @@ export default function ShopPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [showFavorites, setShowFavorites] = useState(false);
+  const [sizeFilter, setSizeFilter] = useState("");
+  const [sortBy, setSortBy] = useState("featured");
   const { favoriteIds } = useFavorites();
   const cat = params.get("cat") || "";
 

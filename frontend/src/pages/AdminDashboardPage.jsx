@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { LogOut, Package, ClipboardList, Plus, Edit, Trash2, X, Loader2, MessageCircle, Mail, Bell, BellOff, FileEdit, Package2, Tag, Download, TrendingUp, BarChart3, AlertTriangle, Archive, RotateCcw, Star, Images } from "lucide-react";
+import { LogOut, Package, ClipboardList, Plus, Edit, Trash2, X, Loader2, MessageCircle, Mail, Bell, BellOff, FileEdit, Package2, Tag, Download, TrendingUp, BarChart3, AlertTriangle, Archive, RotateCcw, Star, Images, Truck } from "lucide-react";
 import { toast } from "sonner";
 import api from "../lib/api";
 import { useAuth } from "../context/AuthContext";
@@ -19,7 +19,7 @@ const STATUS_OPTIONS = [
 ];
 
 const CATEGORIES = ["clubes", "selecoes", "retro", "treino", "crianca", "acessorios"];
-const UNITS = ["kg", "un", "g", "dz"];
+const UNITS = ["un"];
 
 const euro = (value = 0) => `€${Number(value || 0).toFixed(2)}`;
 
@@ -278,7 +278,7 @@ export default function AdminDashboardPage() {
   const whatsappLink = (order) => {
     const ref = order.id.slice(0, 8).toUpperCase();
     const method = order.delivery_method === "delivery" ? "para entrega" : "para levantamento na loja";
-    const msg = `Olá ${order.customer_name.split(" ")[0]}! 🍎 A sua encomenda #${ref} (FutWearPT) está pronta ${method}. Total: €${order.total.toFixed(2)}. Aguardamos contacto. Obrigado!`;
+    const msg = `Olá ${order.customer_name.split(" ")[0]}! ⚽ A sua encomenda #${ref} (FutWearPT) está pronta ${method}. Total: €${order.total.toFixed(2)}. Aguardamos contacto. Obrigado!`;
     const phone = order.phone.replace(/\D/g, "");
     return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
   };
@@ -494,6 +494,13 @@ export default function AdminDashboardPage() {
             <Package size={16} /> Produtos ({products.length})
           </button>
           <button
+            onClick={() => setTab("logistics")}
+            data-testid="admin-tab-logistics"
+            className={`pb-4 text-sm uppercase tracking-[0.18em] border-b-2 flex items-center gap-2 ${tab === "logistics" ? "border-brand-red text-brand-red" : "border-transparent text-brand-muted hover:text-brand-espresso"}`}
+          >
+            <Truck size={16} /> Logística
+          </button>
+          <button
             onClick={() => setTab("content")}
             data-testid="admin-tab-content"
             className={`pb-4 text-sm uppercase tracking-[0.18em] border-b-2 flex items-center gap-2 ${tab === "content" ? "border-brand-red text-brand-red" : "border-transparent text-brand-muted hover:text-brand-espresso"}`}
@@ -505,7 +512,7 @@ export default function AdminDashboardPage() {
             data-testid="admin-tab-bundles"
             className={`pb-4 text-sm uppercase tracking-[0.18em] border-b-2 flex items-center gap-2 ${tab === "bundles" ? "border-brand-red text-brand-red" : "border-transparent text-brand-muted hover:text-brand-espresso"}`}
           >
-            <Package2 size={16} /> Cabazes
+            <Package2 size={16} /> Packs
           </button>
           <button
             onClick={() => setTab("coupons")}
@@ -716,6 +723,9 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
+        {/* Logistics */}
+        {tab === "logistics" && <ContentEditor initialSection="logistics" />}
+
         {/* Content Editor */}
         {tab === "content" && <ContentEditor />}
 
@@ -746,9 +756,9 @@ export default function AdminDashboardPage() {
 function ProductForm({ initial, onClose, onSaved }) {
   const [form, setForm] = useState({
     name: initial?.name || "",
-    category: initial?.category || "frutas",
+    category: initial?.category || "clubes",
     price: initial?.price ?? "",
-    unit: initial?.unit || "kg",
+    unit: initial?.unit || "un",
     image: initial?.image || "",
     description: initial?.description || "",
     in_stock: initial?.in_stock ?? true,
@@ -758,6 +768,9 @@ function ProductForm({ initial, onClose, onSaved }) {
     promotion: initial?.promotion ?? false,
     related_ids: Array.isArray(initial?.related_ids) ? initial.related_ids.join(",") : "",
     stock_quantity: initial?.stock_quantity ?? "",
+    sizes: Array.isArray(initial?.sizes) ? initial.sizes.join(",") : "XS,S,M,L,XL,XXL",
+    personalizable: initial?.personalizable ?? true,
+    season: initial?.season || "2026",
   });
   const [saving, setSaving] = useState(false);
 
@@ -772,6 +785,7 @@ function ProductForm({ initial, onClose, onSaved }) {
         price: parseFloat(form.price),
         stock_quantity: form.stock_quantity === "" || form.stock_quantity === null ? null : parseFloat(form.stock_quantity),
         related_ids: form.related_ids ? form.related_ids.split(",").map((v) => v.trim()).filter(Boolean) : [],
+        sizes: form.sizes.split(",").map((v) => v.trim()).filter(Boolean),
       };
       if (initial) await api.put(`/admin/products/${initial.id}`, payload);
       else await api.post("/admin/products", payload);
@@ -813,6 +827,11 @@ function ProductForm({ initial, onClose, onSaved }) {
           <Field label="Stock disponível (deixar vazio = sem limite)">
             <input type="number" step="1" min="0" value={form.stock_quantity} onChange={set("stock_quantity")} placeholder="ex: 25" data-testid="admin-form-stock" className={inp} />
           </Field>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Tamanhos disponíveis (separados por vírgula)"><input value={form.sizes} onChange={set("sizes")} placeholder="XS,S,M,L,XL,XXL" className={inp} /></Field>
+            <Field label="Época / coleção"><input value={form.season} onChange={set("season")} placeholder="2026" className={inp} /></Field>
+          </div>
+          <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={form.personalizable} onChange={set("personalizable")} /> Permite nome e número</label>
           <Field label="URL da imagem">
             <input value={form.image} onChange={set("image")} placeholder="https://..." data-testid="admin-form-image" className={inp} />
           </Field>
@@ -983,7 +1002,7 @@ function GalleryManager() {
             <input
               value={form.caption}
               onChange={(e) => setForm({ ...form, caption: e.target.value })}
-              placeholder="Ex: Os nossos produtos frescos"
+              placeholder="Ex: Os nossos produtos"
               className="mt-1 w-full border border-brand-border px-4 py-3 text-sm focus:outline-none focus:border-brand-red"
             />
           </div>

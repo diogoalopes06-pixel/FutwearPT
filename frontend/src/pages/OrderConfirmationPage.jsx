@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { CheckCircle2, Phone, Mail, Package, Truck, Clock as ClockIcon, ChefHat, Smartphone, Copy, QrCode, Timer } from "lucide-react";
 import api from "../lib/api";
 import { toast } from "sonner";
+import { useContent } from "../context/ContentContext";
 
 const MBWAY_PHONE = process.env.REACT_APP_MBWAY_PHONE || "93X XXX XXX";
 
@@ -41,6 +42,7 @@ export default function OrderConfirmationPage() {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const trackingToken = searchParams.get("token");
+  const { content } = useContent();
   const [order, setOrder] = useState(null);
   const [error, setError] = useState(null);
 
@@ -186,6 +188,7 @@ export default function OrderConfirmationPage() {
               )}
             </div>
             <div className="sm:text-right space-y-0.5">
+              {order.shipping_fee > 0 && <p className="text-xs text-brand-muted">Portes: <span className="tabular-nums">€{Number(order.shipping_fee).toFixed(2)}</span></p>}
               {order.discount > 0 && (
                 <>
                   <p className="text-xs text-brand-muted">Subtotal: <span className="tabular-nums">€{order.subtotal.toFixed(2)}</span></p>
@@ -199,15 +202,19 @@ export default function OrderConfirmationPage() {
         </div>
 
         <div className="mt-10 grid sm:grid-cols-2 gap-4">
-          <a href="tel:+351241402897" className="bg-brand-espresso text-brand-bone p-5 hover:bg-brand-red transition-colors">
+          {content.contact.phone ? <a href={`tel:${content.contact.phone.replace(/\s/g, "")}`} className="bg-brand-espresso text-brand-bone p-5 hover:bg-brand-red transition-colors">
             <Phone size={18} className="text-brand-red" />
             <p className="mt-2 text-xs uppercase tracking-[0.18em] text-brand-bone/70">Falar connosco</p>
-            <p className="font-serif text-xl">+351 241 402 897</p>
-          </a>
-          <a href="mailto:hello@futwearpt.pt" className="bg-white border border-brand-border p-5 hover:border-brand-espresso transition-colors">
+            <p className="font-serif text-xl">{content.contact.phone}</p>
+          </a> : <div className="bg-brand-espresso text-brand-bone p-5">
+            <Package size={18} className="text-brand-red" />
+            <p className="mt-2 text-xs uppercase tracking-[0.18em] text-brand-bone/70">Logística</p>
+            <p className="font-serif text-xl">Encomenda em preparação</p>
+          </div>}
+          <a href={`mailto:${content.contact.email || "hello@futwearpt.pt"}`} className="bg-white border border-brand-border p-5 hover:border-brand-espresso transition-colors">
             <Mail size={18} className="text-brand-red" />
             <p className="mt-2 text-xs uppercase tracking-[0.18em] text-brand-muted">Email</p>
-            <p className="font-serif text-base text-brand-espresso break-all">hello@futwearpt.pt</p>
+            <p className="font-serif text-base text-brand-espresso break-all">{content.contact.email || "hello@futwearpt.pt"}</p>
           </a>
         </div>
 
