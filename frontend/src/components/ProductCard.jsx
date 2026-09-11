@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
+import FwImage from "./FwImage";
 
 export default function ProductCard({ product }) {
   const { addItem } = useCart();
@@ -19,22 +20,19 @@ export default function ProductCard({ product }) {
   return (
     <article
       data-testid={`product-card-${product.id}`}
-      className="group bg-[#111] border border-[#292929] overflow-hidden hover:-translate-y-2 hover:border-[#CAFF00] active:scale-[0.99] hover:shadow-[0_22px_55px_rgba(0,0,0,.5)] transition-all duration-500 flex flex-col rounded-sm"
+      className="group bg-[#111] border border-[#292929] overflow-hidden hover:-translate-y-2 hover:border-[#E10600] active:scale-[0.99] hover:shadow-[0_22px_55px_rgba(0,0,0,.5)] transition-all duration-500 flex flex-col rounded-sm"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-[#171717]">
         <div className="absolute inset-0 grid place-items-center pointer-events-none">
           <span className="font-serif text-7xl text-white/10">{(product.name || "P").charAt(0)}</span>
         </div>
 
-        {product.image && (
-          <img
-            src={product.image}
-            alt={product.name}
-            onError={(e) => { e.currentTarget.style.display = "none"; }}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            loading="lazy"
-          />
-        )}
+        <FwImage
+          src={product.image}
+          alt={product.name || "Camisola FutWearPT"}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          loading="lazy"
+        />
 
         <div className="absolute inset-0 bg-gradient-to-t from-brand-espresso/35 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -44,11 +42,11 @@ export default function ProductCard({ product }) {
               <Sparkles size={11} /> Destaque
             </span>
           )}
-          {product.seasonal && <span className="bg-[#CAFF00] text-black text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">DROP</span>}
+          {product.seasonal && <span className="bg-[#E10600] text-black text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">DROP</span>}
           {product.bestseller && <span className="bg-[#222] text-white text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">Mais vendido</span>}
-          {product.promotion && <span className="bg-[#CAFF00] text-black text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">Promoção</span>}
+          {product.promotion && <span className="bg-[#E10600] text-black text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">Promoção</span>}
           {lowStock && (
-            <span className="bg-[#CAFF00] text-black text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">
+            <span className="bg-[#E10600] text-black text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">
               Últimas {product.stock_quantity}
             </span>
           )}
@@ -57,7 +55,7 @@ export default function ProductCard({ product }) {
         <button
           type="button"
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(product); }}
-          className={`absolute top-3 right-3 h-10 w-10 grid place-items-center bg-black/90 backdrop-blur-sm shadow-sm transition-all hover:scale-105 ${fav ? "text-[#CAFF00]" : "text-white"}`}
+          className={`absolute top-3 right-3 h-10 w-10 grid place-items-center bg-black/90 backdrop-blur-sm shadow-sm transition-all hover:scale-105 ${fav ? "text-[#E10600]" : "text-white"}`}
           aria-label="Favorito"
         >
           <Heart size={16} fill={fav ? "currentColor" : "none"} />
@@ -72,8 +70,8 @@ export default function ProductCard({ product }) {
 
       <div className="p-5 sm:p-6 flex-1 flex flex-col">
         <div className="flex-1">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[#CAFF00] mb-2">{(product.category || "produto").replace("-", " ")}</p>
-          <Link to={`/produto/${product.id}`}><h3 className="font-serif text-2xl leading-snug text-white group-hover:text-[#CAFF00] transition-colors">{product.name || "Produto"}</h3></Link>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-[#E10600] mb-2">{(product.category || "produto").replace("-", " ")}</p>
+          <Link to={`/produto/${product.id}`}><h3 className="font-serif text-2xl leading-snug text-white group-hover:text-[#E10600] transition-colors">{product.name || "Produto"}</h3></Link>
           <p className="text-xs text-zinc-500 mt-2 line-clamp-2 leading-relaxed min-h-[2.5rem]">{product.description || ""}</p>
         </div>
 
@@ -86,14 +84,14 @@ export default function ProductCard({ product }) {
             </p>
           </div>
 
-          <Link to={`/produto/${product.id}`} className="h-12 w-12 grid place-items-center border border-[#292929] text-white hover:border-brand-red hover:text-[#CAFF00] transition-colors" aria-label="Ver produto">
+          <Link to={`/produto/${product.id}`} className="h-12 w-12 grid place-items-center border border-[#292929] text-white hover:border-brand-red hover:text-[#E10600] transition-colors" aria-label="Ver produto">
             <Eye size={15} />
           </Link>
           <button
             onClick={handleAdd}
             disabled={!product.in_stock}
             data-testid={`add-to-cart-${product.id}`}
-            className="h-12 px-4 sm:px-5 bg-brand-espresso text-white text-xs uppercase tracking-[0.18em] flex items-center gap-2 hover:bg-[#CAFF00] hover:text-black transition-all disabled:opacity-40 active:scale-95"
+            className="h-12 px-4 sm:px-5 bg-brand-espresso text-white text-xs uppercase tracking-[0.18em] flex items-center gap-2 hover:bg-[#E10600] hover:text-black transition-all disabled:opacity-40 active:scale-95"
           >
             {added ? <Check size={15} /> : <Plus size={15} />} {added ? "OK" : "Cesto"}
           </button>

@@ -26,7 +26,7 @@ const FALLBACK = {
   cta_title: "Veste a tua história.",
   cta_subtitle: "Escolhe a camisola. Mete o nome. Entra em campo.",
   footer_tagline: "Football only. Drops, camisolas e cultura de bancada.",
-  promo_banner: { active: true, text: "DROP 01 · NOVAS CAMISOLAS ONLINE", link: "/loja", bg_color: "#CAFF00", text_color: "#080808" },
+  promo_banner: { active: true, text: "DROP 01 · NOVAS CAMISOLAS ONLINE", link: "/loja", bg_color: "#E10600", text_color: "#080808" },
   analytics: { google_analytics_id: "", meta_pixel_id: "" },
   seo: { site_title: "FutWearPT — Camisolas de Futebol", site_description: "Camisolas de futebol, retro, treino e personalização em Portugal.", og_image: "" },
 };
@@ -48,7 +48,7 @@ export function ContentProvider({ children }) {
       });
     } catch (e) {
       // Backend doesn't have /api/content yet (older deploy) — keep FALLBACK
-      console.warn("[delicias] /api/content unavailable, using fallback content.");
+      console.warn("[futwearpt] /api/content unavailable, using fallback content.");
     } finally {
       setLoaded(true);
     }

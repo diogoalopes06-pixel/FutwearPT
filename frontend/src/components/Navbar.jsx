@@ -21,16 +21,16 @@ export default function Navbar() {
             <img src="/futwearpt-logo-square.png" alt="FutWearPT" className="h-full w-full object-cover" />
           </div>
           <div>
-            <span className="block text-white font-black tracking-[-.05em] text-xl leading-none">FUTWEAR<span className="text-[#CAFF00]">PT</span></span>
+            <span className="block text-white font-black tracking-[-.05em] text-xl leading-none">FUTWEAR<span className="text-[#E10600]">PT</span></span>
             <span className="block text-[8px] uppercase tracking-[.28em] text-zinc-500 mt-1">Football only · Portugal</span>
           </div>
         </Link>
         <nav className="hidden md:flex items-center gap-7">
-          {links.map((l) => <NavLink key={l.to} to={l.to} end={l.to === "/"} className={({isActive}) => `text-[10px] uppercase tracking-[.2em] font-black transition-colors ${isActive ? "text-[#CAFF00]" : "text-zinc-400 hover:text-white"}`}>{l.label}</NavLink>)}
+          {links.map((l) => <NavLink key={l.to} to={l.to} end={l.to === "/"} className={({isActive}) => `text-[10px] uppercase tracking-[.2em] font-black transition-colors ${isActive ? "text-[#E10600]" : "text-zinc-400 hover:text-white"}`}>{l.label}</NavLink>)}
         </nav>
         <div className="flex items-center gap-2">
-          <span className="hidden lg:flex items-center gap-1.5 text-[8px] uppercase tracking-[.16em] font-bold text-zinc-500 mr-2"><Zap size={11} className="text-[#CAFF00]"/> Drop 01</span>
-          <button onClick={() => setOpen(true)} data-testid="nav-cart-button" className="relative h-11 w-11 grid place-items-center border border-white/15 text-white hover:border-[#CAFF00] hover:text-[#CAFF00] transition-all"><ShoppingBag size={18}/>{count > 0 && <span data-testid="nav-cart-count" className="absolute -top-2 -right-2 min-w-[20px] h-5 px-1 grid place-items-center bg-[#CAFF00] text-black text-[10px] font-black rounded-full">{count.toFixed(count % 1 === 0 ? 0 : 1)}</span>}</button>
+          <span className="hidden lg:flex items-center gap-1.5 text-[8px] uppercase tracking-[.16em] font-bold text-zinc-500 mr-2"><Zap size={11} className="text-[#E10600]"/> Drop 01</span>
+          <button onClick={() => setOpen(true)} data-testid="nav-cart-button" className="relative h-11 w-11 grid place-items-center border border-white/15 text-white hover:border-[#E10600] hover:text-[#E10600] transition-all"><ShoppingBag size={18}/>{count > 0 && <span data-testid="nav-cart-count" className="absolute -top-2 -right-2 min-w-[20px] h-5 px-1 grid place-items-center bg-[#E10600] text-black text-[10px] font-black rounded-full">{count.toFixed(count % 1 === 0 ? 0 : 1)}</span>}</button>
           <button className="md:hidden h-11 w-11 grid place-items-center border border-white/15 text-white" onClick={() => setMobile(v=>!v)} aria-label="Menu" data-testid="nav-mobile-toggle">{mobile ? <X size={18}/> : <Menu size={18}/>}</button>
         </div>
       </div>

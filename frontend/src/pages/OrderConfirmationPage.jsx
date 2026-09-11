@@ -204,10 +204,10 @@ export default function OrderConfirmationPage() {
             <p className="mt-2 text-xs uppercase tracking-[0.18em] text-brand-bone/70">Falar connosco</p>
             <p className="font-serif text-xl">+351 241 402 897</p>
           </a>
-          <a href="mailto:deliciasdaquintinha.financeira@gmail.com" className="bg-white border border-brand-border p-5 hover:border-brand-espresso transition-colors">
+          <a href="mailto:hello@futwearpt.pt" className="bg-white border border-brand-border p-5 hover:border-brand-espresso transition-colors">
             <Mail size={18} className="text-brand-red" />
             <p className="mt-2 text-xs uppercase tracking-[0.18em] text-brand-muted">Email</p>
-            <p className="font-serif text-base text-brand-espresso break-all">deliciasdaquintinha.financeira@gmail.com</p>
+            <p className="font-serif text-base text-brand-espresso break-all">hello@futwearpt.pt</p>
           </a>
         </div>
 

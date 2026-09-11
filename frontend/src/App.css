@@ -2,4 +2,4 @@
 .App {
     min-height: 100vh;
 }
-.fw-footer-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #292929;padding:8px 10px;font-size:9px;font-weight:900;letter-spacing:.16em;color:#aaa}.fw-footer-pill svg{color:#caff00}.fw-footer-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:900;color:#caff00;margin-bottom:18px}
+.fw-footer-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #292929;padding:8px 10px;font-size:9px;font-weight:900;letter-spacing:.16em;color:#aaa}.fw-footer-pill svg{color:#E10600}.fw-footer-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:900;color:#E10600;margin-bottom:18px}

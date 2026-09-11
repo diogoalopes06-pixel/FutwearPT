@@ -65,12 +65,12 @@ const filtered = safeProducts
     <div className="pt-32 pb-24 bg-[#080808] text-white min-h-screen" data-testid="shop-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         <div className="reveal relative overflow-hidden bg-[#101010] border border-[#292929] p-6 sm:p-10 mb-10">
-          <div className="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-[#CAFF00]/10" />
+          <div className="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-[#E10600]/10" />
           <div className="absolute -left-16 -bottom-16 w-56 h-56 rounded-full bg-[#171717]" />
           <div className="relative">
             <div className="inline-flex items-center gap-2 bg-[#171717] px-3 py-2 mb-4">
-              <Zap size={14} className="text-[#CAFF00]" />
-              <p className="text-xs uppercase tracking-[0.25em] text-[#CAFF00]">FOOTBALL ONLY</p>
+              <Zap size={14} className="text-[#E10600]" />
+              <p className="text-xs uppercase tracking-[0.25em] text-[#E10600]">FOOTBALL ONLY</p>
             </div>
             <h1 className="font-serif text-5xl md:text-7xl text-white leading-none">
               {CATEGORIES.find((c) => c.slug === cat)?.name || "Todas as camisolas"}
@@ -90,7 +90,7 @@ const filtered = safeProducts
                 }}
                 className={`px-4 py-2.5 text-xs uppercase tracking-[0.16em] border transition-colors ${
                   (cat || "") === c.slug
-                    ? "bg-[#CAFF00] text-black border-[#CAFF00]"
+                    ? "bg-[#E10600] text-black border-[#E10600]"
                     : "bg-[#111] border-[#292929] text-white"
                 }`}
               >

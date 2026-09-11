@@ -132,7 +132,7 @@ export default function ProductPage() {
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
           <div className="reveal relative overflow-hidden bg-brand-cream border border-brand-border aspect-square">
             <div className="absolute inset-0 grid place-items-center"><span className="font-serif text-9xl text-brand-muted/15">{(product.name || "P").charAt(0)}</span></div>
-            {product.image && <img src={product.image} alt={product.name || "Produto"} onError={(e) => { e.currentTarget.style.display = "none"; }} className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700" />}
+            <FwImage src={product.image} alt={product.name || "Produto"} className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
             <div className="absolute top-4 left-4 flex flex-col gap-2">
               {product.featured && <Badge><Sparkles size={12} /> Destaque</Badge>}
               {product.seasonal && <Badge>Da época</Badge>}

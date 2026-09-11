@@ -69,7 +69,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="font-serif text-3xl text-brand-espresso mb-3">7. Contacto</h2>
             <p>
-              Para questões sobre privacidade, contacte-nos por email: <a className="text-brand-red hover:underline" href="mailto:deliciasdaquintinha.financeira@gmail.com">deliciasdaquintinha.financeira@gmail.com</a>
+              Para questões sobre privacidade, contacte-nos por email: <a className="text-brand-red hover:underline" href="mailto:hello@futwearpt.pt">hello@futwearpt.pt</a>
             </p>
           </section>
         </div>

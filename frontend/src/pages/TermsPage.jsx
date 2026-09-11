@@ -58,7 +58,7 @@ export default function TermsPage() {
           <section>
             <h2 className="font-serif text-3xl text-brand-espresso mb-3">7. Contacto</h2>
             <p>
-              Para dúvidas sobre encomendas, contacte-nos pelo telefone <a className="text-brand-red hover:underline" href="tel:+351241402897">+351 241 402 897</a> ou por email <a className="text-brand-red hover:underline" href="mailto:deliciasdaquintinha.financeira@gmail.com">deliciasdaquintinha.financeira@gmail.com</a>.
+              Para dúvidas sobre encomendas, contacte-nos pelo telefone <a className="text-brand-red hover:underline" href="tel:+351241402897">+351 241 402 897</a> ou por email <a className="text-brand-red hover:underline" href="mailto:hello@futwearpt.pt">hello@futwearpt.pt</a>.
             </p>
           </section>
         </div>

@@ -187,7 +187,7 @@ function ContactEditor({ data, update }) {
         <Field label="Telefone"><Input value={data.phone} onChange={(v) => update("contact.phone", v)} /></Field>
         <Field label="Email"><Input value={data.email} onChange={(v) => update("contact.email", v)} /></Field>
         <Field label="Facebook URL"><Input value={data.facebook_url} onChange={(v) => update("contact.facebook_url", v)} /></Field>
-        <Field label="Facebook handle (ex: @asdeliciasdaquintinha)"><Input value={data.facebook_handle} onChange={(v) => update("contact.facebook_handle", v)} /></Field>
+        <Field label="Facebook handle (ex: @futwearpt)"><Input value={data.facebook_handle} onChange={(v) => update("contact.facebook_handle", v)} /></Field>
       </div>
       <p className="text-xs uppercase tracking-[0.2em] text-brand-muted mt-6 mb-2">Horário</p>
       <div className="grid sm:grid-cols-2 gap-4">

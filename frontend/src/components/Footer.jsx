@@ -9,24 +9,24 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3">
               <img src="/futwearpt-logo-transparent.png" alt="FutWearPT" className="w-16 h-16 object-contain" />
-              <div className="text-3xl font-black tracking-[-.07em]">FUTWEAR<span className="text-[#CAFF00]">PT</span></div>
+              <div className="text-3xl font-black tracking-[-.07em]">FUTWEAR<span className="text-[#E10600]">PT</span></div>
             </div>
             <p className="text-sm text-zinc-500 max-w-sm mt-4 leading-relaxed">Camisolas de futebol para quem não assiste ao jogo de longe. Clubes, seleções, retro, treino e personalização.</p>
             <div className="mt-7 flex flex-wrap gap-3"><span className="fw-footer-pill"><Zap size={13}/> DROPS</span><span className="fw-footer-pill"><ShieldCheck size={13}/> QUALITY</span></div>
           </div>
-          <div><h4 className="fw-footer-title">Loja</h4><ul className="space-y-3 text-sm text-zinc-400"><li><Link to="/loja" className="hover:text-[#CAFF00]">Todas as camisolas</Link></li><li><Link to="/loja?cat=clubes" className="hover:text-[#CAFF00]">Clubes</Link></li><li><Link to="/loja?cat=selecoes" className="hover:text-[#CAFF00]">Seleções</Link></li><li><Link to="/loja?cat=retro" className="hover:text-[#CAFF00]">Retro</Link></li><li><Link to="/loja?cat=treino" className="hover:text-[#CAFF00]">Treino</Link></li></ul></div>
-          <div><h4 className="fw-footer-title">FutWearPT</h4><ul className="space-y-3 text-sm text-zinc-400"><li><Link to="/sobre" className="hover:text-[#CAFF00]">Sobre nós</Link></li><li><Link to="/contactos" className="hover:text-[#CAFF00]">Contactos</Link></li><li><Link to="/termos" className="hover:text-[#CAFF00]">Termos</Link></li><li><Link to="/privacidade" className="hover:text-[#CAFF00]">Privacidade</Link></li></ul></div>
+          <div><h4 className="fw-footer-title">Loja</h4><ul className="space-y-3 text-sm text-zinc-400"><li><Link to="/loja" className="hover:text-[#E10600]">Todas as camisolas</Link></li><li><Link to="/loja?cat=clubes" className="hover:text-[#E10600]">Clubes</Link></li><li><Link to="/loja?cat=selecoes" className="hover:text-[#E10600]">Seleções</Link></li><li><Link to="/loja?cat=retro" className="hover:text-[#E10600]">Retro</Link></li><li><Link to="/loja?cat=treino" className="hover:text-[#E10600]">Treino</Link></li></ul></div>
+          <div><h4 className="fw-footer-title">FutWearPT</h4><ul className="space-y-3 text-sm text-zinc-400"><li><Link to="/sobre" className="hover:text-[#E10600]">Sobre nós</Link></li><li><Link to="/contactos" className="hover:text-[#E10600]">Contactos</Link></li><li><Link to="/termos" className="hover:text-[#E10600]">Termos</Link></li><li><Link to="/privacidade" className="hover:text-[#E10600]">Privacidade</Link></li></ul></div>
           <div>
             <h4 className="fw-footer-title">Logística</h4>
             <div className="space-y-4 text-sm text-zinc-400">
-              <div className="flex gap-3"><Truck size={18} className="text-[#CAFF00] shrink-0 mt-0.5"/><span><b className="text-white">Expedição rápida</b><br/>Pedidos preparados em 24–48h úteis.</span></div>
-              <div className="flex gap-3"><ShieldCheck size={18} className="text-[#CAFF00] shrink-0 mt-0.5"/><span><b className="text-white">Envio seguro</b><br/>Embalagem protegida para a tua camisola.</span></div>
-              <div className="flex gap-3"><Zap size={18} className="text-[#CAFF00] shrink-0 mt-0.5"/><span><b className="text-white">Portugal</b><br/>Portes e opções apresentados no checkout.</span></div>
+              <div className="flex gap-3"><Truck size={18} className="text-[#E10600] shrink-0 mt-0.5"/><span><b className="text-white">Expedição rápida</b><br/>Pedidos preparados em 24–48h úteis.</span></div>
+              <div className="flex gap-3"><ShieldCheck size={18} className="text-[#E10600] shrink-0 mt-0.5"/><span><b className="text-white">Envio seguro</b><br/>Embalagem protegida para a tua camisola.</span></div>
+              <div className="flex gap-3"><Zap size={18} className="text-[#E10600] shrink-0 mt-0.5"/><span><b className="text-white">Portugal</b><br/>Portes e opções apresentados no checkout.</span></div>
             </div>
             <div className="mt-6 pt-5 border-t border-white/10">
               <h4 className="fw-footer-title mb-3">Contacto</h4>
               <p className="text-sm text-zinc-400">Portugal · Online</p>
-              <a href="mailto:hello@futwearpt.pt" className="mt-3 flex items-center gap-2 text-sm text-white hover:text-[#CAFF00]"><Mail size={15}/> hello@futwearpt.pt</a>
+              <a href="mailto:hello@futwearpt.pt" className="mt-3 flex items-center gap-2 text-sm text-white hover:text-[#E10600]"><Mail size={15}/> hello@futwearpt.pt</a>
             </div>
           </div>
         </div>

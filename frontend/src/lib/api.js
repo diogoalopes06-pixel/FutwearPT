@@ -9,13 +9,13 @@ if (typeof window !== "undefined") {
   if (!BACKEND_URL) {
     // eslint-disable-next-line no-console
     console.error(
-      "[delicias] REACT_APP_BACKEND_URL is not defined at build time. " +
+      "[futwearpt] REACT_APP_BACKEND_URL is not defined at build time. " +
         "API calls will fail. Set it on Vercel (Project → Settings → Environment Variables) " +
         "and redeploy."
     );
   } else {
     // eslint-disable-next-line no-console
-    console.info("[delicias] API base:", API);
+    console.info("[futwearpt] API base:", API);
   }
 }
 
