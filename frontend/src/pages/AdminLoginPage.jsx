@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-bone grid lg:grid-cols-2" data-testid="admin-login-page">
+    <div className="min-h-screen bg-brand-bone text-brand-espresso grid lg:grid-cols-2 admin-page" data-testid="admin-login-page">
       <div className="hidden lg:block relative overflow-hidden bg-brand-red">
         <div className="absolute inset-0 grid place-items-center p-12">
           <img src={LOGO} alt="" className="w-64 h-64 object-cover" />
@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 data-testid="admin-login-email"
-                className="mt-2 w-full bg-white border border-brand-border px-4 py-3 text-sm focus:outline-none focus:border-brand-red"
+                className="mt-2 w-full bg-white text-brand-espresso placeholder:text-zinc-400 border border-brand-border px-4 py-3 text-sm focus:outline-none focus:border-brand-red"
               />
             </label>
             <label className="block">
@@ -75,7 +75,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 data-testid="admin-login-password"
-                className="mt-2 w-full bg-white border border-brand-border px-4 py-3 text-sm focus:outline-none focus:border-brand-red"
+                className="mt-2 w-full bg-white text-brand-espresso placeholder:text-zinc-400 border border-brand-border px-4 py-3 text-sm focus:outline-none focus:border-brand-red"
               />
             </label>
                         <label className="flex items-center gap-2 text-sm text-brand-muted cursor-pointer">

@@ -22,7 +22,11 @@ if (typeof window !== "undefined") {
 const api = axios.create({ baseURL: API });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("dq_token") || localStorage.getItem("dq_customer_token");
+  const token =
+    localStorage.getItem("dq_token") ||
+    sessionStorage.getItem("dq_token") ||
+    localStorage.getItem("dq_customer_token") ||
+    sessionStorage.getItem("dq_customer_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

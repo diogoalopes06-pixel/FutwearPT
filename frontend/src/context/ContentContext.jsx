@@ -26,7 +26,7 @@ const FALLBACK = {
   cta_title: "Veste a tua história.",
   cta_subtitle: "Escolhe a camisola. Mete o nome. Entra em campo.",
   footer_tagline: "Football only. Drops, camisolas e cultura de bancada.",
-  promo_banner: { active: true, text: "DROP 01 · NOVAS CAMISOLAS ONLINE", link: "/loja", bg_color: "#E10600", text_color: "#080808" },
+  promo_banner: { active: true, text: "FUTWEARPT · NOVAS CAMISOLAS ONLINE", link: "/loja", bg_color: "#E10600", text_color: "#080808" },
   analytics: { google_analytics_id: "", meta_pixel_id: "" },
   seo: { site_title: "FutWearPT — Camisolas de Futebol", site_description: "Camisolas de futebol, retro, treino e personalização em Portugal.", og_image: "" },
 };
@@ -41,7 +41,14 @@ export function ContentProvider({ children }) {
       // Merge with FALLBACK so missing fields keep their defaults
       setContent({
         ...FALLBACK,
-        // Keep the storefront football-first even if an older backend still has the original shop content.
+        hero: { ...FALLBACK.hero, ...(data.hero || {}) },
+        about: { ...FALLBACK.about, ...(data.about || {}) },
+        contact: { ...FALLBACK.contact, ...(data.contact || {}) },
+        reviews: Array.isArray(data.reviews) && data.reviews.length ? data.reviews : FALLBACK.reviews,
+        categories: Array.isArray(data.categories) && data.categories.length ? data.categories : FALLBACK.categories,
+        cta_title: data.cta_title || FALLBACK.cta_title,
+        cta_subtitle: data.cta_subtitle || FALLBACK.cta_subtitle,
+        footer_tagline: data.footer_tagline || FALLBACK.footer_tagline,
         promo_banner: { ...FALLBACK.promo_banner, ...(data.promo_banner || {}) },
         analytics: { ...FALLBACK.analytics, ...(data.analytics || {}) },
         seo: { ...FALLBACK.seo, ...(data.seo || {}) },

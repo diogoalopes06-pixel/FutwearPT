@@ -64,14 +64,14 @@ export default function HomePage() {
               </div>
             </div>
             <div className="fw-stamp"><Crown size={16} /> <span>FOOTBALL<br/>CULTURE</span></div>
-            <div className="fw-vertical">FUTWEARPT / 2026 / DROP 01</div>
+            <div className="fw-vertical">FUTWEARPT / 2026 / FUTWEARPT</div>
           </div>
         </div>
         <div className="fw-marquee"><div>CAMISOLAS DE FUTEBOL <span>✦</span> CLUBES <span>✦</span> SELEÇÕES <span>✦</span> RETRO <span>✦</span> PERSONALIZAÇÃO <span>✦</span> CAMISOLAS DE FUTEBOL <span>✦</span> CLUBES <span>✦</span></div></div>
       </section>
 
       <section className="fw-drop-bar">
-        <div><span className="fw-live-dot" /> DROP 01 / AGORA ONLINE</div>
+        <div><span className="fw-live-dot" /> FUTWEARPT / AGORA ONLINE</div>
         <div className="fw-drop-count">6 CATEGORIAS <ChevronRight size={16} /></div>
       </section>
 
@@ -95,7 +95,7 @@ export default function HomePage() {
       {featured.length > 0 && (
         <section className="fw-section fw-products">
           <div className="fw-section-head reveal">
-            <div><p className="fw-kicker">DROP DA SEMANA</p><h2>AS MAIS<br/><em>QUENTES.</em></h2></div>
+            <div><p className="fw-kicker">DESTAQUES DA SEMANA</p><h2>AS MAIS<br/><em>QUENTES.</em></h2></div>
             <Link to="/loja" className="fw-text-link">VER TUDO <ArrowRight size={16} /></Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -120,7 +120,7 @@ export default function HomePage() {
 
       <section className="fw-section fw-values">
         <div className="fw-section-head reveal">
-          <div><p className="fw-kicker">LOGÍSTICA FUTWEARPT</p><h2>DO DROP<br/><em>À TUA PORTA.</em></h2></div>
+          <div><p className="fw-kicker">LOGÍSTICA FUTWEARPT</p><h2>DA FUTWEARPT<br/><em>À TUA PORTA.</em></h2></div>
           <p className="max-w-md text-sm text-zinc-500 leading-relaxed">Sem complicar: escolhes a camisola, confirmas a encomenda e nós tratamos do resto.</p>
         </div>
         <div className="fw-value-grid">

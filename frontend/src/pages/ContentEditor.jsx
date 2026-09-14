@@ -101,12 +101,12 @@ export default function ContentEditor() {
 function BannerEditor({ data, update }) {
   return (
     <Card title="Banner Promocional (topo do site)">
-      <p className="text-xs text-brand-muted">Quando ativo, aparece uma faixa colorida no topo de todas as páginas. Útil para campanhas (ex: "🌰 Castanhas no S. Martinho — 5€/kg").</p>
+      <p className="text-xs text-brand-muted">Quando ativo, aparece uma faixa promocional no topo de todas as páginas.</p>
       <label className="flex items-center gap-2 text-sm">
         <input type="checkbox" checked={data.active || false} onChange={(e) => update("promo_banner.active", e.target.checked)} data-testid="banner-active" /> Ativar banner
       </label>
       <Field label="Texto"><Input value={data.text} onChange={(v) => update("promo_banner.text", v)} /></Field>
-      <Field label="Link (opcional)"><Input value={data.link} onChange={(v) => update("promo_banner.link", v)} placeholder="/loja?cat=frutas ou https://..." /></Field>
+      <Field label="Link (opcional)"><Input value={data.link} onChange={(v) => update("promo_banner.link", v)} placeholder="/loja?cat=clubes ou https://..." /></Field>
       <div className="grid sm:grid-cols-2 gap-4">
         <Field label="Cor de fundo"><Input value={data.bg_color} onChange={(v) => update("promo_banner.bg_color", v)} placeholder="#C1292E" /></Field>
         <Field label="Cor do texto"><Input value={data.text_color} onChange={(v) => update("promo_banner.text_color", v)} placeholder="#FDFBF7" /></Field>
@@ -239,7 +239,7 @@ function CategoriesEditor({ categories, setDraft }) {
 
   return (
     <Card title="Categorias da Loja">
-      <p className="text-xs text-brand-muted mb-4">O <strong>slug</strong> deve corresponder ao slug do produto (ex: frutas, legumes, queijos-enchidos, vinhos, compotas, mercearia).</p>
+      <p className="text-xs text-brand-muted mb-4">O <strong>slug</strong> deve corresponder ao slug do produto (ex: clubes, selecoes, retro, treino, crianca, acessorios).</p>
       <div className="space-y-4">
         {categories.map((c, i) => (
           <div key={i} className="bg-brand-cream/40 border border-brand-border p-5">

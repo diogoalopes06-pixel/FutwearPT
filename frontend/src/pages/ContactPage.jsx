@@ -97,7 +97,7 @@ export default function ContactPage() {
           <h2 className="font-serif text-5xl text-brand-espresso leading-tight">Resposta rápida.</h2>
           <div className="mt-10 grid md:grid-cols-2 gap-x-12 gap-y-10">
             {[
-              { q: "Que tipo de produtos vendem?", a: "Frutas, legumes, compotas, queijos, enchidos, vinhos regionais, mel, azeite, pão e mercearia caseira." },
+              { q: "Que tipo de produtos vendem?", a: "Camisolas de clubes, seleções, modelos retro, treino, criança e acessórios de futebol." },
               { q: "Aceitam encomendas online?", a: "Sim! Pode preencher o cesto neste site e finalizar a encomenda. Confirmamos por telefone." },
               { q: "Fazem entregas?", a: "Sim, entregamos na zona de Abrantes. Pode também levantar na loja sem custos." },
               { q: "Os produtos são da época?", a: "Sempre. Trabalhamos com produtores locais e tudo é selecionado consoante a estação." },

@@ -19,7 +19,7 @@ const STATUS_OPTIONS = [
 ];
 
 const CATEGORIES = ["clubes", "selecoes", "retro", "treino", "crianca", "acessorios"];
-const UNITS = ["kg", "un", "g", "dz"];
+const UNITS = ["un"];
 
 const euro = (value = 0) => `€${Number(value || 0).toFixed(2)}`;
 
@@ -295,7 +295,7 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-bone" data-testid="admin-dashboard">
+    <div className="min-h-screen bg-brand-bone text-brand-espresso admin-page" data-testid="admin-dashboard">
       <header className="bg-brand-espresso text-brand-bone">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-5 flex items-center justify-between">
           <div className="flex items-center gap-6">
@@ -746,9 +746,9 @@ export default function AdminDashboardPage() {
 function ProductForm({ initial, onClose, onSaved }) {
   const [form, setForm] = useState({
     name: initial?.name || "",
-    category: initial?.category || "frutas",
+    category: initial?.category || "clubes",
     price: initial?.price ?? "",
-    unit: initial?.unit || "kg",
+    unit: initial?.unit || "un",
     image: initial?.image || "",
     description: initial?.description || "",
     in_stock: initial?.in_stock ?? true,
@@ -758,6 +758,9 @@ function ProductForm({ initial, onClose, onSaved }) {
     promotion: initial?.promotion ?? false,
     related_ids: Array.isArray(initial?.related_ids) ? initial.related_ids.join(",") : "",
     stock_quantity: initial?.stock_quantity ?? "",
+    sizes: Array.isArray(initial?.sizes) ? initial.sizes.join(",") : "XS,S,M,L,XL,XXL",
+    personalizable: initial?.personalizable ?? true,
+    season: initial?.season || "2026",
   });
   const [saving, setSaving] = useState(false);
 
@@ -772,6 +775,9 @@ function ProductForm({ initial, onClose, onSaved }) {
         price: parseFloat(form.price),
         stock_quantity: form.stock_quantity === "" || form.stock_quantity === null ? null : parseFloat(form.stock_quantity),
         related_ids: form.related_ids ? form.related_ids.split(",").map((v) => v.trim()).filter(Boolean) : [],
+        sizes: form.sizes ? form.sizes.split(",").map((v) => v.trim()).filter(Boolean) : [],
+        personalizable: Boolean(form.personalizable),
+        season: form.season || "2026",
       };
       if (initial) await api.put(`/admin/products/${initial.id}`, payload);
       else await api.post("/admin/products", payload);
@@ -816,6 +822,17 @@ function ProductForm({ initial, onClose, onSaved }) {
           <Field label="URL da imagem">
             <input value={form.image} onChange={set("image")} placeholder="https://..." data-testid="admin-form-image" className={inp} />
           </Field>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Tamanhos (separados por vírgulas)">
+              <input value={form.sizes} onChange={set("sizes")} placeholder="XS,S,M,L,XL,XXL" data-testid="admin-form-sizes" className={inp} />
+            </Field>
+            <Field label="Época / coleção">
+              <input value={form.season} onChange={set("season")} placeholder="2026" data-testid="admin-form-season" className={inp} />
+            </Field>
+          </div>
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" checked={form.personalizable} onChange={set("personalizable")} data-testid="admin-form-personalizable" /> Personalizável (nome + número)
+          </label>
           <Field label="Descrição">
             <textarea value={form.description} onChange={set("description")} rows={3} data-testid="admin-form-desc" className={`${inp} resize-none`} />
           </Field>
@@ -912,7 +929,7 @@ function ReviewsManager({ reviews, products, onSaved }) {
 }
 
 
-const inp = "w-full bg-white border border-brand-border px-3 py-2.5 text-sm focus:outline-none focus:border-brand-red";
+const inp = "w-full bg-white text-brand-espresso placeholder:text-zinc-400 border border-brand-border px-3 py-2.5 text-sm focus:outline-none focus:border-brand-red";
 
 function Field({ label, children }) {
   return (

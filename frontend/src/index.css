@@ -126,3 +126,20 @@ body { background: var(--fw-black); }
 .fw-hero::after { content:""; position:absolute; left:0; right:0; top:0; height:1px; background:linear-gradient(90deg,transparent,var(--fw-red),transparent); opacity:.65; animation:fwScan 7s linear infinite; }
 
 @media (max-width:640px){ .fw-hero-copy h1 { text-shadow:none; } .fw-btn-acid { box-shadow:3px 3px 0 #fff; } }
+
+/* Admin/editor form readability: typed values are always black on white fields. */
+.admin-page input:not([type="checkbox"]):not([type="radio"]),
+.admin-page textarea,
+.admin-page select {
+  color: #080808 !important;
+  -webkit-text-fill-color: #080808;
+  background-color: #ffffff;
+}
+.admin-page input::placeholder,
+.admin-page textarea::placeholder { color: #8a8a84 !important; opacity: 1; }
+.admin-page option { color: #080808; background: #ffffff; }
+.admin-page input:-webkit-autofill,
+.admin-page textarea:-webkit-autofill,
+.admin-page select:-webkit-autofill {
+  -webkit-text-fill-color: #080808 !important;
+}

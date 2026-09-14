@@ -42,7 +42,7 @@ export default function ProductCard({ product }) {
               <Sparkles size={11} /> Destaque
             </span>
           )}
-          {product.seasonal && <span className="bg-[#E10600] text-black text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">DROP</span>}
+          {product.seasonal && <span className="bg-[#E10600] text-black text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">DESTAQUE</span>}
           {product.bestseller && <span className="bg-[#222] text-white text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">Mais vendido</span>}
           {product.promotion && <span className="bg-[#E10600] text-black text-[10px] uppercase tracking-[0.18em] px-2.5 py-1.5 shadow-sm">Promoção</span>}
           {lowStock && (
