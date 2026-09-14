@@ -611,12 +611,12 @@ async def admin_delete_product_review(rid: str, admin=Depends(get_current_admin)
 @api.get("/categories")
 async def list_categories():
     return [
-        {"slug": "frutas", "name": "Frutas"},
-        {"slug": "legumes", "name": "Legumes"},
-        {"slug": "queijos-enchidos", "name": "Queijos & Enchidos"},
-        {"slug": "vinhos", "name": "Vinhos"},
-        {"slug": "compotas", "name": "Compotas"},
-        {"slug": "mercearia", "name": "Mercearia"},
+        {"slug": "clubes", "name": "Clubes"},
+        {"slug": "selecoes", "name": "Seleções"},
+        {"slug": "retro", "name": "Retro"},
+        {"slug": "treino", "name": "Treino"},
+        {"slug": "crianca", "name": "Criança"},
+        {"slug": "acessorios", "name": "Acessórios"},
     ]
 
 
@@ -1434,7 +1434,7 @@ async def seed():
                 CategoryContent(slug="retro", name="Retro", image="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&q=80&w=900"),
                 CategoryContent(slug="treino", name="Treino", image="https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&q=80&w=900"),
             ],
-            cta_title="Do drop à tua porta.", cta_subtitle="Preparação habitual em 24–48h úteis. Portes e opções apresentados no checkout.", footer_tagline="Camisolas de futebol, retro e treino. Personaliza a tua camisola e veste a tua paixão.",
+            cta_title="Da tua paixão à tua porta.", cta_subtitle="Preparação habitual em 24–48h úteis. Portes e opções apresentados no checkout.", footer_tagline="Camisolas de futebol, retro e treino. Personaliza a tua camisola e veste a tua paixão.",
             seo=SeoConfig(site_title="FutWearPT — Camisolas de Futebol", site_description="Camisolas de futebol, retro e treino. Personaliza a tua camisola e compra online em Portugal.")
         )
         payload = default_content.model_dump()
