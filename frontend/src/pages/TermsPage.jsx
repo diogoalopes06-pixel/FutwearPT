@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useSeo } from "../components/Seo";
 
 export default function TermsPage() {
-  useSeo({ title: "Termos e Condições", description: "Condições aplicáveis às encomendas feitas nas Delícias Football Store." });
+  useSeo({ title: "Termos e Condições", description: "Condições aplicáveis às encomendas feitas nas FutWearPT." });
   return (
     <div className="pt-32 pb-24 min-h-screen bg-brand-bone" data-testid="terms-page">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-10">
@@ -23,7 +23,7 @@ export default function TermsPage() {
           <section>
             <h2 className="font-serif text-3xl text-brand-espresso mb-3">2. Preços</h2>
             <p>
-              Os preços apresentados no site podem ser atualizados a qualquer momento. Em produtos vendidos ao peso, o valor final pode variar ligeiramente conforme preparação e pesagem final.
+              Os preços apresentados no site podem ser atualizados a qualquer momento. Em produtos alguns produtos, as características apresentadas podem variar conforme disponibilidade e stock.
             </p>
           </section>
 

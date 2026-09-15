@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useSeo } from "../components/Seo";
 
 export default function PrivacyPolicyPage() {
-  useSeo({ title: "Política de Privacidade", description: "Saiba como as Delícias Football Store tratam os seus dados pessoais." });
+  useSeo({ title: "Política de Privacidade", description: "Saiba como as FutWearPT tratam os seus dados pessoais." });
   return (
     <div className="pt-32 pb-24 min-h-screen bg-brand-bone" data-testid="privacy-policy-page">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-10">

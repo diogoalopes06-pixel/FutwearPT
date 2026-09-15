@@ -4,6 +4,7 @@ import { ArrowLeft, CheckCircle2, Heart, Plus, Share2, ShoppingBag, Sparkles, St
 import { toast } from "sonner";
 import api from "../lib/api";
 import ProductCard from "../components/ProductCard";
+import FwImage from "../components/FwImage";
 import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
 
