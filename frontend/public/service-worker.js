@@ -1,4 +1,4 @@
-/* Service Worker — FutWearPT */
+/* Service Worker — FutWearPT v2026.09 */
 const LOGO = "/futwearpt-logo-square.png";
 
 self.addEventListener("install", (event) => {
