@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Truck, Store, Loader2, Tag, Clock, Smartphone, Banknote, CheckCircle2, UserRound, MapPin } from "lucide-react";
+import { ArrowLeft, Truck, Store, Loader2, Tag, Clock, Instagram, CheckCircle2, UserRound, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import { useCart } from "../context/CartContext";
 import api from "../lib/api";
@@ -33,7 +33,7 @@ export default function CheckoutPage() {
     address: "",
     notes: "",
     delivery_slot: "Sem preferência",
-    payment_method: "mbway",
+    payment_method: "instagram",
   });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -183,27 +183,24 @@ export default function CheckoutPage() {
 
             <section className="bg-white border border-brand-border p-5 sm:p-7 transition-all duration-300 hover:shadow-sm">
               <SectionTitle number="3" title="Pagamento" />
-              <div className="grid sm:grid-cols-2 gap-4">
-                <PaymentOption
-                  icon={Smartphone}
-                  selected={form.payment_method === "mbway"}
-                  onClick={() => setForm((f) => ({ ...f, payment_method: "mbway" }))}
-                  title="MBWay"
-                  desc="Pagamento por MB WAY. A confirmação é feita pela loja."
-                />
-                <PaymentOption
-                  icon={Banknote}
-                  selected={form.payment_method === "cash"}
-                  onClick={() => setForm((f) => ({ ...f, payment_method: "cash" }))}
-                  title="Na entrega/loja"
-                  desc="Paga ao levantar ou no ato da entrega."
-                />
+              <div className="border-2 border-brand-red bg-brand-red/5 p-5">
+                <div className="flex items-start gap-4">
+                  <Instagram size={24} className="text-brand-red mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-brand-red">Pagamento por mensagem</p>
+                    <p className="mt-2 text-sm text-brand-espresso leading-relaxed">
+                      Depois de confirmar a encomenda, recebe um talão em PDF com o resumo e a referência.
+                      Para efetuar o pagamento, envie uma mensagem para o Instagram oficial da FutWearPT.
+                    </p>
+                    <a href="https://www.instagram.com/futwearpt" target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 px-4 py-2.5 bg-brand-espresso text-white text-xs uppercase tracking-[0.18em] hover:bg-brand-red transition-colors">
+                      @futwearpt <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                </div>
               </div>
-              {form.payment_method === "mbway" && (
-                <p className="mt-3 text-xs text-brand-muted bg-white border border-brand-border p-4">
-                  Depois de confirmar a encomenda, a loja valida o pedido e envia os dados de pagamento MBWay. A encomenda fica marcada como aguarda pagamento.
-                </p>
-              )}
+              <p className="mt-3 text-xs text-brand-muted leading-relaxed">
+                A encomenda fica <strong className="text-brand-espresso">A aguardar pagamento</strong>. Só passa para produção depois da confirmação manual do pagamento pela FutWearPT.
+              </p>
             </section>
           </div>
 
@@ -259,7 +256,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between text-sm text-brand-muted">
                   <span>Pagamento</span>
-                  <span className="tabular-nums">{form.payment_method === "mbway" ? "MBWay" : "Na entrega/loja"}</span>
+                  <span className="tabular-nums">"Instagram · pagamento por mensagem"</span>
                 </div>
                 <div className="flex justify-between mt-3 pt-3 border-t border-brand-border">
                   <span className="font-serif text-2xl text-brand-espresso">Total</span>

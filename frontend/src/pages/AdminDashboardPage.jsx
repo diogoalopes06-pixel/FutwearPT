@@ -607,7 +607,7 @@ export default function AdminDashboardPage() {
                         <p className="font-serif text-2xl text-brand-espresso mt-2">{o.customer_name}</p>
                         <p className="text-sm text-brand-muted">{o.phone} {o.email && `· ${o.email}`}</p>
                       <p className="text-xs text-brand-muted mt-1">
-                        {o.delivery_method === "delivery" ? `Entrega: ${o.address}` : "Levantamento na loja"} · Pagamento: {o.payment_method === "mbway" ? "MBWay" : "Na entrega/loja"} · Estado pagamento: {o.payment_status === "paid" ? "Pago" : "Pendente"}
+                        {o.delivery_method === "delivery" ? `Entrega: ${o.address}` : "Levantamento na loja"} · Pagamento: {o.payment_method === "instagram" ? "Instagram" : "Pagamento manual"} · Estado pagamento: {o.payment_status === "paid" ? "Pago" : "Pendente"}
                       </p>
                         {o.notes && <p className="text-xs italic text-brand-muted mt-1">"{o.notes}"</p>}
                       </div>
