@@ -247,7 +247,7 @@ class OrderIn(BaseModel):
     items: List[OrderItem] = Field(min_length=1, max_length=100)
     delivery_slot: Optional[str] = None  # e.g. "Manhã (09h-13h)", "Tarde (14h-18h)", or specific
     coupon_code: Optional[str] = None
-    payment_method: Literal["cash", "mbway", "manual"] = "cash"
+    payment_method: Literal["instagram", "manual"] = "instagram"
     client_order_id: Optional[str] = Field(default=None, min_length=20, max_length=100)
 
 
