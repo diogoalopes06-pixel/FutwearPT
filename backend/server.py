@@ -1124,7 +1124,7 @@ async def admin_export_orders_csv(admin=Depends(get_current_admin)):
 
 @api.get("/")
 async def root():
-    return {"app": "As Delícias da Quintinha", "status": "ok"}
+    return {"app": "FutWearPT", "status": "ok"}
 
 
 # ---------- Bundles (cabazes) ----------
@@ -1412,14 +1412,27 @@ async def seed():
         )
         logger.info("Admin password updated")
 
-    # products
-    if await db.products.count_documents({}) == 0:
-        for p in DEFAULT_PRODUCTS:
-            obj = Product(**p)
-            doc = obj.model_dump()
-            doc["created_at"] = doc["created_at"].isoformat()
-            await db.products.insert_one(doc)
-        logger.info("Default products seeded: %d", len(DEFAULT_PRODUCTS))
+    # products — keep the football catalogue available even if the old fruit-shop data
+    # already exists in MongoDB. Existing FutWearPT products created in Admin are preserved.
+    football_categories = {"clubes", "selecoes", "retro", "treino", "crianca", "acessorios"}
+    legacy = await db.products.find({"category": {"$nin": list(football_categories)}}).to_list(1000)
+    if legacy:
+        await db.products.delete_many({"_id": {"$in": [d["_id"] for d in legacy]}})
+        logger.info("Removed %d legacy non-football products", len(legacy))
+
+    for index, default in enumerate(DEFAULT_PRODUCTS, start=1):
+        stable_id = f"fw-default-{index}"
+        existing_product = await db.products.find_one({"id": stable_id})
+        if not existing_product:
+            # Also match by exact name so a previous seed with a random UUID is upgraded.
+            existing_product = await db.products.find_one({"name": default["name"], "category": default["category"]})
+        if existing_product:
+            continue
+        obj = Product(**{**default, "id": stable_id})
+        doc = obj.model_dump()
+        doc["created_at"] = doc["created_at"].isoformat()
+        await db.products.insert_one(doc)
+    logger.info("FutWearPT product catalogue checked: %d defaults", len(DEFAULT_PRODUCTS))
 
     # site content — one-time FutWearPT migration from the original shop
     existing_content = await db.site_content.find_one({"id": "main"}, {"_id": 0, "brand_key": 1})

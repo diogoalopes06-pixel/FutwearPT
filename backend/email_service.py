@@ -240,4 +240,4 @@ async def send_password_reset_email(email: str, token: str, name: str = "Cliente
         cta_label="Criar nova password",
         cta_url=reset_url,
     )
-    return await send_email(email, "Recuperar password · As Delícias da Quintinha", html)
+    return await send_email(email, "Recuperar password · FutWearPT", html)
