@@ -247,7 +247,7 @@ class OrderIn(BaseModel):
     items: List[OrderItem] = Field(min_length=1, max_length=100)
     delivery_slot: Optional[str] = None  # e.g. "Manhã (09h-13h)", "Tarde (14h-18h)", or specific
     coupon_code: Optional[str] = None
-    payment_method: Literal["instagram", "manual"] = "instagram"
+    payment_method: Literal["cash", "mbway", "manual"] = "cash"
     client_order_id: Optional[str] = Field(default=None, min_length=20, max_length=100)
 
 
@@ -534,6 +534,7 @@ async def customer_orders(user: dict = Depends(get_current_customer)):
 # ---------- Public products ----------
 @api.get("/products", response_model=List[Product])
 async def list_products(category: Optional[str] = None, featured: Optional[bool] = None):
+    await ensure_default_catalog()
     q: dict = {}
     if category:
         q["category"] = category
@@ -548,6 +549,7 @@ async def list_products(category: Optional[str] = None, featured: Optional[bool]
 
 @api.get("/products/{pid}", response_model=Product)
 async def get_product(pid: str):
+    await ensure_default_catalog()
     doc = await db.products.find_one({"id": pid}, {"_id": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Produto não encontrado")
@@ -663,6 +665,7 @@ async def validate_coupon(data: CouponValidate, request: Request):
 
 @api.post("/orders", response_model=Order)
 async def create_order(data: OrderIn, background: BackgroundTasks, request: Request):
+    await ensure_default_catalog()
     enforce_rate_limit(request, "orders", 20, 60 * 60)
     if data.client_order_id:
         existing_order = await db.orders.find_one({"client_order_id": data.client_order_id}, {"_id": 0})
@@ -1390,6 +1393,26 @@ DEFAULT_PRODUCTS = [
 
 
 
+
+async def ensure_default_catalog():
+    """Guarantee the public FutWearPT catalogue exists whenever the API is used.
+    This makes the shop self-healing after a fresh/partial MongoDB deployment.
+    """
+    football_categories = {"clubes", "selecoes", "retro", "treino", "crianca", "acessorios"}
+    legacy = await db.products.find({"category": {"$nin": list(football_categories)}}).to_list(1000)
+    if legacy:
+        await db.products.delete_many({"_id": {"$in": [d["_id"] for d in legacy]}})
+    for index, default in enumerate(DEFAULT_PRODUCTS, start=1):
+        stable_id = f"fw-default-{index}"
+        existing_product = await db.products.find_one({"id": stable_id})
+        if not existing_product:
+            existing_product = await db.products.find_one({"name": default["name"], "category": default["category"]})
+        if not existing_product:
+            obj = Product(**{**default, "id": stable_id})
+            doc = obj.model_dump()
+            doc["created_at"] = doc["created_at"].isoformat()
+            await db.products.insert_one(doc)
+
 async def seed():
     # admin
     admin_email = os.environ["ADMIN_EMAIL"].lower().strip()
@@ -1412,27 +1435,8 @@ async def seed():
         )
         logger.info("Admin password updated")
 
-    # products — keep the football catalogue available even if the old fruit-shop data
-    # already exists in MongoDB. Existing FutWearPT products created in Admin are preserved.
-    football_categories = {"clubes", "selecoes", "retro", "treino", "crianca", "acessorios"}
-    legacy = await db.products.find({"category": {"$nin": list(football_categories)}}).to_list(1000)
-    if legacy:
-        await db.products.delete_many({"_id": {"$in": [d["_id"] for d in legacy]}})
-        logger.info("Removed %d legacy non-football products", len(legacy))
-
-    for index, default in enumerate(DEFAULT_PRODUCTS, start=1):
-        stable_id = f"fw-default-{index}"
-        existing_product = await db.products.find_one({"id": stable_id})
-        if not existing_product:
-            # Also match by exact name so a previous seed with a random UUID is upgraded.
-            existing_product = await db.products.find_one({"name": default["name"], "category": default["category"]})
-        if existing_product:
-            continue
-        obj = Product(**{**default, "id": stable_id})
-        doc = obj.model_dump()
-        doc["created_at"] = doc["created_at"].isoformat()
-        await db.products.insert_one(doc)
-    logger.info("FutWearPT product catalogue checked: %d defaults", len(DEFAULT_PRODUCTS))
+    # products — self-heal the public football catalogue
+    await ensure_default_catalog()
 
     # site content — one-time FutWearPT migration from the original shop
     existing_content = await db.site_content.find_one({"id": "main"}, {"_id": 0, "brand_key": 1})
