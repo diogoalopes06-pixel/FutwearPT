@@ -129,7 +129,7 @@ async def get_current_user(creds: HTTPAuthorizationCredentials = Depends(bearer_
 
 
 async def get_current_customer(user: dict = Depends(get_current_user)) -> dict:
-    if user.get("role") not in ["customer", "admin"]:
+    if user.get("role") != "customer":
         raise HTTPException(status_code=403, detail="Acesso negado")
     return user
 
@@ -457,7 +457,7 @@ async def customer_login(data: LoginInput, request: Request):
     enforce_rate_limit(request, "customer-login", 15, 15 * 60)
     email = data.email.lower().strip()
     user = await db.users.find_one({"email": email})
-    if not user or user.get("role") not in ["customer", "admin"] or not verify_password(data.password, user.get("password_hash", "")):
+    if not user or user.get("role") != "customer" or not verify_password(data.password, user.get("password_hash", "")):
         raise HTTPException(status_code=401, detail="Credenciais inválidas")
     token = create_access_token(user["id"], user["email"], user["role"])
     return LoginResponse(access_token=token, user=UserOut(id=user["id"], email=user["email"], name=user["name"], role=user["role"], phone=user.get("phone", ""), address=user.get("address", ""), avatar_url=user.get("avatar_url", "")))
