@@ -22,11 +22,16 @@ if (typeof window !== "undefined") {
 const api = axios.create({ baseURL: API });
 
 api.interceptors.request.use((config) => {
-  const token =
-    localStorage.getItem("dq_token") ||
-    sessionStorage.getItem("dq_token") ||
-    localStorage.getItem("dq_customer_token") ||
-    sessionStorage.getItem("dq_customer_token");
+  const url = config?.url || "";
+  const isCustomerEndpoint = url.startsWith("/customers/") || url === "/customers";
+
+  // Keep admin and customer sessions completely separate. Previously dq_token
+  // (the admin token) was preferred for customer endpoints, which could make a
+  // normal customer session behave as an admin and produce 401/403 responses.
+  const token = isCustomerEndpoint
+    ? localStorage.getItem("dq_customer_token") || sessionStorage.getItem("dq_customer_token")
+    : localStorage.getItem("dq_token") || sessionStorage.getItem("dq_token");
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
