@@ -1,0 +1,51 @@
+name: Fix customer auth separation
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply customer-only auth fix
+        shell: python
+        run: |
+          from pathlib import Path
+          path = Path("backend/server.py")
+          text = path.read_text(encoding="utf-8")
+          old1 = 'if user.get("role") not in ["customer", "admin"]:'
+          new1 = 'if user.get("role") != "customer":'
+          old2 = 'user.get("role") not in ["customer", "admin"] or not verify_password'
+          new2 = 'user.get("role") != "customer" or not verify_password'
+          changed = False
+          if old1 in text:
+              text = text.replace(old1, new1)
+              changed = True
+          if old2 in text:
+              text = text.replace(old2, new2)
+              changed = True
+          if not changed:
+              print("Auth fix already applied; nothing to change.")
+              raise SystemExit(0)
+          path.write_text(text, encoding="utf-8")
+
+      - name: Commit backend fix and remove temporary workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/fix-customer-auth.yml
+          git add backend/server.py .github/workflows/fix-customer-auth.yml
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Fix customer login and admin session separation"
+          git push
