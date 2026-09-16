@@ -247,7 +247,7 @@ class OrderIn(BaseModel):
     items: List[OrderItem] = Field(min_length=1, max_length=100)
     delivery_slot: Optional[str] = None  # e.g. "Manhã (09h-13h)", "Tarde (14h-18h)", or specific
     coupon_code: Optional[str] = None
-    payment_method: Literal["cash", "mbway", "manual"] = "cash"
+    payment_method: Literal["manual"] = "manual"
     client_order_id: Optional[str] = Field(default=None, min_length=20, max_length=100)
 
 
@@ -1110,7 +1110,7 @@ async def admin_export_orders_csv(admin=Depends(get_current_admin)):
             order.get("phone", ""),
             order.get("email", ""),
             order.get("delivery_method", ""),
-            order.get("payment_method", "cash"),
+            order.get("payment_method", "manual"),
             order.get("payment_status", "pending"),
             order.get("status", ""),
             order.get("subtotal", 0),

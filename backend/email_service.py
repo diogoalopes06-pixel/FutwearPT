@@ -79,7 +79,7 @@ def _build_order_summary(order) -> str:
     if order.get("delivery_method") == "delivery" and order.get("address"):
         addr = f"<p style='margin:8px 0 0 0;font-size:13px;color:#6B635E;'><strong style='color:#2C2724;'>Morada:</strong> {order['address']}</p>"
     method = "Entrega ao domicílio" if order.get("delivery_method") == "delivery" else "Levantamento na loja"
-    payment = "MBWay manual" if order.get("payment_method") == "mbway" else "Pagamento na entrega/loja"
+    payment = "Instagram · pagamento combinado por mensagem"
     return f"""
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 24px 0;">
         {_format_items(order['items'])}
@@ -134,7 +134,7 @@ async def send_admin_new_order(order: dict):
         return {"sent": False, "reason": "no_admin_email"}
 
     method = "Entrega ao domicílio" if order.get("delivery_method") == "delivery" else "Levantamento na loja"
-    payment = "MBWay manual" if order.get("payment_method") == "mbway" else "Pagamento na entrega/loja"
+    payment = "Instagram · pagamento combinado por mensagem"
     email_line = f"<p style='margin:4px 0 0 0;'><strong style='color:#2C2724;'>Email:</strong> {order.get('email') or '—'}</p>"
     notes_line = f"<p style='margin:12px 0 0 0;font-style:italic;'>\"{order['notes']}\"</p>" if order.get("notes") else ""
     addr_line = f"<p style='margin:4px 0 0 0;'><strong style='color:#2C2724;'>Morada:</strong> {order['address']}</p>" if order.get("delivery_method") == "delivery" and order.get("address") else ""
