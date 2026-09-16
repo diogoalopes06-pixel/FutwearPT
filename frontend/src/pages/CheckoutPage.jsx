@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Truck, Store, Loader2, Tag, Clock, Smartphone, Banknote, CheckCircle2, UserRound, MapPin } from "lucide-react";
+import { ArrowLeft, Truck, Loader2, Tag, Clock, MessageCircle, CheckCircle2, UserRound, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import { useCart } from "../context/CartContext";
 import api from "../lib/api";
@@ -33,7 +33,7 @@ export default function CheckoutPage() {
     address: "",
     notes: "",
     delivery_slot: "Sem preferência",
-    payment_method: "mbway",
+    payment_method: "manual",
   });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -161,7 +161,6 @@ export default function CheckoutPage() {
               <SectionTitle number="2" title="Entrega" />
               <div className="grid sm:grid-cols-2 gap-4">
                 <DeliveryOption icon={Truck} selected={form.delivery_method === "delivery"} onClick={() => setForm((f) => ({ ...f, delivery_method: "delivery" }))} title="Envio para Portugal" desc="Expedição em 24–48h úteis" data-testid="checkout-delivery-option" />
-                <DeliveryOption icon={Store} selected={form.delivery_method === "pickup"} onClick={() => setForm((f) => ({ ...f, delivery_method: "pickup" }))} title="Levantamento local" desc="Grátis · quando disponível" data-testid="checkout-pickup-option" />
               </div>
               {form.delivery_method === "delivery" && (
                 <Field label="Morada de entrega *" className="mt-4">
@@ -183,27 +182,18 @@ export default function CheckoutPage() {
 
             <section className="bg-white border border-brand-border p-5 sm:p-7 transition-all duration-300 hover:shadow-sm">
               <SectionTitle number="3" title="Pagamento" />
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-1 gap-4 max-w-2xl">
                 <PaymentOption
-                  icon={Smartphone}
-                  selected={form.payment_method === "mbway"}
-                  onClick={() => setForm((f) => ({ ...f, payment_method: "mbway" }))}
-                  title="MBWay"
-                  desc="Pagamento por MB WAY. A confirmação é feita pela loja."
-                />
-                <PaymentOption
-                  icon={Banknote}
-                  selected={form.payment_method === "cash"}
-                  onClick={() => setForm((f) => ({ ...f, payment_method: "cash" }))}
-                  title="Na entrega/loja"
-                  desc="Paga ao levantar ou no ato da entrega."
+                  icon={MessageCircle}
+                  selected={form.payment_method === "manual"}
+                  onClick={() => setForm((f) => ({ ...f, payment_method: "manual" }))}
+                  title="Pagamento por Instagram"
+                  desc="Depois de confirmar a encomenda, recebe um comprovativo em PDF e fala connosco no Instagram @futwearpt para combinar o pagamento."
                 />
               </div>
-              {form.payment_method === "mbway" && (
-                <p className="mt-3 text-xs text-brand-muted bg-white border border-brand-border p-4">
-                  Depois de confirmar a encomenda, a loja valida o pedido e envia os dados de pagamento MBWay. A encomenda fica marcada como aguarda pagamento.
-                </p>
-              )}
+              <p className="mt-3 text-xs text-brand-muted bg-brand-red/5 border border-brand-red/20 p-4">
+                A encomenda fica <strong className="text-brand-espresso">A aguardar pagamento</strong>. Não é apresentado qualquer número pessoal, IBAN ou pagamento automático no site.
+              </p>
             </section>
           </div>
 
@@ -259,7 +249,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between text-sm text-brand-muted">
                   <span>Pagamento</span>
-                  <span className="tabular-nums">{form.payment_method === "mbway" ? "MBWay" : "Na entrega/loja"}</span>
+                  <span className="tabular-nums">Instagram · pagamento combinado</span>
                 </div>
                 <div className="flex justify-between mt-3 pt-3 border-t border-brand-border">
                   <span className="font-serif text-2xl text-brand-espresso">Total</span>
@@ -274,7 +264,7 @@ export default function CheckoutPage() {
                   Confirmar encomenda
                 </button>
                 <p className="mt-3 text-[11px] text-brand-muted leading-relaxed">
-                  Após confirmar, recebe a página de acompanhamento e a loja trata do pedido.
+                  Após confirmar, recebe a página de acompanhamento e um comprovativo em PDF com as instruções para falar connosco no Instagram.
                 </p>
               </div>
             </div>

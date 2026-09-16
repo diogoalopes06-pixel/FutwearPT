@@ -30,14 +30,14 @@ export default function TermsPage() {
           <section>
             <h2 className="font-serif text-3xl text-brand-espresso mb-3">3. Pagamentos</h2>
             <p>
-              O pagamento pode ser combinado após a encomenda, incluindo opções disponíveis na loja. Quando usado MBWay manual, a encomenda é preparada após confirmação do pagamento pela equipa.
+              O pagamento é combinado por mensagem através do Instagram @futwearpt após a criação da encomenda. A encomenda fica a aguardar pagamento e só é preparada após confirmação manual pela equipa.
             </p>
           </section>
 
           <section>
             <h2 className="font-serif text-3xl text-brand-espresso mb-3">4. Entrega e levantamento</h2>
             <p>
-              As encomendas são preparadas para expedição em Portugal, normalmente no prazo de 24–48 horas úteis. Os portes e opções disponíveis são apresentados no checkout. Quando disponível, poderá existir levantamento local gratuito.
+              As encomendas são preparadas para expedição em Portugal, normalmente no prazo de 24–48 horas úteis. Os portes são apresentados no checkout. O pagamento é combinado através do Instagram @futwearpt após a criação da encomenda.
             </p>
           </section>
 
