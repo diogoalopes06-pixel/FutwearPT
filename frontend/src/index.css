@@ -143,12 +143,3 @@ body { background: var(--fw-black); }
 .admin-page select:-webkit-autofill {
   -webkit-text-fill-color: #080808 !important;
 }
-
-
-@media print {
-  body { background: white !important; }
-  .print-hide, header, nav, footer { display: none !important; }
-  .print-payment { break-inside: avoid; }
-  [data-testid="order-confirmation"] { padding-top: 0 !important; padding-bottom: 0 !important; background: white !important; }
-  [data-testid="order-confirmation"] > div { max-width: 100% !important; }
-}

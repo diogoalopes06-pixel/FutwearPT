@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { CheckCircle2, Package, Truck, Clock as ClockIcon, ChefHat, Instagram, FileDown } from "lucide-react";
+import { CheckCircle2, Phone, Mail, Package, Truck, Clock as ClockIcon, ChefHat, Smartphone, Copy, QrCode, Timer } from "lucide-react";
 import api from "../lib/api";
 import { toast } from "sonner";
+
+const MBWAY_PHONE = process.env.REACT_APP_MBWAY_PHONE || "93X XXX XXX";
 
 const STAGES = [
   { key: "pending", label: "Pendente", icon: ClockIcon },
@@ -69,7 +71,19 @@ export default function OrderConfirmationPage() {
   }
 
   const reference = order.id.slice(0, 8).toUpperCase();
-  const printReceipt = () => window.print();
+  const isMbway = order.payment_method === "mbway" || order.payment_method === "MBWay";
+  const createdAt = order.created_at ? new Date(order.created_at) : new Date();
+  const paidUntil = new Date(createdAt.getTime() + 30 * 60 * 1000);
+  const paymentNote = `FutWearPT · Encomenda ${reference} · €${Number(order.total || 0).toFixed(2)}`;
+  const qrData = encodeURIComponent(`MBWay ${MBWAY_PHONE} ${paymentNote}`);
+  const copyText = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success("Copiado");
+    } catch {
+      toast.info(text);
+    }
+  };
 
   return (
     <div className="pt-32 pb-24 min-h-screen bg-brand-bone" data-testid="order-confirmation">
@@ -88,25 +102,57 @@ export default function OrderConfirmationPage() {
           </p>
         </div>
 
-        <div className="mt-8 bg-white border-2 border-brand-red p-6 text-center print-payment">
-          <Instagram size={34} className="mx-auto text-brand-red" />
-          <p className="mt-4 text-xs uppercase tracking-[0.25em] text-brand-red">Pagamento por mensagem</p>
-          <p className="mt-4 text-brand-muted max-w-xl mx-auto leading-relaxed">
-            Para efetuar o pagamento, envie uma mensagem para o Instagram oficial da FutWearPT.
-            Indique a referência da encomenda para a nossa equipa lhe enviar as instruções de pagamento.
-          </p>
-          <a href="https://www.instagram.com/futwearpt" target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 bg-brand-espresso text-white px-5 py-3 text-sm uppercase tracking-[0.18em] hover:bg-brand-red transition-colors print-hide">
-            @futwearpt ↗
-          </a>
-          <p className="mt-4 font-mono text-lg text-brand-espresso">Encomenda #{reference}</p>
-          <p className="mt-4 text-xs text-brand-muted">A produção só começa depois da confirmação do pagamento.</p>
-        </div>
+        {isMbway && (
+          <div className="mt-8 bg-white border-2 border-brand-red p-6 text-center">
+            <Smartphone size={34} className="mx-auto text-brand-red" />
+            <p className="mt-4 text-xs uppercase tracking-[0.25em] text-brand-red">
+              Pagamento MBWay
+            </p>
+            <p className="mt-4 text-brand-muted">
+              Para concluir a encomenda, envie o pagamento por MBWay para:
+            </p>
+            <div className="mt-3 flex items-center justify-center gap-2">
+              <p className="font-serif text-3xl text-brand-espresso">{MBWAY_PHONE}</p>
+              <button type="button" onClick={() => copyText(MBWAY_PHONE)} className="p-2 border border-brand-border hover:border-brand-red" title="Copiar número MBWay">
+                <Copy size={16} />
+              </button>
+            </div>
 
-        <div className="mt-5 flex justify-center print-hide">
-          <button type="button" onClick={printReceipt} className="inline-flex items-center gap-2 px-5 py-3 bg-brand-red text-white text-xs uppercase tracking-[0.18em] hover:bg-brand-redDark transition-colors">
-            <FileDown size={16} /> Guardar talão em PDF
-          </button>
-        </div>
+            <div className="mt-5 grid sm:grid-cols-2 gap-4 items-center">
+              <div className="bg-brand-cream/40 border border-brand-border p-4">
+                <p className="text-sm text-brand-muted">Valor</p>
+                <p className="font-serif text-3xl text-brand-red tabular-nums">€{order.total.toFixed(2)}</p>
+                <button type="button" onClick={() => copyText(order.total.toFixed(2))} className="mt-2 text-xs uppercase tracking-[0.18em] text-brand-red hover:underline">Copiar valor</button>
+              </div>
+              <div className="bg-brand-cream/40 border border-brand-border p-4">
+                <p className="text-sm text-brand-muted">Referência</p>
+                <p className="font-mono text-xl text-brand-espresso">{reference}</p>
+                <button type="button" onClick={() => copyText(reference)} className="mt-2 text-xs uppercase tracking-[0.18em] text-brand-red hover:underline">Copiar referência</button>
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col items-center justify-center gap-3">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-brand-muted">
+                <QrCode size={16} /> QR auxiliar
+              </div>
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${qrData}`}
+                alt="QR com dados MBWay da encomenda"
+                className="w-36 h-36 border border-brand-border p-2 bg-white"
+              />
+              <p className="text-[11px] text-brand-muted max-w-md leading-relaxed">
+                O QR serve apenas para copiar/partilhar os dados do pagamento. Confirme sempre o número, valor e referência na app MBWay.
+              </p>
+            </div>
+
+            <div className="mt-5 inline-flex items-center gap-2 bg-brand-espresso text-brand-bone px-4 py-2 text-xs uppercase tracking-[0.18em]">
+              <Timer size={14} /> Preferencialmente até {paidUntil.toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}
+            </div>
+            <p className="mt-5 text-xs text-brand-muted max-w-lg mx-auto leading-relaxed">
+              A encomenda será preparada após confirmação manual do pagamento pela nossa equipa.
+            </p>
+          </div>
+        )}
 
         <div className="reveal mt-10 bg-white border border-brand-border p-6">
           <p className="text-[10px] uppercase tracking-[0.2em] text-brand-muted text-center">Estado da encomenda</p>
@@ -150,6 +196,19 @@ export default function OrderConfirmationPage() {
               <p className="font-serif text-3xl text-brand-red tabular-nums">€{order.total.toFixed(2)}</p>
             </div>
           </div>
+        </div>
+
+        <div className="mt-10 grid sm:grid-cols-2 gap-4">
+          <a href="tel:+351241402897" className="bg-brand-espresso text-brand-bone p-5 hover:bg-brand-red transition-colors">
+            <Phone size={18} className="text-brand-red" />
+            <p className="mt-2 text-xs uppercase tracking-[0.18em] text-brand-bone/70">Falar connosco</p>
+            <p className="font-serif text-xl">+351 241 402 897</p>
+          </a>
+          <a href="mailto:hello@futwearpt.pt" className="bg-white border border-brand-border p-5 hover:border-brand-espresso transition-colors">
+            <Mail size={18} className="text-brand-red" />
+            <p className="mt-2 text-xs uppercase tracking-[0.18em] text-brand-muted">Email</p>
+            <p className="font-serif text-base text-brand-espresso break-all">hello@futwearpt.pt</p>
+          </a>
         </div>
 
         <div className="mt-12 text-center">

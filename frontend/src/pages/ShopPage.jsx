@@ -33,8 +33,11 @@ export default function ShopPage() {
       const data = Array.isArray(r.data)
         ? r.data
         : (r.data.products || r.data.items || []);
-
-      setProducts(data);
+      setProducts(Array.isArray(data) ? data : []);
+    })
+    .catch((error) => {
+      console.error("[futwearpt] Erro ao carregar catálogo:", error);
+      setProducts([]);
     })
     .finally(() => setLoading(false));
 }, [cat]);
