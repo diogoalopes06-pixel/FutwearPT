@@ -11,7 +11,7 @@ export default function Navbar() {
   useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 12); window.addEventListener("scroll", onScroll); return () => window.removeEventListener("scroll", onScroll); }, []);
   const links = [
     { to: "/", label: "Início" }, { to: "/loja", label: "Loja" }, { to: "/galeria", label: "Drops" },
-    { to: "/sobre", label: "Sobre" }, { to: "/contactos", label: "Contactos" }, { to: "/conta", label: "Conta" },
+    { to: "/sobre", label: "Sobre" }, { to: "/conta", label: "Conta" },
   ];
   return (
     <header data-testid="navbar" className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? "bg-black/95 backdrop-blur-xl border-b border-white/10" : "bg-black/70 backdrop-blur-md"}`}>
