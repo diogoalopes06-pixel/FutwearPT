@@ -18,7 +18,6 @@ import ShopPage from "./pages/ShopPage";
 import ProductPage from "./pages/ProductPage";
 import BundlePage from "./pages/BundlePage";
 import AboutPage from "./pages/AboutPage";
-import ContactPage from "./pages/ContactPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import CustomerAccountPage from "./pages/CustomerAccountPage";
@@ -97,7 +96,6 @@ function App() {
                   <Route path="/produto/:id" element={<PublicLayout><ProductPage /></PublicLayout>} />
                   <Route path="/cabaz/:id" element={<PublicLayout><BundlePage /></PublicLayout>} />
                   <Route path="/sobre" element={<PublicLayout><AboutPage /></PublicLayout>} />
-                  <Route path="/contactos" element={<PublicLayout><ContactPage /></PublicLayout>} />
                   <Route path="/galeria" element={<PublicLayout><GalleryPage /></PublicLayout>} />
                   <Route path="/checkout" element={<PublicLayout><CheckoutPage /></PublicLayout>} />
                   <Route path="/encomenda/:id" element={<PublicLayout><OrderConfirmationPage /></PublicLayout>} />
