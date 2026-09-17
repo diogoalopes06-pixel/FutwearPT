@@ -40,7 +40,7 @@ export default function CheckoutPage() {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem("fw_customer_token");
+    const token = localStorage.getItem("dq_customer_token") || sessionStorage.getItem("dq_customer_token");
     if (!token) return;
     api.get("/customers/me", { headers: { Authorization: `Bearer ${token}` } })
       .then(({ data }) => setForm((f) => ({ ...f, customer_name: f.customer_name || data.name || "", phone: f.phone || data.phone || "", email: f.email || data.email || "", address: f.address || data.address || "" })))
