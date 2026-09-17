@@ -10,7 +10,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 12); window.addEventListener("scroll", onScroll); return () => window.removeEventListener("scroll", onScroll); }, []);
   const links = [
-    { to: "/", label: "Início" }, { to: "/loja", label: "Loja" }, { to: "/galeria", label: "Drops" },
+    { to: "/", label: "Início" }, { to: "/loja", label: "Loja" },
     { to: "/sobre", label: "Sobre" }, { to: "/conta", label: "Conta" },
   ];
   return (
