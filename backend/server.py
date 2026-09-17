@@ -1234,12 +1234,10 @@ from fastapi.responses import Response
 @api.get("/sitemap")
 async def sitemap_data():
     products = await db.products.find({}, {"_id": 0, "id": 1, "category": 1}).to_list(1000)
-    bundles = await db.bundles.find({"active": True}, {"_id": 0, "id": 1}).to_list(200)
     return {
         "static": ["/", "/loja", "/sobre", "/contactos"],
         "products": [p["id"] for p in products],
         "categories": list({p["category"] for p in products}),
-        "bundles": [b["id"] for b in bundles],
     }
 
 
@@ -1519,14 +1517,12 @@ async def sitemap_xml(request: Request):
     products = await db.products.find({}, {"_id": 0, "id": 1}).to_list(1000)
     bundles = await db.bundles.find({"active": True}, {"_id": 0, "id": 1}).to_list(200)
     base = os.environ.get("SITE_URL", "https://futwear-pt-l3cp.vercel.app").rstrip("/")
-    static = ["/", "/loja", "/sobre", "/contactos", "/galeria", "/termos", "/privacidade"]
+    static = ["/", "/loja", "/sobre", "/galeria", "/termos", "/privacidade"]
     urls = []
     for path in static:
         urls.append(f"<url><loc>{base}{path}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>")
     for p in products:
         urls.append(f"<url><loc>{base}/produto/{p['id']}</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>")
-    for b in bundles:
-        urls.append(f"<url><loc>{base}/cabaz/{b['id']}</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>")
     xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(urls) + "</urlset>"
     return Response(content=xml, media_type="application/xml")
 
