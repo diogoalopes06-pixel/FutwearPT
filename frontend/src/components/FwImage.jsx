@@ -7,7 +7,7 @@ export function resolveImageUrl(src) {
   if (!value) return "";
   if (/^(https?:|data:|blob:)/i.test(value)) return value;
   const backend = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/+$/, "");
-  if (value.startsWith("/")) return backend ? `${backend}${value}` : value;
+  if (value.startsWith("/")) return backend ? backend + value : value;
   return value;
 }
 
@@ -16,9 +16,9 @@ export default function FwImage({ src, alt = "", className = "", fallback = "log
   const url = resolveImageUrl(src);
   if (!url || failed) {
     return (
-      <div className={`fw-img-fallback ${className}`} role="img" aria-label={alt}>
+      <div className={"fw-img-fallback " + className} role="img" aria-label={alt}>
         {fallback === "logo" ? (
-          <img src="/futwearpt-logo-square.png" alt="" className="fw-img-fallback-logo" />
+          <img src="/futwearpt-logo-square.png" alt="" className="fw-img-fallback-logo" loading="lazy" decoding="async" />
         ) : (
           <Shirt size={56} strokeWidth={1.2} />
         )}
@@ -26,5 +26,5 @@ export default function FwImage({ src, alt = "", className = "", fallback = "log
       </div>
     );
   }
-  return <img src={url} alt={alt} className={className} onError={() => setFailed(true)} {...props} />;
+  return <img src={url} alt={alt} className={className} onError={() => setFailed(true)} decoding="async" {...props} />;
 }
