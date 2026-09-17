@@ -203,9 +203,7 @@ const filtered = safeProducts
                       <option value="name">Nome</option>
                     </select>
                   </div>
-                </div>
-                  <p className="hidden sm:block text-xs text-zinc-500">Clique em “Cesto” para adicionar rapidamente.</p>
-                </div>
+                <p className="hidden sm:block text-xs text-zinc-500">Clique em “Cesto” para adicionar rapidamente.</p>
                 <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
                   {filtered.map((p) => <ProductCard key={p.id} product={p} />)}
                 </div>
