@@ -55,3 +55,98 @@ a.bg-brand-espresso.text-white {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
+
+
+/* UX / performance pass */
+img {
+  max-width: 100%;
+}
+button, a, input, select, textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+.safe-top {
+  padding-top: max(1.25rem, env(safe-area-inset-top));
+}
+.safe-bottom {
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+}
+.fw-home section:not(.fw-hero):not(.fw-attack):not(.fw-final-cta) {
+  content-visibility: auto;
+  contain-intrinsic-size: 700px;
+}
+@media (max-width: 640px) {
+  body {
+    overscroll-behavior-x: none;
+  }
+  .fw-hero {
+    min-height: auto;
+    padding-top: 7rem;
+  }
+  .fw-hero-inner {
+    min-height: 0;
+    padding: 3rem 1rem 6rem;
+  }
+  .fw-hero-copy h1 {
+    font-size: clamp(3.8rem, 18vw, 6rem);
+    margin-top: 1.35rem;
+  }
+  .fw-hero-sub {
+    font-size: 15px;
+  }
+  .fw-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .fw-btn {
+    width: 100%;
+    min-height: 54px;
+  }
+  .fw-proof-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 2rem;
+  }
+  .fw-proof-row > div:last-child {
+    grid-column: 1 / -1;
+  }
+  .fw-category {
+    min-height: 165px;
+    padding: 20px;
+  }
+  .fw-category h3 {
+    font-size: 30px;
+  }
+  .fw-section {
+    padding: 4.5rem 1rem;
+  }
+  .fw-section-head {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 2rem;
+  }
+  .fw-section-head h2, .fw-attack h2, .fw-final-cta h2 {
+    font-size: clamp(2.9rem, 13vw, 4.4rem);
+  }
+  .fw-products .grid {
+    gap: 12px;
+  }
+  .fw-products .grid > div {
+    min-width: 0;
+  }
+  .fw-attack-inner {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  .fw-attack-number {
+    font-size: 18vw !important;
+  }
+  .fw-final-cta {
+    padding: 5rem 1rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fw-home section {
+    content-visibility: visible;
+  }
+}
