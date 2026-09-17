@@ -25,9 +25,7 @@ api.interceptors.request.use((config) => {
   const url = config?.url || "";
   const isCustomerEndpoint = url.startsWith("/customers/") || url === "/customers";
 
-  // Keep admin and customer sessions completely separate. Previously dq_token
-  // (the admin token) was preferred for customer endpoints, which could make a
-  // normal customer session behave as an admin and produce 401/403 responses.
+  // Keep admin and customer sessions completely separate.
   const token = isCustomerEndpoint
     ? localStorage.getItem("dq_customer_token") || sessionStorage.getItem("dq_customer_token")
     : localStorage.getItem("dq_token") || sessionStorage.getItem("dq_token");
@@ -39,7 +37,26 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (r) => r,
+  async (response) => {
+    // If an older order was created before the account-email prefill fix, it may
+    // not be linked to the customer account. Recover the most recent order from
+    // the secure tracking token saved by the order confirmation page.
+    if (response.config?.url === "/customers/orders" && Array.isArray(response.data) && response.data.length === 0) {
+      try {
+        const orderId = localStorage.getItem("fw_last_order_id");
+        const trackingToken = localStorage.getItem("fw_last_order_token");
+        if (orderId && trackingToken) {
+          const recovered = await axios.get(`${API}/orders/${encodeURIComponent(orderId)}`, {
+            params: { token: trackingToken },
+          });
+          if (recovered.data?.id) response.data = [recovered.data];
+        }
+      } catch {
+        // Keep the normal empty history response if recovery is not possible.
+      }
+    }
+    return response;
+  },
   (err) => {
     if (!BACKEND_URL && err?.message?.includes("Network")) {
       err.message =
