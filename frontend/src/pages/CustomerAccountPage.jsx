@@ -225,6 +225,27 @@ export default function CustomerAccountPage() {
 
   if (loading) return <div className="pt-32 pb-24 min-h-screen bg-brand-bone grid place-items-center"><Loader2 className="animate-spin" /></div>;
 
+  const statusMeta = {
+    pending: { label: "A aguardar pagamento", className: "bg-amber-50 text-amber-800 border-amber-200" },
+    confirmed: { label: "Pago", className: "bg-blue-50 text-blue-800 border-blue-200" },
+    preparing: { label: "Em produção", className: "bg-purple-50 text-purple-800 border-purple-200" },
+    ready: { label: "Enviado", className: "bg-green-50 text-green-800 border-green-200" },
+    delivered: { label: "Concluído", className: "bg-green-50 text-green-800 border-green-200" },
+    cancelled: { label: "Cancelada", className: "bg-red-50 text-red-700 border-red-200" },
+  };
+
+  useEffect(() => {
+    if (!user) return;
+    const refreshOrders = async () => {
+      try {
+        const history = await api.get("/customers/orders", { headers: authHeaders() });
+        setOrders(history.data || []);
+      } catch {}
+    };
+    const timer = window.setInterval(refreshOrders, 30000);
+    return () => window.clearInterval(timer);
+  }, [user]);
+
   if (!user) {
     return (
       <div className="pt-32 pb-24 min-h-screen bg-brand-bone">
@@ -371,18 +392,36 @@ export default function CustomerAccountPage() {
         </div>
 
         <div className="space-y-4">
-          {orders.length === 0 && <div className="bg-white border border-brand-border p-8 text-center text-brand-muted">Ainda não existem encomendas nesta conta.</div>}
-          {orders.map((o) => (
-            <div key={o.id} className="bg-white border border-brand-border p-6 flex flex-wrap justify-between gap-4">
-              <div>
-                <p className="font-mono text-sm text-brand-muted">#{o.id.slice(0, 8).toUpperCase()}</p>
-                <p className="font-serif text-2xl text-brand-espresso mt-1">€{Number(o.total || 0).toFixed(2)}</p>
-                <p className="text-sm text-brand-muted mt-1">{new Date(o.created_at).toLocaleString("pt-PT")}</p>
-                <p className="text-xs text-brand-muted mt-1">Estado: {o.status} · Pagamento: {o.payment_status}</p>
-              </div>
-              <Link to={orderUrl(o)} className="self-center px-5 py-3 bg-brand-red text-white text-xs uppercase tracking-[0.18em]">Ver estado</Link>
-            </div>
-          ))}
+          {orders.length === 0 && <div className="bg-white border border-brand-border p-8 text-center"><Package size={28} className="mx-auto text-brand-red" /><p className="font-serif text-2xl text-brand-espresso mt-4">Ainda não tens encomendas</p><p className="text-sm text-brand-muted mt-2">As tuas próximas compras vão aparecer aqui.</p><Link to="/loja" className="inline-flex mt-5 px-6 py-3 bg-brand-red text-white text-xs uppercase tracking-[0.18em]">Ver camisolas</Link></div>}
+          {orders.map((o) => {
+            const meta = statusMeta[o.status] || { label: o.status || "Estado desconhecido", className: "bg-brand-cream text-brand-espresso border-brand-border" };
+            return (
+              <article key={o.id} className="bg-white border border-brand-border overflow-hidden">
+                <div className="p-5 sm:p-6 flex flex-wrap items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="font-mono text-sm text-brand-muted">#{o.id.slice(0, 8).toUpperCase()}</p>
+                      <span className={"inline-flex items-center border px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] font-bold " + meta.className}>{meta.label}</span>
+                    </div>
+                    <p className="font-serif text-3xl text-brand-espresso mt-2">€{Number(o.total || 0).toFixed(2)}</p>
+                    <p className="text-xs text-brand-muted mt-1">{new Date(o.created_at).toLocaleString("pt-PT")} · Pagamento: {o.payment_status === "paid" ? "Pago" : "A aguardar"}</p>
+                  </div>
+                  <Link to={orderUrl(o)} className="px-5 py-3 bg-brand-red text-white text-xs uppercase tracking-[0.18em] font-bold hover:bg-brand-redDark">Ver encomenda</Link>
+                </div>
+                <div className="px-5 sm:px-6 pb-5 sm:pb-6">
+                  <div className="grid sm:grid-cols-2 gap-2 border-t border-brand-border pt-4">
+                    {(o.items || []).slice(0, 4).map((it, index) => (
+                      <div key={index} className="flex justify-between gap-3 text-sm">
+                        <span className="text-brand-espresso truncate">{it.name} <span className="text-brand-muted">× {it.quantity}</span>{it.size ? " · " + it.size : ""}</span>
+                        <span className="text-brand-muted tabular-nums shrink-0">€{(Number(it.price || 0) * Number(it.quantity || 0)).toFixed(2)}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {(o.items || []).length > 4 && <p className="text-xs text-brand-muted mt-2">+ {(o.items || []).length - 4} artigo(s)</p>}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </div>
