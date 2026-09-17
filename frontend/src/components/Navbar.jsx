@@ -14,7 +14,7 @@ export default function Navbar() {
     { to: "/sobre", label: "Sobre" }, { to: "/conta", label: "Conta" },
   ];
   return (
-    <header data-testid="navbar" className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? "bg-black/95 backdrop-blur-xl border-b border-white/10" : "bg-black/70 backdrop-blur-md"}`}>
+    <header data-testid="navbar" className={`fixed top-10 inset-x-0 z-50 transition-all duration-300 ${scrolled ? "bg-black/95 backdrop-blur-xl border-b border-white/10" : "bg-black/70 backdrop-blur-md"}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group" data-testid="nav-home-logo">
           <div className="h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-sm border border-white/10 bg-[#c90d0c] shadow-[0_0_24px_rgba(201,13,12,.18)] group-hover:scale-105 group-hover:-rotate-2 transition-all duration-300">
