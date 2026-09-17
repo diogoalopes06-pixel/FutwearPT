@@ -32,6 +32,8 @@ export default function ProductCard({ product }) {
           alt={product.name || "Camisola FutWearPT"}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           loading="lazy"
+          decoding="async"
+          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
         />
 
         <div className="absolute inset-0 bg-gradient-to-t from-brand-espresso/35 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
