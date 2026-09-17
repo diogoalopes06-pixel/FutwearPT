@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Mail, ShieldCheck, Truck, Zap } from "lucide-react";
-import { useContent } from "../context/ContentContext";
+
+const CONTACT_EMAIL = "futwearpt25@gmail.com";
 
 export default function Footer() {
-  const { content } = useContent();
-  const contactEmail = content?.contact?.email || "hello@futwearpt.pt";
-
   return (
     <footer className="bg-black text-white border-t border-white/10" data-testid="footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-14">
@@ -30,7 +28,7 @@ export default function Footer() {
             <div className="mt-6 pt-5 border-t border-white/10">
               <h4 className="fw-footer-title mb-3">Contacto</h4>
               <p className="text-sm text-zinc-400">Portugal · Online</p>
-              <a href={`mailto:${contactEmail}`} className="mt-3 flex items-center gap-2 text-sm text-white hover:text-[#E10600]"><Mail size={15}/> {contactEmail}</a>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="mt-3 flex items-center gap-2 text-sm text-white hover:text-[#E10600]"><Mail size={15}/> {CONTACT_EMAIL}</a>
             </div>
           </div>
         </div>
