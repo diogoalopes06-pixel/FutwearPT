@@ -21,6 +21,7 @@ export default function ShopPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [showFavorites, setShowFavorites] = useState(false);
+  const [sortBy, setSortBy] = useState("featured");
   const { favoriteIds } = useFavorites();
   const cat = params.get("cat") || "";
 
@@ -58,7 +59,12 @@ const filtered = safeProducts
       const haystack = normalize(`${p.name} ${p.description || ""} ${p.category || ""}`);
       return terms.every((term) => haystack.includes(term));
     })
-    .sort((a, b) => Number(b.featured || b.seasonal || b.bestseller || b.promotion || 0) - Number(a.featured || a.seasonal || a.bestseller || a.promotion || 0));
+    .sort((a, b) => {
+      if (sortBy === "price-asc") return Number(a.price || 0) - Number(b.price || 0);
+      if (sortBy === "price-desc") return Number(b.price || 0) - Number(a.price || 0);
+      if (sortBy === "name") return String(a.name || "").localeCompare(String(b.name || ""), "pt");
+      return Number(b.featured || b.seasonal || b.bestseller || b.promotion || 0) - Number(a.featured || a.seasonal || a.bestseller || a.promotion || 0);
+    });
 
   const seasonal = safeProducts.filter(
   (p) => p.seasonal || p.promotion || p.bestseller || p.featured
@@ -179,10 +185,25 @@ const filtered = safeProducts
               </div>
             ) : (
               <>
-                <div className="flex items-center justify-between gap-4 mb-6">
-                  <p className="text-xs text-zinc-500 uppercase tracking-[0.18em]">
-                    {filtered.length} produto{filtered.length !== 1 ? "s" : ""}
-                  </p>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                  <div className="flex items-center gap-3">
+                    <p className="text-xs text-zinc-500 uppercase tracking-[0.18em]">
+                      {filtered.length} produto{filtered.length !== 1 ? "s" : ""}
+                    </p>
+                    <button type="button" onClick={() => setShowFavorites((v) => !v)} className={`px-3 py-2 border text-[10px] uppercase tracking-[0.14em] ${showFavorites ? "border-[#E10600] text-[#E10600]" : "border-[#292929] text-zinc-400"}`}>
+                      <Heart size={12} className="inline mr-1" fill={showFavorites ? "currentColor" : "none"} /> Favoritos
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <label htmlFor="shop-sort" className="text-[10px] uppercase tracking-[0.16em] text-zinc-500">Ordenar</label>
+                    <select id="shop-sort" value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="bg-[#111] border border-[#292929] px-3 py-2 text-xs text-white focus:outline-none focus:border-[#E10600]">
+                      <option value="featured">Destaques</option>
+                      <option value="price-asc">Preço: menor primeiro</option>
+                      <option value="price-desc">Preço: maior primeiro</option>
+                      <option value="name">Nome</option>
+                    </select>
+                  </div>
+                </div>
                   <p className="hidden sm:block text-xs text-zinc-500">Clique em “Cesto” para adicionar rapidamente.</p>
                 </div>
                 <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
