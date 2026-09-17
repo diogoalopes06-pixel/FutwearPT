@@ -37,6 +37,13 @@ function clearCustomerSession() {
   sessionStorage.removeItem(tokenKey);
 }
 
+function orderUrl(order) {
+  const token = order?.tracking_token;
+  return token
+    ? `/encomenda/${encodeURIComponent(order.id)}?token=${encodeURIComponent(token)}`
+    : `/encomenda/${encodeURIComponent(order.id)}`;
+}
+
 export default function CustomerAccountPage() {
   const [mode, setMode] = useState("login");
   const [loading, setLoading] = useState(true);
@@ -373,7 +380,7 @@ export default function CustomerAccountPage() {
                 <p className="text-sm text-brand-muted mt-1">{new Date(o.created_at).toLocaleString("pt-PT")}</p>
                 <p className="text-xs text-brand-muted mt-1">Estado: {o.status} · Pagamento: {o.payment_status}</p>
               </div>
-              <Link to={`/encomenda/${o.id}`} className="self-center px-5 py-3 bg-brand-red text-white text-xs uppercase tracking-[0.18em]">Ver estado</Link>
+              <Link to={orderUrl(o)} className="self-center px-5 py-3 bg-brand-red text-white text-xs uppercase tracking-[0.18em]">Ver estado</Link>
             </div>
           ))}
         </div>
