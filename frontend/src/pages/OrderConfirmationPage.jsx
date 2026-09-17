@@ -37,6 +37,15 @@ export default function OrderConfirmationPage() {
   useEffect(() => { fetchOrder(); const t = setInterval(fetchOrder, 30000); return () => clearInterval(t); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, trackingToken]);
 
+  useEffect(() => {
+    if (!order?.id) return;
+    try {
+      localStorage.setItem("fw_last_order_id", order.id);
+      if (trackingToken) localStorage.setItem("fw_last_order_token", trackingToken);
+      if (order.email) localStorage.setItem("fw_last_order_email", String(order.email).toLowerCase().trim());
+    } catch {}
+  }, [order, trackingToken]);
+
   if (error) return <div className="pt-32 pb-24 min-h-screen bg-brand-bone"><div className="max-w-xl mx-auto px-6 text-center py-32"><h1 className="font-serif text-5xl text-brand-espresso">{error}</h1><Link to="/loja" className="mt-10 inline-block px-8 py-4 bg-brand-red text-white text-sm uppercase tracking-[0.18em]">Voltar à loja</Link></div></div>;
   if (!order) return <div className="pt-32 pb-24 min-h-screen bg-brand-bone" />;
 
