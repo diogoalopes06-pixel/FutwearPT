@@ -46,3 +46,12 @@ a.bg-brand-espresso.text-white {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff;
 }
+
+/* Dark payment panel: keep the Instagram link readable. */
+.bg-black a.text-white,
+.bg-black a.text-white:visited,
+.bg-black a.text-white:hover,
+.bg-black a.text-white:focus {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
