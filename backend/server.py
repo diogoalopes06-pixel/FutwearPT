@@ -1438,10 +1438,10 @@ async def seed():
 
     # site content — one-time FutWearPT migration from the original shop
     existing_content = await db.site_content.find_one({"id": "main"}, {"_id": 0, "brand_key": 1})
-    if not existing_content or existing_content.get("brand_key") != "futwearpt":
+    if not existing_content or existing_content.get("brand_key") != "futwearpt-v2":
         default_content = SiteContent(
-            hero=HeroContent(tagline="FUTEBOL · PORTUGAL", title_part1="Veste", title_emphasis="a tua paixão", title_part2=".", subtitle="Camisolas de futebol, modelos retro e equipamento de treino. Escolhe o tamanho, personaliza e compra online.", image="/futwearpt-logo.png", cta_primary="Ver camisolas", cta_secondary="Sobre a FutWearPT", rating_value="5.0", rating_label="Paixão pelo futebol"),
-            about=AboutContent(tagline="Sobre nós", title="A tua paixão. A tua camisola.", paragraph1="A FutWearPT nasceu para juntar camisolas de futebol, cultura de bancada e personalização numa experiência de compra simples.", paragraph2="Escolhe o modelo, seleciona o tamanho, acrescenta nome e número e recebe a tua encomenda em Portugal."),
+            hero=HeroContent(tagline="FUTEBOL · PORTUGAL · 2026", title_part1="Veste.", title_emphasis="Joga.", title_part2="Domina.", subtitle="Camisolas para quem leva o futebol a sério. Clubes, seleções, retro, treino e personalização.", image="/futwearpt-logo.png", cta_primary="Ver camisolas", cta_secondary="Conhecer a FutWearPT", rating_value="5.0", rating_label="Paixão pelo futebol"),
+            about=AboutContent(tagline="Football only", title="Não é moda. É cultura.", paragraph1="A FutWearPT existe para quem vê uma camisola e vê muito mais do que tecido. É clube, memória, bancada e paixão pelo jogo.", paragraph2="Escolhe o modelo, seleciona o tamanho, acrescenta nome e número quando disponível e recebe a tua encomenda em Portugal."),
             reviews=[],
             categories=[
                 CategoryContent(slug="clubes", name="Clubes", image="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&q=80&w=900"),
@@ -1449,12 +1449,12 @@ async def seed():
                 CategoryContent(slug="retro", name="Retro", image="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&q=80&w=900"),
                 CategoryContent(slug="treino", name="Treino", image="https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&q=80&w=900"),
             ],
-            cta_title="Da tua paixão à tua porta.", cta_subtitle="Preparação habitual em 24–48h úteis. Portes e opções apresentados no checkout.", footer_tagline="Camisolas de futebol, retro e treino. Personaliza a tua camisola e veste a tua paixão.",
+            cta_title="Veste a tua história.", cta_subtitle="Escolhe a camisola, personaliza quando disponível e acompanha a encomenda até à tua porta.", footer_tagline="Football only. Camisolas, retro, treino e personalização.");
             seo=SeoConfig(site_title="FutWearPT — Camisolas de Futebol", site_description="Camisolas de futebol, retro e treino. Personaliza a tua camisola e compra online em Portugal.")
         )
         payload = default_content.model_dump()
         payload["id"] = "main"
-        payload["brand_key"] = "futwearpt"
+        payload["brand_key"] = "futwearpt-v2"
         payload["updated_at"] = datetime.now(timezone.utc).isoformat()
         await db.site_content.update_one({"id": "main"}, {"$set": payload}, upsert=True)
         logger.info("FutWearPT content migrated")
@@ -1515,7 +1515,6 @@ async def update_gallery_photo(pid: str, data: GalleryPhotoIn, admin=Depends(get
 async def sitemap_xml(request: Request):
     from fastapi.responses import Response
     products = await db.products.find({}, {"_id": 0, "id": 1}).to_list(1000)
-    bundles = await db.bundles.find({"active": True}, {"_id": 0, "id": 1}).to_list(200)
     base = os.environ.get("SITE_URL", "https://futwear-pt-l3cp.vercel.app").rstrip("/")
     static = ["/", "/loja", "/sobre", "/galeria", "/termos", "/privacidade"]
     urls = []
