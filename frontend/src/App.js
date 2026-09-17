@@ -16,7 +16,6 @@ import ScrollToTopButton from "./components/ScrollToTopButton";
 import HomePage from "./pages/HomePage";
 import ShopPage from "./pages/ShopPage";
 import ProductPage from "./pages/ProductPage";
-import BundlePage from "./pages/BundlePage";
 import AboutPage from "./pages/AboutPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
@@ -94,7 +93,6 @@ function App() {
                   <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
                   <Route path="/loja" element={<PublicLayout><ShopPage /></PublicLayout>} />
                   <Route path="/produto/:id" element={<PublicLayout><ProductPage /></PublicLayout>} />
-                  <Route path="/cabaz/:id" element={<PublicLayout><BundlePage /></PublicLayout>} />
                   <Route path="/sobre" element={<PublicLayout><AboutPage /></PublicLayout>} />
                   <Route path="/galeria" element={<PublicLayout><GalleryPage /></PublicLayout>} />
                   <Route path="/checkout" element={<PublicLayout><CheckoutPage /></PublicLayout>} />
