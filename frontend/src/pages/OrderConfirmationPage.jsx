@@ -33,9 +33,17 @@ export default function OrderConfirmationPage() {
   const [order, setOrder] = useState(null);
   const [error, setError] = useState(null);
 
-  const fetchOrder = () => api.get(`/orders/${id}`, { params: trackingToken ? { token: trackingToken } : {} }).then((r) => { setOrder(r.data); setError(null); }).catch(() => setError("Encomenda não encontrada."));
-  useEffect(() => { fetchOrder(); const t = setInterval(fetchOrder, 30000); return () => clearInterval(t); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, trackingToken]);
+  useEffect(() => {
+    let active = true;
+    const fetchOrder = () => api.get(`/orders/${id}`, { params: trackingToken ? { token: trackingToken } : {} }).then((r) => {
+      if (active) { setOrder(r.data); setError(null); }
+    }).catch((err) => {
+      if (active) setError(err?.response?.status === 404 ? "Encomenda não encontrada. Esta referência pode já não existir." : "Não foi possível carregar a encomenda.");
+    });
+    fetchOrder();
+    const t = setInterval(() => { if (active && !error) fetchOrder(); }, 30000);
+    return () => { active = false; clearInterval(t); };
+  }, [id, trackingToken, error]);
 
   useEffect(() => {
     if (!order?.id) return;
