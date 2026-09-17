@@ -1,0 +1,46 @@
+/* FutWearPT global readability fixes */
+html,
+body {
+  background: #F4F4F0;
+  color: #080808;
+}
+
+.bg-brand-bone,
+.bg-white {
+  color: #080808;
+}
+
+.bg-white input,
+.bg-white textarea,
+.bg-white select,
+.bg-brand-bone input,
+.bg-brand-bone textarea,
+.bg-brand-bone select {
+  color: #080808 !important;
+  -webkit-text-fill-color: #080808;
+  caret-color: #E10600;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #77746f !important;
+  opacity: 1;
+}
+
+select option {
+  color: #080808;
+  background: #ffffff;
+}
+
+.bg-brand-bone .text-white:not(.bg-brand-red),
+.bg-white .text-white:not(.bg-brand-red) {
+  color: #080808 !important;
+}
+
+.bg-brand-red.text-white,
+.bg-brand-espresso.text-white,
+button.bg-brand-red.text-white,
+a.bg-brand-red.text-white {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+}
