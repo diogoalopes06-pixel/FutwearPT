@@ -32,15 +32,17 @@ select option {
   background: #ffffff;
 }
 
-.bg-brand-bone .text-white:not(.bg-brand-red),
-.bg-white .text-white:not(.bg-brand-red) {
+.bg-brand-bone .text-white:not(.bg-brand-red):not(.bg-brand-espresso),
+.bg-white .text-white:not(.bg-brand-red):not(.bg-brand-espresso) {
   color: #080808 !important;
 }
 
 .bg-brand-red.text-white,
 .bg-brand-espresso.text-white,
 button.bg-brand-red.text-white,
-a.bg-brand-red.text-white {
+a.bg-brand-red.text-white,
+button.bg-brand-espresso.text-white,
+a.bg-brand-espresso.text-white {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff;
 }
