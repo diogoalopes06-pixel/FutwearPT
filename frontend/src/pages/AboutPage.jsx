@@ -13,7 +13,7 @@ export default function AboutPage() {
             <p className="mt-5 text-zinc-400 text-lg leading-relaxed">Escolhe o teu lado, mete o teu nome e veste a tua história.</p>
           </div>
           <div className="lg:col-span-5 grid grid-cols-2 gap-2">
-            {[ [Zap,"DROPS","Limitados"],[ShieldCheck,"QUALIDADE","Sem atalhos"],[Trophy,"FUTEBOL","Primeiro"],[Target,"ATITUDE","Sempre"] ].map(([Icon,t,d])=><div key={t} className="bg-[#111] border border-[#292929] p-6 min-h-[170px] hover:border-[#E10600] transition-colors"><Icon className="text-[#E10600]" size={22}/><h3 className="font-black text-xl mt-12">{t}</h3><p className="text-xs uppercase tracking-[.16em] text-zinc-600 mt-1">{d}</p></div>)}
+            {[ [Zap,"NOVIDADES","Limitadas"],[ShieldCheck,"QUALIDADE","Sem atalhos"],[Trophy,"FUTEBOL","Primeiro"],[Target,"ATITUDE","Sempre"] ].map(([Icon,t,d])=><div key={t} className="bg-[#111] border border-[#292929] p-6 min-h-[170px] hover:border-[#E10600] transition-colors"><Icon className="text-[#E10600]" size={22}/><h3 className="font-black text-xl mt-12">{t}</h3><p className="text-xs uppercase tracking-[.16em] text-zinc-600 mt-1">{d}</p></div>)}
           </div>
         </div>
         <div className="mt-20 border-y border-[#292929] py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
