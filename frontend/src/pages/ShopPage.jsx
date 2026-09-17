@@ -82,8 +82,18 @@ const filtered = safeProducts
           </div>
         </div>
 
-        <div className="reveal lg:hidden mb-8 -mx-4 px-4 overflow-x-auto">
-          <div className="flex gap-2 min-w-max pb-2">
+        <div className="reveal lg:hidden mb-8 -mx-4 px-4">
+          <div className="relative mb-4">
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Pesquisar camisola, clube..."
+              aria-label="Pesquisar produtos"
+              className="w-full bg-[#111] border border-[#292929] pl-10 pr-3 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-[#E10600]"
+            />
+          </div>
+          <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1">
             {CATEGORIES.map((c) => (
               <button
                 key={c.slug || "all-mobile"}
