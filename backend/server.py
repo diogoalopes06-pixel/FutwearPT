@@ -352,7 +352,7 @@ class ContactContent(BaseModel):
     address_line1: str = "Av. Mário Soares 37 loja 1"
     address_line2: str = "2200-192 Abrantes"
     phone: str = "+351 241 402 897"
-    email: str = "hello@futwearpt.pt"
+    email: str = "futwearpt25@gmail.com"
     facebook_url: str = ""
     facebook_handle: str = ""
     hours_weekday_label: str = "Online"
@@ -1235,7 +1235,7 @@ from fastapi.responses import Response
 async def sitemap_data():
     products = await db.products.find({}, {"_id": 0, "id": 1, "category": 1}).to_list(1000)
     return {
-        "static": ["/", "/loja", "/sobre", "/contactos"],
+        "static": ["/", "/loja", "/sobre", "/galeria", "/termos", "/privacidade"],
         "products": [p["id"] for p in products],
         "categories": list({p["category"] for p in products}),
     }
