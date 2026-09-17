@@ -45,6 +45,8 @@ export default function AdminDashboardPage() {
   const [archiveView, setArchiveView] = useState("active");
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [productSearch, setProductSearch] = useState("");
+  const [productCategory, setProductCategory] = useState("all");
   const knownOrderIdsRef = useRef(new Set());
   const ordersInitializedRef = useRef(false);
 
@@ -283,6 +285,13 @@ export default function AdminDashboardPage() {
     return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
   };
 
+  const visibleProducts = products.filter((p) => {
+    const q = productSearch.trim().toLowerCase();
+    const matchesSearch = !q || `${p.name || ""} ${p.description || ""}`.toLowerCase().includes(q);
+    const matchesCategory = productCategory === "all" || p.category === productCategory;
+    return matchesSearch && matchesCategory;
+  });
+
   const deleteProduct = async (id) => {
     if (!window.confirm("Apagar este produto?")) return;
     try {
@@ -478,7 +487,7 @@ export default function AdminDashboardPage() {
         )}
 
         {/* Tabs */}
-        <div className="border-b border-brand-border mb-8 flex gap-8">
+        <div className="border-b border-brand-border mb-8 flex gap-5 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
           <button
             onClick={() => setTab("orders")}
             data-testid="admin-tab-orders"
@@ -681,8 +690,16 @@ export default function AdminDashboardPage() {
         {/* Products */}
         {tab === "products" && (
           <div>
+            <div className="mb-6 bg-white border border-brand-border p-4 grid md:grid-cols-[1fr_220px_auto] gap-3 items-center">
+              <input value={productSearch} onChange={(e) => setProductSearch(e.target.value)} placeholder="Pesquisar produtos..." className="bg-white border border-brand-border px-4 py-3 text-sm focus:outline-none focus:border-brand-red" />
+              <select value={productCategory} onChange={(e) => setProductCategory(e.target.value)} className="bg-white border border-brand-border px-4 py-3 text-sm">
+                <option value="all">Todas as categorias</option>
+                {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+              <span className="text-xs text-brand-muted">{visibleProducts.length} de {products.length} produtos</span>
+            </div>
             <button
-              onClick={() => { setEditing(null); setShowForm(true); }}
+              onClick={() => { setEditing(null); setShowForm(true); }
               data-testid="admin-add-product"
               className="mb-6 px-5 py-3 bg-brand-red text-white text-xs uppercase tracking-[0.18em] flex items-center gap-2 hover:bg-brand-redDark"
             >
@@ -690,7 +707,7 @@ export default function AdminDashboardPage() {
             </button>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {products.map((p) => (
+              {visibleProducts.map((p) => (
                 <div key={p.id} className="bg-white border border-brand-border p-4 flex gap-4" data-testid={`admin-product-${p.id}`}>
                   <div className="w-20 h-20 bg-brand-cream shrink-0 overflow-hidden">
                     {p.image && <img src={p.image} alt="" className="w-full h-full object-cover" />}
