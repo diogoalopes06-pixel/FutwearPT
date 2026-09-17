@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { LogOut, Package, ClipboardList, Plus, Edit, Trash2, X, Loader2, MessageCircle, Mail, Bell, BellOff, FileEdit, Package2, Tag, Download, TrendingUp, BarChart3, AlertTriangle, Archive, RotateCcw, Star, Images } from "lucide-react";
+import { LogOut, Package, ClipboardList, Plus, Edit, Trash2, X, Loader2, MessageCircle, Mail, Bell, BellOff, FileEdit, Tag, Download, TrendingUp, BarChart3, AlertTriangle, Archive, RotateCcw, Star, Images } from "lucide-react";
 import { toast } from "sonner";
 import api from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 import { pushSupported, getPushStatus, subscribeToPush, unsubscribeFromPush, testPush } from "../lib/push";
 import ContentEditor from "./ContentEditor";
-import BundlesManager from "./BundlesManager";
 import CouponsManager from "./CouponsManager";
 
 const STATUS_OPTIONS = [
@@ -510,13 +509,6 @@ export default function AdminDashboardPage() {
             <FileEdit size={16} /> Conteúdo do site
           </button>
           <button
-            onClick={() => setTab("bundles")}
-            data-testid="admin-tab-bundles"
-            className={`pb-4 text-sm uppercase tracking-[0.18em] border-b-2 flex items-center gap-2 ${tab === "bundles" ? "border-brand-red text-brand-red" : "border-transparent text-brand-muted hover:text-brand-espresso"}`}
-          >
-            <Package2 size={16} /> Cabazes
-          </button>
-          <button
             onClick={() => setTab("coupons")}
             data-testid="admin-tab-coupons"
             className={`pb-4 text-sm uppercase tracking-[0.18em] border-b-2 flex items-center gap-2 ${tab === "coupons" ? "border-brand-red text-brand-red" : "border-transparent text-brand-muted hover:text-brand-espresso"}`}
@@ -735,9 +727,6 @@ export default function AdminDashboardPage() {
 
         {/* Content Editor */}
         {tab === "content" && <ContentEditor />}
-
-        {/* Bundles */}
-        {tab === "bundles" && <BundlesManager />}
 
         {/* Coupons */}
         {tab === "coupons" && <CouponsManager />}
