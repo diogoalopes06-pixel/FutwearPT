@@ -223,16 +223,6 @@ export default function CustomerAccountPage() {
     reader.readAsDataURL(file);
   };
 
-  if (loading) return <div className="pt-32 pb-24 min-h-screen bg-brand-bone grid place-items-center"><Loader2 className="animate-spin" /></div>;
-
-  const statusMeta = {
-    pending: { label: "A aguardar pagamento", className: "bg-amber-50 text-amber-800 border-amber-200" },
-    confirmed: { label: "Pago", className: "bg-blue-50 text-blue-800 border-blue-200" },
-    preparing: { label: "Em produção", className: "bg-purple-50 text-purple-800 border-purple-200" },
-    ready: { label: "Enviado", className: "bg-green-50 text-green-800 border-green-200" },
-    delivered: { label: "Concluído", className: "bg-green-50 text-green-800 border-green-200" },
-    cancelled: { label: "Cancelada", className: "bg-red-50 text-red-700 border-red-200" },
-  };
 
   useEffect(() => {
     if (!user) return;
@@ -246,6 +236,16 @@ export default function CustomerAccountPage() {
     return () => window.clearInterval(timer);
   }, [user]);
 
+  if (loading) return <div className="pt-32 pb-24 min-h-screen bg-brand-bone grid place-items-center"><Loader2 className="animate-spin" /></div>;
+
+  const statusMeta = {
+    pending: { label: "A aguardar pagamento", className: "bg-amber-50 text-amber-800 border-amber-200" },
+    confirmed: { label: "Pago", className: "bg-blue-50 text-blue-800 border-blue-200" },
+    preparing: { label: "Em produção", className: "bg-purple-50 text-purple-800 border-purple-200" },
+    ready: { label: "Enviado", className: "bg-green-50 text-green-800 border-green-200" },
+    delivered: { label: "Concluído", className: "bg-green-50 text-green-800 border-green-200" },
+    cancelled: { label: "Cancelada", className: "bg-red-50 text-red-700 border-red-200" },
+  };
   if (!user) {
     return (
       <div className="pt-32 pb-24 min-h-screen bg-brand-bone">
