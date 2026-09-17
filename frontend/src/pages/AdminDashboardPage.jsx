@@ -691,7 +691,7 @@ export default function AdminDashboardPage() {
               <span className="text-xs text-brand-muted">{visibleProducts.length} de {products.length} produtos</span>
             </div>
             <button
-              onClick={() => { setEditing(null); setShowForm(true); }
+              onClick={() => { setEditing(null); setShowForm(true); }}
               data-testid="admin-add-product"
               className="mb-6 px-5 py-3 bg-brand-red text-white text-xs uppercase tracking-[0.18em] flex items-center gap-2 hover:bg-brand-redDark"
             >
