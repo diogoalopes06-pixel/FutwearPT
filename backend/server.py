@@ -1449,7 +1449,7 @@ async def seed():
                 CategoryContent(slug="retro", name="Retro", image="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&q=80&w=900"),
                 CategoryContent(slug="treino", name="Treino", image="https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&q=80&w=900"),
             ],
-            cta_title="Veste a tua história.", cta_subtitle="Escolhe a camisola, personaliza quando disponível e acompanha a encomenda até à tua porta.", footer_tagline="Football only. Camisolas, retro, treino e personalização.");
+            cta_title="Veste a tua história.", cta_subtitle="Escolhe a camisola, personaliza quando disponível e acompanha a encomenda até à tua porta.", footer_tagline="Football only. Camisolas, retro, treino e personalização.",
             seo=SeoConfig(site_title="FutWearPT — Camisolas de Futebol", site_description="Camisolas de futebol, retro e treino. Personaliza a tua camisola e compra online em Portugal.")
         )
         payload = default_content.model_dump()
