@@ -84,7 +84,7 @@ const filtered = safeProducts
             <h1 className="font-serif text-5xl md:text-7xl text-white leading-none">
               {CATEGORIES.find((c) => c.slug === cat)?.name || "Todas as camisolas"}
             </h1>
-            <p className="mt-4 text-zinc-500 max-w-2xl">Drops para quem vive o futebol dentro e fora do estádio. Sem básicos. Sem desculpas.</p>
+            <p className="mt-4 text-zinc-500 max-w-2xl">Camisolas para quem vive o futebol dentro e fora do estádio. Sem básicos. Sem desculpas.</p>
           </div>
         </div>
 
